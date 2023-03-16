@@ -1,7 +1,0 @@
-res://inteface/control.tscn
-res://inteface/confirmacao.tscn
-res://cenas/titulo.tscn
-res://cenas/teste.tscn
-res://inteface/item.tscn
-res://cenas/mapa.tscn
-res://scripts/core/core.gd
