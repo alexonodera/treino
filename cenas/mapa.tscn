@@ -1,0 +1,133 @@
+[gd_scene load_steps=3 format=3 uid="uid://51ggvmmvw6rh"]
+
+[ext_resource type="Texture2D" uid="uid://sw3g4ewvbybq" path="res://assets/imagem_fundo.png" id="1_iwu8i"]
+[ext_resource type="Script" path="res://scripts/interface/mapa.gd" id="1_lx3wh"]
+
+[node name="Mapa" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lx3wh")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -188.0
+offset_bottom = 188.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_iwu8i")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -852.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Back" type="Button" parent="Control" groups=["botao"]]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 741.0
+offset_top = 25.0
+offset_right = 841.0
+offset_bottom = 56.0
+grow_horizontal = 0
+text = "Back"
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -445.0
+offset_right = 300.0
+offset_bottom = 445.0
+grow_vertical = 2
+color = Color(0.160784, 0.498039, 0.592157, 0.537255)
+
+[node name="GridContainer" type="GridContainer" parent="Control"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 170.0
+offset_bottom = 414.0
+
+[node name="Fase" type="Button" parent="Control/GridContainer" groups=["botao"]]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 30
+text = "Stage 01"
+flat = true
+
+[node name="Fase2" type="Button" parent="Control/GridContainer" groups=["botao"]]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 30
+text = "Stage 02"
+flat = true
+
+[node name="Fase3" type="Button" parent="Control/GridContainer" groups=["botao"]]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 30
+text = "Stage 03"
+flat = true
+
+[node name="Fase4" type="Button" parent="Control/GridContainer" groups=["botao"]]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 30
+text = "Stage 04"
+flat = true
+
+[node name="Fase5" type="Button" parent="Control/GridContainer" groups=["botao"]]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 30
+text = "Stage 05"
+flat = true
+
+[node name="Fase6" type="Button" parent="Control/GridContainer" groups=["botao"]]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 30
+text = "Stage 06"
+flat = true
+
+[node name="Fase7" type="Button" parent="Control/GridContainer" groups=["botao"]]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 30
+text = "Stage 07"
+flat = true

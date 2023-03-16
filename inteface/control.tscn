@@ -1,0 +1,114 @@
+[gd_scene load_steps=3 format=3 uid="uid://pcxx17nuwlmu"]
+
+[ext_resource type="Script" path="res://inteface/control.gd" id="1_32c0j"]
+[ext_resource type="Texture2D" uid="uid://drb1dc1bcvgo0" path="res://assets/fundo_2.png" id="2_ajf5t"]
+
+[node name="Control" type="Node2D"]
+position = Vector2(544, 326)
+script = ExtResource("1_32c0j")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1216.0
+offset_top = -512.0
+offset_right = 1216.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ajf5t")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -436.0
+offset_bottom = 86.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 60
+text = "Teste de dados"
+
+[node name="Back" type="Button" parent="." groups=["botao"]]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -525.0
+offset_top = -305.0
+offset_right = -425.0
+offset_bottom = -274.0
+grow_horizontal = 0
+text = "Back"
+
+[node name="Menu" type="VBoxContainer" parent="."]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 354.0
+offset_top = -68.0
+offset_right = 454.0
+offset_bottom = 68.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Novo" type="Button" parent="Menu" groups=["botao"]]
+layout_mode = 2
+text = "New Game"
+
+[node name="Editar" type="Button" parent="Menu" groups=["botao"]]
+visible = false
+layout_mode = 2
+text = "Editar"
+
+[node name="Carregar" type="Button" parent="Menu" groups=["botao"]]
+layout_mode = 2
+text = "Load"
+
+[node name="Apagar" type="Button" parent="Menu" groups=["botao"]]
+modulate = Color(0.854902, 0.396078, 0.427451, 1)
+layout_mode = 2
+text = "Erase"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -445.0
+offset_top = -212.0
+offset_right = 330.0
+offset_bottom = 212.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+modulate = Color(1, 1, 1, 0.537255)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.160784, 0.498039, 0.592157, 1)
+
+[node name="ListaItens" type="GridContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -372.5
+offset_top = -202.0
+offset_right = 372.5
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
