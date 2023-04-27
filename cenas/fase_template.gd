@@ -1,24 +1,11 @@
 extends Node2D
-class_name FaseTemplate_teste
-
-@onready var botao_voltar: Button = get_node("botao_voltar")
-@onready var concluir: Button = get_node("concluir")
+class_name FaseTemplate
 
 var pontuacao:int = 0
-var nome_fase:String = "fase_1"
+@export var nome_fase:String = "fase_1"
+@export var fases_desbloqueadas: Array = ["fase_2"]
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pontuacao = 9999
-	var clicar_item = Callable(self, "inicio_jogo")
-	botao_voltar.connect("button_down",clicar_item.bind())
-	
-	
-	var clicar_concluir = Callable(self, "concluir_fase")
-	concluir.connect("button_down",clicar_concluir.bind())
-	
-	
-	
+
 	
 func concluir_fase() -> void:
 	
@@ -45,7 +32,7 @@ func criar_nova_fase_concluida(nome:String) -> void:
 		"id":core.gerar_id(),
 		"nome":nome,
 		"template": "fase_concluida",
-		"fases_desbloqueadas": ["fase_2"],
+		"fases_desbloqueadas": fases_desbloqueadas,
 		"pontuacao_maxima":pontuacao	
 	} 
 	core.cadastrar(nova_fase_concluida)
@@ -55,7 +42,3 @@ func criar_nova_fase_concluida(nome:String) -> void:
 
 	
 	
-
-
-func inicio_jogo() -> void:
-	get_tree().change_scene_to_file("res://inteface/control.tscn")

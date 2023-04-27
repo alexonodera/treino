@@ -62,7 +62,7 @@ offset_top = 40.0
 offset_right = 170.0
 offset_bottom = 414.0
 
-[node name="Fase" type="Button" parent="Control/GridContainer" groups=["botao"]]
+[node name="Fase" type="Button" parent="Control/GridContainer" groups=["botao", "fase"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
@@ -71,8 +71,9 @@ theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 30
 text = "Stage 01"
 flat = true
+metadata/id_fase = "fase_1"
 
-[node name="Fase2" type="Button" parent="Control/GridContainer" groups=["botao"]]
+[node name="Fase2" type="Button" parent="Control/GridContainer" groups=["botao", "fase"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
@@ -81,8 +82,9 @@ theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 30
 text = "Stage 02"
 flat = true
+metadata/id_fase = "fase_2"
 
-[node name="Fase3" type="Button" parent="Control/GridContainer" groups=["botao"]]
+[node name="Fase3" type="Button" parent="Control/GridContainer" groups=["botao", "fase"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
@@ -91,8 +93,9 @@ theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 30
 text = "Stage 03"
 flat = true
+metadata/id_fase = "fase_3"
 
-[node name="Fase4" type="Button" parent="Control/GridContainer" groups=["botao"]]
+[node name="Fase4" type="Button" parent="Control/GridContainer" groups=["botao", "fase"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
@@ -101,33 +104,4 @@ theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 30
 text = "Stage 04"
 flat = true
-
-[node name="Fase5" type="Button" parent="Control/GridContainer" groups=["botao"]]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
-theme_override_constants/outline_size = 6
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 30
-text = "Stage 05"
-flat = true
-
-[node name="Fase6" type="Button" parent="Control/GridContainer" groups=["botao"]]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
-theme_override_constants/outline_size = 6
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 30
-text = "Stage 06"
-flat = true
-
-[node name="Fase7" type="Button" parent="Control/GridContainer" groups=["botao"]]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0.705882, 0.647059, 0.313726, 1)
-theme_override_constants/outline_size = 6
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 30
-text = "Stage 07"
-flat = true
+metadata/id_fase = "fase_4"

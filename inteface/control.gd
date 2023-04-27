@@ -1,4 +1,5 @@
 extends MenuManeiro
+class_name LoadSave
 
 @onready var save =  preload("res://inteface/item.tscn")
 @onready var confirmacao =  preload("res://inteface/confirmacao.tscn")

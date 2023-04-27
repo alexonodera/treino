@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://btjo22io6bqp1"]
+
+[ext_resource type="Texture2D" uid="uid://drb1dc1bcvgo0" path="res://assets/fundo_2.png" id="1_c41vt"]
+[ext_resource type="Script" path="res://cenas/fase_template.gd" id="1_mc8n2"]
+[ext_resource type="PackedScene" uid="uid://pwfv74ih422u" path="res://inteface/hud.tscn" id="2_j5wwn"]
+[ext_resource type="PackedScene" uid="uid://c8gvtbsphky83" path="res://cenas/teste_char.tscn" id="4_d7w1w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q1hj7"]
+size = Vector2(95, 330)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgv67"]
+size = Vector2(2749.25, 128)
+
+[sub_resource type="Environment" id="Environment_isqec"]
+background_mode = 3
+
+[node name="FaseTemplate" type="Node2D"]
+script = ExtResource("1_mc8n2")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.713726, 0.913725, 1, 1)
+
+[node name="Cenário" type="StaticBody2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="Cenário"]
+position = Vector2(1325.5, 255.5)
+scale = Vector2(1.09663, 0.770508)
+texture = ExtResource("1_c41vt")
+
+[node name="lateral_esqueda" type="CollisionShape2D" parent="Cenário"]
+position = Vector2(-40, 507)
+shape = SubResource("RectangleShape2D_q1hj7")
+
+[node name="lateral_direita" type="CollisionShape2D" parent="Cenário"]
+position = Vector2(2697, 522)
+shape = SubResource("RectangleShape2D_q1hj7")
+
+[node name="limite_inferior" type="CollisionShape2D" parent="Cenário"]
+position = Vector2(1333.38, 321)
+shape = SubResource("RectangleShape2D_qgv67")
+
+[node name="limite_inferior2" type="CollisionShape2D" parent="Cenário"]
+position = Vector2(1331, 708)
+shape = SubResource("RectangleShape2D_qgv67")
+
+[node name="Hud" parent="." instance=ExtResource("2_j5wwn")]
+
+[node name="Env" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_isqec")
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="teste_char" parent="Players" instance=ExtResource("4_d7w1w")]
+light_mask = 2
+visibility_layer = 2
+
+[node name="Inimigos" type="Node2D" parent="."]

@@ -15,7 +15,7 @@ func _ready():
 func botao_pressionado(botao:String) -> void:
 	match botao:
 		"Fase":
-			pass	
+			get_tree().change_scene_to_file("res://cenas/teste.tscn")	
 		"Fase2":
 			pass
 		"Fase3":
@@ -26,5 +26,19 @@ func voltar_load() -> void:
 	get_tree().change_scene_to_file("res://inteface/control.tscn")
 	
 func verificar_fases_desbloqueadas() -> void:
-	pass
+	var fases_concluidas: Array = core.procurar_sub_itens(core.save_selecionado.id,"fase_concluida")
 	
+	for fase in get_tree().get_nodes_in_group("fase"):
+	
+		if fase.get_meta("id_fase") != "fase_1":
+			fase.disabled = true
+			fase.modulate.a = 0.2			
+		for fase_concluida in fases_concluidas:
+			if fase_concluida.fases_desbloqueadas.has(fase.get_meta("id_fase")):
+				fase.disabled = false
+				fase.modulate.a = 1.0
+			
+
+
+
+

@@ -19,6 +19,12 @@ texture = ExtResource("1_erwcc")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
 shape = SubResource("CircleShape2D_jssu7")
 
+[node name="concluir" type="Button" parent="."]
+offset_left = 200.0
+offset_right = 309.0
+offset_bottom = 31.0
+text = "Concluir fase"
+
 [node name="botao_voltar" type="Button" parent="."]
 offset_right = 8.0
 offset_bottom = 8.0
