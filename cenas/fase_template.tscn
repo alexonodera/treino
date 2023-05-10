@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://drb1dc1bcvgo0" path="res://assets/fundo_2.png" id="1_c41vt"]
 [ext_resource type="Script" path="res://cenas/fase_template.gd" id="1_mc8n2"]
 [ext_resource type="PackedScene" uid="uid://pwfv74ih422u" path="res://inteface/hud.tscn" id="2_j5wwn"]
-[ext_resource type="PackedScene" uid="uid://c8gvtbsphky83" path="res://cenas/teste_char.tscn" id="4_d7w1w"]
+[ext_resource type="PackedScene" uid="uid://b0jn17svolbl1" path="res://cenas/character_body_2d.tscn" id="4_piooa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1hj7"]
 size = Vector2(95, 330)
@@ -18,9 +18,12 @@ background_mode = 3
 script = ExtResource("1_mc8n2")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+z_index = -6
 color = Color(0.713726, 0.913725, 1, 1)
 
 [node name="Cenário" type="StaticBody2D" parent="."]
+z_index = -3
+z_as_relative = false
 
 [node name="Background" type="Sprite2D" parent="Cenário"]
 position = Vector2(1325.5, 255.5)
@@ -50,8 +53,6 @@ environment = SubResource("Environment_isqec")
 
 [node name="Players" type="Node2D" parent="."]
 
-[node name="teste_char" parent="Players" instance=ExtResource("4_d7w1w")]
-light_mask = 2
-visibility_layer = 2
+[node name="CharacterBody2D" parent="Players" instance=ExtResource("4_piooa")]
 
 [node name="Inimigos" type="Node2D" parent="."]
