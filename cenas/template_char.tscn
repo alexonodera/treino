@@ -1,18 +1,18 @@
-[gd_scene load_steps=25 format=3 uid="uid://b0jn17svolbl1"]
+[gd_scene load_steps=26 format=3 uid="uid://b0jn17svolbl1"]
 
-[ext_resource type="Texture2D" uid="uid://b78ar0v723lod" path="res://assets/Char_m1/cabeca_1.png" id="1_hoadd"]
-[ext_resource type="Texture2D" uid="uid://0cil34n8p1b8" path="res://assets/Char_m1/corpo_inf_1.png" id="1_q0ynt"]
-[ext_resource type="Texture2D" uid="uid://dwyqysv45g68p" path="res://assets/Char_m1/perna_1.png" id="2_rgnyp"]
-[ext_resource type="Texture2D" uid="uid://b606ugd7x3opt" path="res://assets/Char_m1/canela_1.png" id="3_2gog4"]
-[ext_resource type="Texture2D" uid="uid://ocwkasmxfdac" path="res://assets/Char_m1/pe_1.png" id="4_gm5m4"]
-[ext_resource type="Texture2D" uid="uid://xf8ck30whlyw" path="res://assets/Char_m1/corpo_sup_1.png" id="5_22jca"]
-[ext_resource type="Texture2D" uid="uid://du5ffuqjk7jlj" path="res://assets/Char_m1/braco_1.png" id="7_j2wci"]
-[ext_resource type="Texture2D" uid="uid://b3m0pxdqhpke8" path="res://assets/Char_m1/pulso_1.png" id="8_3udpq"]
-[ext_resource type="Texture2D" uid="uid://cdhqjgvbw7pov" path="res://assets/Char_m1/mao_fechada_1.png" id="9_1medu"]
-[ext_resource type="Texture2D" uid="uid://bsp0pcefti3rb" path="res://assets/Char_m1/mao_aberta_1.png" id="10_jw1o0"]
+[ext_resource type="Texture2D" uid="uid://0cil34n8p1b8" path="res://assets/Char_m1/corpo_inf_1.png" id="1_heg8t"]
+[ext_resource type="Texture2D" uid="uid://dwyqysv45g68p" path="res://assets/Char_m1/perna_1.png" id="2_x7jp1"]
+[ext_resource type="Texture2D" uid="uid://b606ugd7x3opt" path="res://assets/Char_m1/canela_1.png" id="3_7blvy"]
+[ext_resource type="Texture2D" uid="uid://ocwkasmxfdac" path="res://assets/Char_m1/pe_1.png" id="4_mitou"]
+[ext_resource type="Texture2D" uid="uid://xf8ck30whlyw" path="res://assets/Char_m1/corpo_sup_1.png" id="5_j1bfm"]
+[ext_resource type="Texture2D" uid="uid://b78ar0v723lod" path="res://assets/Char_m1/cabeca_1.png" id="6_ps0uh"]
+[ext_resource type="Texture2D" uid="uid://du5ffuqjk7jlj" path="res://assets/Char_m1/braco_1.png" id="7_nrf5q"]
+[ext_resource type="Texture2D" uid="uid://b3m0pxdqhpke8" path="res://assets/Char_m1/pulso_1.png" id="8_t38mw"]
+[ext_resource type="Texture2D" uid="uid://cdhqjgvbw7pov" path="res://assets/Char_m1/mao_fechada_1.png" id="9_a1rib"]
+[ext_resource type="Texture2D" uid="uid://bsp0pcefti3rb" path="res://assets/Char_m1/mao_aberta_1.png" id="10_j06wd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cb8h8"]
-size = Vector2(77, 149)
+size = Vector2(135.25, 20.5)
 
 [sub_resource type="Animation" id="Animation_lr3g2"]
 length = 0.001
@@ -9773,12 +9773,15 @@ _data = {
 "template_lado": SubResource("Animation_hgf46")
 }
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_isu8v"]
+size = Vector2(78, 208)
+
+[node name="TemplateChar" type="CharacterBody2D"]
 metadata/_edit_horizontal_guides_ = [304.0, 296.0, -99.0]
 metadata/_edit_vertical_guides_ = [36.0, -54.0, 21.0]
 
-[node name="AreaCorpo" type="CollisionShape2D" parent="."]
-position = Vector2(-2.5, 34.5)
+[node name="AreaLimiteCorpo" type="CollisionShape2D" parent="."]
+position = Vector2(1.625, 290)
 shape = SubResource("RectangleShape2D_cb8h8")
 
 [node name="Corpo" type="Node2D" parent="."]
@@ -9788,7 +9791,7 @@ z_index = 2
 z_as_relative = false
 position = Vector2(0, 71)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_q0ynt")
+texture = ExtResource("1_heg8t")
 vframes = 5
 
 [node name="perna_esq" type="Sprite2D" parent="Corpo/corpo_inf"]
@@ -9796,28 +9799,28 @@ z_index = 1
 z_as_relative = false
 position = Vector2(-53, 123)
 scale = Vector2(1.04977, 1)
-texture = ExtResource("2_rgnyp")
+texture = ExtResource("2_x7jp1")
 vframes = 8
 
 [node name="canela" type="Sprite2D" parent="Corpo/corpo_inf/perna_esq"]
 z_as_relative = false
 position = Vector2(-2, 190)
 scale = Vector2(1, 1.00235)
-texture = ExtResource("3_2gog4")
+texture = ExtResource("3_7blvy")
 vframes = 8
 
 [node name="pe" type="Sprite2D" parent="Corpo/corpo_inf/perna_esq/canela"]
 z_index = -1
 z_as_relative = false
 position = Vector2(0, 126)
-texture = ExtResource("4_gm5m4")
+texture = ExtResource("4_mitou")
 vframes = 8
 
 [node name="perna_dir" type="Sprite2D" parent="Corpo/corpo_inf"]
 z_index = 1
 z_as_relative = false
 position = Vector2(55, 124)
-texture = ExtResource("2_rgnyp")
+texture = ExtResource("2_x7jp1")
 flip_h = true
 vframes = 8
 
@@ -9825,27 +9828,27 @@ vframes = 8
 z_index = 1
 z_as_relative = false
 position = Vector2(-2, 190)
-texture = ExtResource("3_2gog4")
+texture = ExtResource("3_7blvy")
 vframes = 8
 
 [node name="pe" type="Sprite2D" parent="Corpo/corpo_inf/perna_dir/canela"]
 z_index = -1
 z_as_relative = false
 position = Vector2(7, 126)
-texture = ExtResource("4_gm5m4")
+texture = ExtResource("4_mitou")
 flip_h = true
 vframes = 8
 
 [node name="corpo_sup" type="Sprite2D" parent="Corpo"]
 z_index = 5
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_22jca")
+texture = ExtResource("5_j1bfm")
 vframes = 5
 
 [node name="cabeca" type="Sprite2D" parent="Corpo/corpo_sup"]
 position = Vector2(2, -148)
 scale = Vector2(0.78308, 0.739337)
-texture = ExtResource("1_hoadd")
+texture = ExtResource("6_ps0uh")
 vframes = 5
 
 [node name="braco_esq" type="Sprite2D" parent="Corpo/corpo_sup"]
@@ -9853,14 +9856,14 @@ z_index = 4
 z_as_relative = false
 position = Vector2(-95, 4)
 rotation = 0.142199
-texture = ExtResource("7_j2wci")
+texture = ExtResource("7_nrf5q")
 vframes = 8
 
 [node name="pulso" type="Sprite2D" parent="Corpo/corpo_sup/braco_esq"]
 z_index = 3
 z_as_relative = false
 position = Vector2(-1, 128)
-texture = ExtResource("8_3udpq")
+texture = ExtResource("8_t38mw")
 vframes = 8
 
 [node name="mao" type="Sprite2D" parent="Corpo/corpo_sup/braco_esq/pulso"]
@@ -9868,7 +9871,7 @@ z_index = 2
 z_as_relative = false
 position = Vector2(8, 94)
 rotation = -1.57079
-texture = ExtResource("9_1medu")
+texture = ExtResource("9_a1rib")
 flip_h = true
 vframes = 8
 
@@ -9878,7 +9881,7 @@ z_index = 4
 z_as_relative = false
 position = Vector2(17.3712, 109.82)
 rotation = -0.270685
-texture = ExtResource("10_jw1o0")
+texture = ExtResource("10_j06wd")
 flip_h = true
 vframes = 8
 frame = 5
@@ -9888,7 +9891,7 @@ z_index = 3
 z_as_relative = false
 position = Vector2(98, 3)
 rotation = -0.126622
-texture = ExtResource("7_j2wci")
+texture = ExtResource("7_nrf5q")
 flip_h = true
 vframes = 8
 
@@ -9896,7 +9899,7 @@ vframes = 8
 z_index = 2
 z_as_relative = false
 position = Vector2(-1, 128)
-texture = ExtResource("8_3udpq")
+texture = ExtResource("8_t38mw")
 flip_h = true
 vframes = 8
 
@@ -9905,7 +9908,7 @@ z_index = 1
 z_as_relative = false
 position = Vector2(-10, 92)
 rotation = 1.57079
-texture = ExtResource("9_1medu")
+texture = ExtResource("9_a1rib")
 vframes = 8
 
 [node name="mao2" type="Sprite2D" parent="Corpo/corpo_sup/braco_dir/pulso"]
@@ -9914,7 +9917,7 @@ z_index = -2
 z_as_relative = false
 position = Vector2(16.6383, 113.192)
 rotation = -0.261799
-texture = ExtResource("10_jw1o0")
+texture = ExtResource("10_j06wd")
 vframes = 8
 frame = 1
 
@@ -9923,3 +9926,11 @@ autoplay = "parado"
 libraries = {
 "": SubResource("AnimationLibrary_1874p")
 }
+
+[node name="AreaHit" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 2)
+shape = SubResource("RectangleShape2D_isu8v")
+
+[node name="Sons" type="Node2D" parent="."]
+
+[node name="AreaAtaque" type="Node2D" parent="."]

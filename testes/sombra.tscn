@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxaukorus1vkc"]
+
+[ext_resource type="Script" path="res://testes/Sombra.gd" id="1_1lx4a"]
+[ext_resource type="Texture2D" uid="uid://s7xn084ghdao" path="res://assets/char/braco.png" id="2_15ru0"]
+[ext_resource type="Script" path="res://testes/CharacterBody2D.gd" id="3_omsih"]
+[ext_resource type="Texture2D" uid="uid://jpbkgx7lgsdi" path="res://assets/char/teste_ok.png" id="4_mph1d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_14g0w"]
+size = Vector2(916, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pgmrc"]
+size = Vector2(65, 317)
+
+[node name="Sombra" type="CharacterBody2D"]
+position = Vector2(433, 170)
+script = ExtResource("1_1lx4a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2, 0)
+scale = Vector2(1.04088, 0.0556426)
+texture = ExtResource("2_15ru0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(296, -1)
+shape = SubResource("RectangleShape2D_14g0w")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("3_omsih")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(-7, -183)
+scale = Vector2(0.686047, 0.602564)
+texture = ExtResource("4_mph1d")
+hframes = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-5.5, -188.5)
+shape = SubResource("RectangleShape2D_pgmrc")
