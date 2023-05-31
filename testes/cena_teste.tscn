@@ -1,9 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://tdmxdox0lj4r"]
+[gd_scene load_steps=3 format=3 uid="uid://tdmxdox0lj4r"]
 
-[ext_resource type="PackedScene" uid="uid://bxuqtrrbv0fji" path="res://cenas/player_template.tscn" id="1_t0qfc"]
+[ext_resource type="PackedScene" uid="uid://bpdpuvhw11xxs" path="res://personagens/Player_template.tscn" id="1_gcw5b"]
+[ext_resource type="PackedScene" uid="uid://dfknj0o4e20p7" path="res://personagens/inimigo_template.tscn" id="2_7ywn7"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="PlayerTemplate" parent="." instance=ExtResource("1_t0qfc")]
-position = Vector2(467, 277)
-scale = Vector2(0.5, 0.5)
+[node name="Players" type="Node2D" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource("1_gcw5b")]
+position = Vector2(622, 582)
+
+[node name="Inimigos" type="Node2D" parent="."]
+
+[node name="inimigo_2" parent="Inimigos" instance=ExtResource("2_7ywn7")]
+position = Vector2(980, 591)

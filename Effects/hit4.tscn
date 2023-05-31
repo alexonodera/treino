@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://he24wd2dw4g4"]
+
+[ext_resource type="Texture2D" uid="uid://vau7cog3oylo" path="res://assets/particulas/particula.png" id="2"]
+[ext_resource type="Script" path="res://Effects/hit2.gd" id="2_hrvhq"]
+
+[sub_resource type="CanvasItemMaterial" id="4"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="1"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 360), 0.0, 0.0, 0, 0, Vector2(1, -360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.995595, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="3"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.127451, 0.205882, 0.372549, 0.794118, 0.901961)
+colors = PackedColorArray(0.933333, 0.968627, 0.027451, 0, 0.931311, 0.909614, 0.0592675, 1, 0.924805, 0.662439, 0.198689, 1, 0.979492, 0.439379, 0.107132, 1, 0.932617, 0.0801468, 0.0801468, 1, 0.964706, 0.541176, 0.541176, 0)
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+z_index = 1000
+material = SubResource("4")
+scale = Vector2(0.5, 0.5)
+amount = 20
+lifetime = 2.0
+draw_order = 1
+texture = ExtResource("2")
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector2(0, -1)
+gravity = Vector2(0, 0)
+angle_curve = SubResource("1")
+scale_amount_curve = SubResource("2")
+color = Color(0.956863, 0.333333, 0.0431373, 1)
+color_ramp = SubResource("3")
+script = ExtResource("2_hrvhq")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

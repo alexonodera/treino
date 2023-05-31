@@ -127,8 +127,8 @@ func criar_rel(id_origem:String, id_alvo: String, rel_tipo:String) -> void:
 		}
 		database.rel.push_back(n_rel)
 		
-func xp_needed_for_level(level: int, xp_per_level: int) -> int:
-	return xp_per_level * pow(2, level-1)
+#func xp_needed_for_level(level: int, xp_per_level: int) -> int:
+#	return xp_per_level * pow(2, level-1)
 
 # função para calcular o quanto de xp precisa para subir de level
 #var xp_needed = xp_needed_for_level(10, 50)

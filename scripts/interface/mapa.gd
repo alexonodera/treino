@@ -17,7 +17,7 @@ func botao_pressionado(botao:String) -> void:
 		"Fase":
 			get_tree().change_scene_to_file("res://cenas/teste.tscn")	
 		"Fase2":
-			pass
+			get_tree().change_scene_to_file("res://cenas/fase_template.tscn")	
 		"Fase3":
 			pass
 
