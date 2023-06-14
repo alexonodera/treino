@@ -30,7 +30,7 @@ func interacao_mouse(botao:Button, tipo:String) -> void:
 			
 			
 func botao_pressionado(botao:String) -> void:
-	print(botao)
+
 	match botao:
 		"Novo":
 			pass	

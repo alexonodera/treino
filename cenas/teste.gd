@@ -7,7 +7,7 @@ class_name FaseTemplate_teste
 var pontuacao:int = 0
 var nome_fase:String = "fase_1"
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	pontuacao = 9999
 	var clicar_item = Callable(self, "inicio_jogo")

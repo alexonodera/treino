@@ -26,7 +26,7 @@ color = Color(0.713726, 0.913725, 1, 1)
 
 [node name="Background" type="Sprite2D" parent="Cenario"]
 position = Vector2(1326, 255)
-scale = Vector2(1.09663, 0.770508)
+scale = Vector2(1.09865, 0.770508)
 texture = ExtResource("1_c41vt")
 
 [node name="limite" type="StaticBody2D" parent="Cenario"]
@@ -37,7 +37,7 @@ collision_mask = 0
 
 [node name="limite_inferior" type="CollisionShape2D" parent="Cenario/limite"]
 position = Vector2(1333.38, 321)
-scale = Vector2(1, 0.739639)
+scale = Vector2(1.06119, 0.739639)
 shape = SubResource("RectangleShape2D_qgv67")
 
 [node name="limite_inferior2" type="CollisionShape2D" parent="Cenario/limite"]
@@ -65,9 +65,11 @@ environment = SubResource("Environment_isqec")
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Player" parent="Players" instance=ExtResource("4_jpxmi")]
-position = Vector2(370, 441)
+position = Vector2(384, 470)
 
 [node name="Inimigos" type="Node2D" parent="."]
 
 [node name="inimigo_2" parent="Inimigos" instance=ExtResource("5_c4sd8")]
-position = Vector2(992, 492)
+position = Vector2(1082, 498)
+nome = "José"
+hp = 150000

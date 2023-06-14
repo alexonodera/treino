@@ -68,7 +68,7 @@ func novo_item() -> void:
 		core.cadastrar(item_n)
 		core.gravar_dados()
 		core.save_selecionado = item_n
-		get_tree().change_scene_to_file("res://cenas/teste.tscn")	
+		get_tree().change_scene_to_file("res://cenas/fase_template.tscn")	
 		
 
 func carregar_itens()-> void:

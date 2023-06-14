@@ -17,7 +17,7 @@ var QUEDA: PackedScene = preload("res://Effects/hit.tscn")
 @onready var timer_imortal: Timer = get_node("TimerImortal")
 @onready var timer_combo: Timer = get_node("TimerCombo")
 @onready var timer_agarrar: Timer = get_node("TimerAgarrar")
-@onready var area_hit = get_node("area_corpo_player") as Area2D
+@onready var area_hit: Area2D = get_node("area_corpo_player")
 #@onready var barra_hp = cena.get_node("InterfaceLayer/UserInterface/hp")
 
 
@@ -48,17 +48,19 @@ var posicao: int = 0
 var tipo_especial: int = 0
 var tipo_arremesso: int = 0
 var imortal:bool = false
+var tempo_agarrado: float = 0
 
 
 var hp_inicial: int = 0
 var velocidade:Vector2 = Vector2.ZERO
 var combo: int = 0
 var max_combo: int = 4
+
 #var combo_reset:float = 0.5
 #var tempo_combo: int = 0
 
 var combo_joelhada: int = 0
-var max_combo_joelhada: int = 2
+var max_combo_joelhada: int = 3
 
 
 var tempo_espera:float = 0.5
@@ -66,6 +68,8 @@ var tempo_correndo: int = 0
 
 var tempo_imortal: int = 10
 var tempo_imortal_passando: int = 0
+
+var inimigo_acao:CharacterBody2D = null
 
 #@export var NOISE_SHAKE_SPEED:float = 50.0
 #@export var NOISE_SHAKE_STRENGTH:float = 30.0
@@ -98,17 +102,12 @@ func _physics_process(delta:float) -> void:
 	# Fim do código para a tela tremer quando houver um impacto
 #	var pos_olho = $corpo/cabeca/olho.global_position
 #	efeito_olho(pos_olho)
-	
-	
 
 	if hp <= 0 and status != "morto" and status != "revivendo":
 		status = "morrendo"
 
-
 	set_velocity(velocidade)
 	move_and_slide()
-
-	#print("player: "+ status)
 
 	if imortal:	
 		area_hit.set_deferred("monitoring", false)
@@ -121,7 +120,9 @@ func _physics_process(delta:float) -> void:
 
 	if status == "normal":
 		habilitar_areas()
+		inimigo_acao = null
 		tempo_correndo = 0
+		tempo_agarrado = 0
 		combo_joelhada = 0
 		ataque_agarrado = false
 		ataque_correndo = false
@@ -129,18 +130,13 @@ func _physics_process(delta:float) -> void:
 		virar(velocidade.x)
 		calcular_velocidade()
 		animacao()
-
-		if Input.is_action_just_pressed("ataque") and status == "normal":		
+		if Input.is_action_just_pressed("ataque") and status == "normal":	
 			tocar_som("golpe_vazio")
 			if combo == max_combo:
 				combo = 0
 			combo_contador()
 			status = "batendo"
-			
-			
-				
-
-
+		
 		if Input.is_action_just_pressed("pulo") and status == "normal":
 			play("pre_pulo")
 			tocar_som("pulo")
@@ -161,11 +157,14 @@ func _physics_process(delta:float) -> void:
 
 
 	elif status == "batendo":
+		# combo_contador()
 		pass
-#		combo_contador()
+
 
 	elif status == "apanhando":
-
+		if inimigo_acao != null && inimigo_acao.status == "agarrado":
+			inimigo_acao.status = "normal"
+			inimigo_acao = null
 		desabilitar_ataques()
 		parar()
 		await anin.animation_finished
@@ -218,46 +217,132 @@ func _physics_process(delta:float) -> void:
 
 
 	elif status == "agarrar":
-		if Input.get_action_strength("direita") or Input.get_action_strength("esquerda"):
-			if Input.is_action_just_pressed("ataque"):
-				if Input.get_action_strength("esquerda") ==1 and transform.x.x >0 :
-					play("arremesso")
-					tipo_arremesso = 1
-				elif  Input.get_action_strength("esquerda") ==1 and transform.x.x < 0 :
-#					arremesso para frente
-#					transform.x.x = 0.5
-					play("ataque3")
-					tipo_arremesso = 2
-				elif  Input.get_action_strength("esquerda") ==0 and transform.x.x < 0 :
-					play("arremesso")
-					tipo_arremesso = 1
-				elif  Input.get_action_strength("esquerda") ==0 and transform.x.x > 0 :
-#					arremesso para frente
-#					transform.x.x = -0.5
-					play("ataque3")
-					tipo_arremesso = 2
-			
-				ataque_agarrado = true
-				await anin.animation_finished
-				ataque_agarrado = false
-				status = "normal"
-		else: 
-			if Input.is_action_just_pressed("ataque") and anin.current_animation != "arremesso":
-				if combo_joelhada == max_combo_joelhada:
-					play("ataque3")
-					ataque_agarrado = false
-					await anin.animation_finished
-					status=  "normal"
-#					combo = 3
-#					status = "batendo"
-				else :
-					play("ataque4")
-
-				ataque_agarrado = true
-				await anin.animation_finished
-				ataque_agarrado = false
-		if  !ataque_agarrado:
+#		print(inimigo_acao.nome)
+		$area_agarrar/shape.disabled = true
+		if !ataque_agarrado and inimigo_acao != null:
 			play("agarrar")
+			inimigo_acao.status ="agarrado"
+			
+			tempo_agarrado += delta		
+			if tempo_agarrado >= inimigo_acao.max_tempo_agarrado:
+				inimigo_acao.status = "normal"
+				status = "normal"				
+				
+				
+		
+			if verificar_posicao_z( self , inimigo_acao):
+				if transform.x.x > 0:
+					posicao = position.x + 100
+					
+				else :
+					posicao = position.x - 100							
+				inimigo_acao.position.y = position.y						
+				inimigo_acao.position.x = posicao
+	#			print(inimigo_acao.transform.x.x)
+				inimigo_acao.transform.x.x = -transform.x.x
+				var direcao = Input.get_action_strength("direita") - Input.get_action_strength("esquerda")
+
+				
+				
+				if Input.is_action_just_pressed("ataque"):
+					if direcao == 0:
+						ataque_agarrado = true
+						if combo_joelhada < max_combo_joelhada:
+							play("ataque4")
+							await anin.animation_finished
+							inimigo_acao.status ="agarrado"
+							ataque_agarrado = false
+						else:
+							ataque_agarrado = true
+							play("especial1")
+							inimigo_acao.status ="normal"	
+							inimigo_acao = null						
+							await anin.animation_finished
+						
+					elif direcao > 0:
+						if transform.x.x > 0:
+							ataque_agarrado = true
+							play("especial1")
+							inimigo_acao.status ="normal"	
+							inimigo_acao = null						
+							await anin.animation_finished
+							
+							
+						else:
+							ataque_agarrado = true
+							play("arremesso")
+							inimigo_acao.status ="normal"
+							inimigo_acao.acertou( 5, 900)
+							inimigo_acao = null
+							await anin.animation_finished
+							
+							ataque_agarrado = false
+						
+					else:
+						if transform.x.x < 0:
+							ataque_agarrado = true
+							play("especial1")
+							inimigo_acao.status ="normal"
+							await anin.animation_finished
+							
+							
+							
+						else:
+							ataque_agarrado = true
+							play("arremesso")
+							inimigo_acao.status ="normal"
+							inimigo_acao.acertou( 5, 900)
+							inimigo_acao = null
+							await anin.animation_finished
+							ataque_agarrado = false
+	#			await anin.animation_finished			
+
+			else:
+				inimigo_acao.status ="normal"
+				status = "normal"
+# 		if Input.get_action_strength("direita") or Input.get_action_strength("esquerda"):
+# 			if Input.is_action_just_pressed("ataque"):
+# 				if Input.get_action_strength("esquerda") ==1 and transform.x.x >0 :
+# 					play("arremesso")
+# 					tipo_arremesso = 1
+# 				elif  Input.get_action_strength("esquerda") ==1 and transform.x.x < 0 :
+# #					arremesso para frente
+# #					transform.x.x = 0.5
+# 					play("especial3")
+# 					tipo_arremesso = 2
+# 				elif  Input.get_action_strength("esquerda") ==0 and transform.x.x < 0 :
+# 					play("arremesso")
+# 					tipo_arremesso = 1
+# 				elif  Input.get_action_strength("esquerda") ==0 and transform.x.x > 0 :
+# #					arremesso para frente
+# #					transform.x.x = -0.5
+# 					play("especial3")
+# 					tipo_arremesso = 2
+			
+# 				ataque_agarrado = true
+# 				await anin.animation_finished
+# 				ataque_agarrado = false
+# 				status = "normal"
+# 		else: 
+# 			if Input.is_action_just_pressed("ataque") and anin.current_animation != "arremesso":
+
+# 				if combo_joelhada == max_combo_joelhada:
+# 					print("ataque3")
+# 					# play("ataque_correndo")
+# 					# ataque_agarrado = true
+# 					# await anin.animation_finished
+# 					# ataque_agarrado = false
+					
+# 					# combo = 3
+# 					# status = "batendo"
+# 				else :
+# 					play("ataque4")
+
+# 				ataque_agarrado = true
+# 				await anin.animation_finished
+# 				ataque_agarrado = false
+# 		if  !ataque_agarrado:
+			# play("agarrar")
 	elif status =="especial":
 		if tipo_especial == 1:
 			var efeito: Efeito = EFEITO4.instantiate()
@@ -318,7 +403,7 @@ func _physics_process(delta:float) -> void:
 
 func combo_contador()->void:
 	parar()	
-
+	
 	match combo:
 		0:
 			play("ataque1")
@@ -329,9 +414,15 @@ func combo_contador()->void:
 		3:
 			play("ataque3")
 	
-	await anin.animation_finished			
+	await anin.animation_finished	
+	if inimigo_atingido:
+		combo +=1	
+		inimigo_atingido = false
+		timer_combo.start(-1)	
+	else:
+		combo = 0
+		inimigo_atingido = false
 	desabilitar_ataques()
-	inimigo_atingido = false
 	status = "normal"
 	
 
@@ -618,8 +709,9 @@ func on_ataque_fraco_area_entered(area:Area2D) -> void:
 			inimigo.emit_signal("acertar", 1, 30)
 			PlayerData.score += 10
 			inimigo_atingido = true
-			timer_combo.start(-1)
-			combo += 1
+		
+		
+			# combo += 1
 
 
 
@@ -636,8 +728,8 @@ func on_ataque_medio_area_entered(area:Area2D) -> void:
 #			tremer_tela(25)
 			inimigo.emit_signal("acertar", 2, 60)
 			inimigo_atingido = true
-			timer_combo.start(-1)
-			combo += 1
+			
+			# combo += 1
 
 
 
@@ -678,62 +770,61 @@ func _on_voadora2_area_entered(area:Area2D) -> void:
 func on_area_agarrar_area_entered(area:Area2D) -> void:	
 	if area.name == "area_agarrao_inimigo":
 		var inimigo:CharacterBody2D = area.get_parent()
-		parar()	
-		if status == "normal" && inimigo.status == "normal":
+		if abs(velocidade) && status == "normal":
+			inimigo_acao = area.get_parent()
+			parar()
+			
 			status = "agarrar"
-			inimigo.parado()
-			inimigo.status = "agarrado"
-			timer_agarrar.start(-1)
-			var timer_inimigo_agarrado: Timer = inimigo.get_node("TimerAgarrado")
-			timer_inimigo_agarrado.start(-1)
-			inimigo.emit_signal("agarrar", 1)			
-			if verificar_posicao_z( self , inimigo):
-				if transform.x.x > 0:
-					posicao = position.x + 100
-				else :
-					posicao = position.x - 100				
-				inimigo.global_position.y = global_position.y							
-				inimigo.position.x = posicao
+	
+
+		# parar()	
+
+		# if status == "normal" and inimigo.status == "normal" and abs(velocidade.x) > 0 :
+		# 	status = "agarrar"
+		# 	parar()
+		# 	inimigo.parado()
+		# 	inimigo.status = "agarrado"
+		# 	timer_agarrar.start(-1)
+		# 	# var timer_inimigo_agarrado: Timer = inimigo.get_node("TimerAgarrado")
+		# 	# timer_inimigo_agarrado.start(-1)
+		# 	inimigo.emit_signal("agarrar", 1)			
+		# 	if verificar_posicao_z( self , inimigo):
+		# 		if transform.x.x > 0:
+		# 			posicao = position.x + 100
+		# 		else :
+		# 			posicao = position.x - 100				
+		# 		inimigo.global_position.y = position.y							
+		# 		inimigo.position.x = posicao
 
 
-				#inimigo.parado()
-				PlayerData.score += 5
+		# 		#inimigo.parado()
+		# 		PlayerData.score += 5
 
 
 
 func on_joelhada_area_entered(area:Area2D) -> void:
-	
-	if area.name == "area_corpo": 
-		var inimigo:CharacterBody2D = area.get_parent()
-		if inimigo.status == "agarrado":			
-			if verificar_posicao_z( self , inimigo):
-				var posicao:Vector2 = $joelhada/shape.global_position
-				efeito_hit2(posicao)
-				tocar_som("golpe_fraco")
-#				tremer_tela(30)
-				PlayerData.score += 25
-				inimigo.emit_signal("acertar", 4, 120)
-				combo_joelhada += 1
-
-
-
-
-func on_area_agarrar_area_exited(area:Area2D) -> void:
-	pass
-#	var inimigo:CharacterBody2D = area.get_parent()
-#
-#	if area.name == "area_agarrao_inimigo":
-#		if inimigo.status == "normal":
-#			status = "normal"
+	if area.name == "area_corpo": 				
+		var posicao:Vector2 = $joelhada/shape.global_position
+		efeito_hit2(posicao)
+		tocar_som("golpe_fraco")
+		inimigo_acao.acertou(4, 120)
+		inimigo_acao.status = "apanhando"
+		combo_joelhada +=1		
 		
-#		status = "normal"
+#	if area.name == "area_corpo": 
+#		var inimigo:CharacterBody2D = area.get_parent()
+#		if inimigo.status == "agarrado":			
+#			if verificar_posicao_z( self , inimigo):
+#				var posicao:Vector2 = $joelhada/shape.global_position
+#				efeito_hit2(posicao)
+#				tocar_som("golpe_fraco")
+##				tremer_tela(30)
+#				PlayerData.score += 25
+#				inimigo.emit_signal("acertar", 4, 120)
+#				combo_joelhada += 1
 
-		#inimigo.emit_signal("agarrar",2)
 
-
-
-func _on_arremesso_area_entered(area:Area2D) -> void:
-	
+func _on_arremesso_area_entered(area:Area2D) -> void:	
 	if area.name == "area_agarrao_inimigo":		
 		var inimigo:CharacterBody2D = area.get_parent()	
 		if inimigo.status == "agarrado":
@@ -742,11 +833,10 @@ func _on_arremesso_area_entered(area:Area2D) -> void:
 				if transform.x.x > 0:
 					posicao = position.x + 100
 				else :
-					posicao = position.x - 100
-		
-					
+					posicao = position.x - 100						
 				inimigo.global_position.y = global_position.y
 				inimigo.position.x = posicao
+			
 				inimigo.emit_signal("acertar", 5, 900)
 			else:
 				if transform.x.x > 0:
@@ -754,8 +844,7 @@ func _on_arremesso_area_entered(area:Area2D) -> void:
 					inimigo.transform.x.x = -0.5
 				else :
 					posicao = position.x - 100
-					inimigo.transform.x.x = 0.5
-						
+					inimigo.transform.x.x = 0.5						
 				inimigo.global_position.y = global_position.y
 				inimigo.position.x = posicao
 				inimigo.emit_signal("acertar", 5, 900)
@@ -773,7 +862,7 @@ func _on_ataque_especial_area_entered(area:Area2D) -> void:
 			tocar_som("golpe_especial")
 			efeito_hit3(posicao)
 #			tremer_tela(50)
-			PlayerData.score += 35
+			PlayerData.score += 35		
 			inimigo.emit_signal("acertar", 3, 800)
 			#inimigo_atingido = true
 
@@ -812,6 +901,11 @@ func tocar_som(som:String):
 
 
 func on_animation_player_animation_finished(anim_name:String):
+	if anim_name == "ataque4":
+		play("agarrar")
+	if  anim_name == "especial1" || anim_name == "pos_queda" || anim_name == "arremesso" || anim_name == "ataque_correndo":
+		status = "normal"
+
 	pass # Replace with function body.
 
 
@@ -821,11 +915,8 @@ func on_timer_imortal_timeout():
 
 
 func on_timer_combo_timeout():
+	
 	combo = 0	
-
-
-
-
 
 
 func on_timer_combo_joelhada_timeout():
@@ -834,6 +925,9 @@ func on_timer_combo_joelhada_timeout():
 
 
 func on_timer_agarrar_timeout():
-	if status == "agarrar":
-		status = "normal"
+	pass
+#	if status == "agarrar":
+#		status = "normal"
+
+
 
