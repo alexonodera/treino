@@ -31,7 +31,7 @@ func criar_nova_fase_concluida(nome:String) -> void:
 	var nova_fase_concluida: Dictionary = {
 		"id":core.gerar_id(),
 		"nome":nome,
-		"template": "fase_concluida",
+		"template": "fased_concluida",
 		"fases_desbloqueadas": fases_desbloqueadas,
 		"pontuacao_maxima":pontuacao	
 	} 

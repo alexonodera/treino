@@ -7,6 +7,9 @@ signal died
 var score: = 0 : set = set_score
 var deaths: = 0 : set = set_deaths
 var vidas: = 2 : set = set_vidas
+var position:Vector2 = Vector2.ZERO
+var pos_base:Vector2 = Vector2.ZERO
+var status:String = ""
 
 
 

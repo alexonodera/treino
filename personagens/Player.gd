@@ -95,7 +95,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta:float) -> void:
-
+	PlayerData.position = global_position
+	PlayerData.status = status
+	PlayerData.pos_base = pos_base
 	#Código para a tela tremer quando houver um impacto
 #	shake_strength = lerp(shake_strength, 0, SHAKE_DECAY_RATE * delta)
 #	camera.offset = get_noise_offset(delta)
@@ -173,6 +175,7 @@ func _physics_process(delta:float) -> void:
 
 	elif status == "voo":
 		$sombra_sprite.visible = false
+		$area_corpo_player/shape.disabled = true
 		if anin.current_animation != "pos_queda":
 			$corpo/sombra.visible = false
 		if tipo_voo == 4:
@@ -219,7 +222,15 @@ func _physics_process(delta:float) -> void:
 	elif status == "agarrar":
 #		print(inimigo_acao.nome)
 		$area_agarrar/shape.disabled = true
+		
 		if !ataque_agarrado and inimigo_acao != null:
+			if inimigo_acao.status == "morrendo":
+				print("inimigo morrendo")
+				status = "normal"
+				inimigo_acao = null
+				return
+		
+			
 			play("agarrar")
 			inimigo_acao.status ="agarrado"
 			
@@ -300,6 +311,7 @@ func _physics_process(delta:float) -> void:
 			else:
 				inimigo_acao.status ="normal"
 				status = "normal"
+				inimigo_acao = null
 # 		if Input.get_action_strength("direita") or Input.get_action_strength("esquerda"):
 # 			if Input.is_action_just_pressed("ataque"):
 # 				if Input.get_action_strength("esquerda") ==1 and transform.x.x >0 :
@@ -498,7 +510,7 @@ func verificar_voo():
 	#posição de parada do pulo. Correção de -16 para posição correta.
 	if position.y + 8 > pos_base.y and position.y < pos_base.y + 8 or position.y > pos_base.y:
 	#if position.y > pos_base.y:
-		
+		$sombra_sprite.visible = true
 		remove_collision_exception_with(cena.get_node("Cenario/limite"))
 
 		if tipo_voo == 2:

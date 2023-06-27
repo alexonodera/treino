@@ -17,6 +17,8 @@ background_mode = 3
 
 [node name="FaseTemplate" type="Node2D"]
 script = ExtResource("1_mc8n2")
+metadata/_edit_horizontal_guides_ = [649.0, -140.0]
+metadata/_edit_vertical_guides_ = [2660.0]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 z_index = -6
@@ -72,4 +74,4 @@ position = Vector2(384, 470)
 [node name="inimigo_2" parent="Inimigos" instance=ExtResource("5_c4sd8")]
 position = Vector2(1082, 498)
 nome = "José"
-hp = 150000
+hp = 150
