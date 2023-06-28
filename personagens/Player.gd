@@ -19,7 +19,7 @@ var QUEDA: PackedScene = preload("res://Effects/hit.tscn")
 @onready var timer_agarrar: Timer = get_node("TimerAgarrar")
 @onready var area_hit: Area2D = get_node("area_corpo_player")
 #@onready var barra_hp = cena.get_node("InterfaceLayer/UserInterface/hp")
-
+@onready var camera: Camera2D = get_node("Camera2D")
 
 @export var max_velocidade: int = 200
 @export var velocidade_ataque: int = 1
@@ -71,26 +71,34 @@ var tempo_imortal_passando: int = 0
 
 var inimigo_acao:CharacterBody2D = null
 
-#@export var NOISE_SHAKE_SPEED:float = 50.0
-#@export var NOISE_SHAKE_STRENGTH:float = 30.0
-#@export var SHAKE_DECAY_RATE:float = 5.0
+@export var NOISE_SHAKE_SPEED:float = 50.0
+@export var NOISE_SHAKE_STRENGTH:float = 30.0
+@export var SHAKE_DECAY_RATE:float = 10.0
 
 #@onready var camera = $"Camera2D"
-#@onready var rand = RandomNumberGenerator.new()
+@onready var rand = RandomNumberGenerator.new()
 #@onready var noise = FastNoiseLite.new()
+var noise: FastNoiseLite = FastNoiseLite.new()
 
-#var noise_i:float = 0.0
+var noise_i:float = 0.0
 #
-#var shake_strength:float = 0.0
+var shake_strength:float = 0.0
 
 func _ready() -> void:
 	desabilitar_ataques()
 	connect("acertar",Callable(self,"acertou"))
 	hp_inicial = hp
 	PlayerData.vidas = vidas
-#	rand.randomize()
-#	noise.seed = rand.randi()s
-#	noise.period = 2.0
+	randomize()
+#	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+#	noise.seed = randi()
+#	noise.frequency = 2.0
+#	var x =0
+#	var y = 0
+#	var value = noise.noise.get_noise_2d(x, y)
+	randomize()
+	noise.seed = randi()
+	noise.frequency = 2.0
 
 
 
@@ -99,8 +107,9 @@ func _physics_process(delta:float) -> void:
 	PlayerData.status = status
 	PlayerData.pos_base = pos_base
 	#Código para a tela tremer quando houver um impacto
-#	shake_strength = lerp(shake_strength, 0, SHAKE_DECAY_RATE * delta)
-#	camera.offset = get_noise_offset(delta)
+	shake_strength = lerp(shake_strength,0.0, SHAKE_DECAY_RATE * delta)
+#	
+	camera.offset = get_noise_offset(delta)
 	# Fim do código para a tela tremer quando houver um impacto
 #	var pos_olho = $corpo/cabeca/olho.global_position
 #	efeito_olho(pos_olho)
@@ -111,7 +120,7 @@ func _physics_process(delta:float) -> void:
 	set_velocity(velocidade)
 	move_and_slide()
 
-	if imortal:	
+	if imortal:
 		area_hit.set_deferred("monitoring", false)
 		$area_corpo_player/shape.disabled = true
 		timer_imortal.start(-1)
@@ -132,7 +141,7 @@ func _physics_process(delta:float) -> void:
 		virar(velocidade.x)
 		calcular_velocidade()
 		animacao()
-		if Input.is_action_just_pressed("ataque") and status == "normal":	
+		if Input.is_action_just_pressed("ataque") and status == "normal":
 			tocar_som("golpe_vazio")
 			if combo == max_combo:
 				combo = 0
@@ -225,7 +234,7 @@ func _physics_process(delta:float) -> void:
 		
 		if !ataque_agarrado and inimigo_acao != null:
 			if inimigo_acao.status == "morrendo":
-				print("inimigo morrendo")
+				
 				status = "normal"
 				inimigo_acao = null
 				return
@@ -234,10 +243,10 @@ func _physics_process(delta:float) -> void:
 			play("agarrar")
 			inimigo_acao.status ="agarrado"
 			
-			tempo_agarrado += delta		
+			tempo_agarrado += delta
 			if tempo_agarrado >= inimigo_acao.max_tempo_agarrado:
 				inimigo_acao.status = "normal"
-				status = "normal"				
+				status = "normal"
 				
 				
 		
@@ -246,8 +255,8 @@ func _physics_process(delta:float) -> void:
 					posicao = position.x + 100
 					
 				else :
-					posicao = position.x - 100							
-				inimigo_acao.position.y = position.y						
+					posicao = position.x - 100
+				inimigo_acao.position.y = position.y
 				inimigo_acao.position.x = posicao
 	#			print(inimigo_acao.transform.x.x)
 				inimigo_acao.transform.x.x = -transform.x.x
@@ -266,16 +275,16 @@ func _physics_process(delta:float) -> void:
 						else:
 							ataque_agarrado = true
 							play("especial1")
-							inimigo_acao.status ="normal"	
-							inimigo_acao = null						
+							inimigo_acao.status ="normal"
+							inimigo_acao = null
 							await anin.animation_finished
 						
 					elif direcao > 0:
 						if transform.x.x > 0:
 							ataque_agarrado = true
 							play("especial1")
-							inimigo_acao.status ="normal"	
-							inimigo_acao = null						
+							inimigo_acao.status ="normal"
+							inimigo_acao = null
 							await anin.animation_finished
 							
 							
@@ -414,7 +423,7 @@ func _physics_process(delta:float) -> void:
 		pos_base = position
 
 func combo_contador()->void:
-	parar()	
+	parar()
 	
 	match combo:
 		0:
@@ -426,11 +435,11 @@ func combo_contador()->void:
 		3:
 			play("ataque3")
 	
-	await anin.animation_finished	
+	await anin.animation_finished
 	if inimigo_atingido:
-		combo +=1	
+		combo +=1
 		inimigo_atingido = false
-		timer_combo.start(-1)	
+		timer_combo.start(-1)
 	else:
 		combo = 0
 		inimigo_atingido = false
@@ -438,22 +447,21 @@ func combo_contador()->void:
 	status = "normal"
 	
 
-func tremer_tela()->void:
-	pass
-#func tremer_tela(forca_efeito) -> void:
-	
-#	shake_strength = forca_efeito
+#func tremer_tela()->void:
+#	pass
+func tremer_tela(forca_efeito) -> void:
+	shake_strength = forca_efeito
 
 #func apply_noise_shake() -> void:
 #	shake_strength = NOISE_SHAKE_STRENGTH
 
-#func get_noise_offset(delta:float) -> Vector2:
-#	noise_i += delta * NOISE_SHAKE_SPEED
-#
-#	return Vector2(
-#		noise.get_noise_2d(1, noise_i) * shake_strength,
-#		noise.get_noise_2d(100, noise_i) * shake_strength
-#	)
+func get_noise_offset(delta:float) -> Vector2:
+	noise_i += delta * NOISE_SHAKE_SPEED
+
+	return Vector2(
+		noise.get_noise_2d(1, noise_i) * shake_strength,
+		noise.get_noise_2d(100, noise_i) * shake_strength
+	)
 
 func resetar_player():
 	pass
@@ -526,6 +534,7 @@ func verificar_voo():
 			parar()
 			
 			play("pos_queda")
+			tremer_tela(2)
 
 			$corpo/sombra.visible = true
 #			anin.playback_speed = 2 + velocidade_ataque
@@ -590,7 +599,7 @@ func efeito_hit4():
 	add_child(efeito)
 	var pos: Vector2 = $ataque_especial_area/shape.global_position
 	efeito.global_position = pos
-#	tremer_tela(80)
+	tremer_tela(40)
 
 func efeito_queda():
 	var efeito: Efeito = QUEDA.instantiate()
@@ -598,6 +607,7 @@ func efeito_queda():
 	add_child(efeito)
 	
 	efeito.global_position = $limite.global_position
+	tremer_tela(40)
 #	apply_noise_shake()
 	tocar_som("queda")
 
@@ -658,7 +668,7 @@ func calcular_velocidade():
 
 func acertou(tipo:int, forca:int):
 	#verificar qual status necessário
-#	apply_noise_shake()
+	tremer_tela(forca)
 	efeito_hit(1)
 	status = "apanhando"
 	hp_2(forca)
@@ -710,14 +720,14 @@ func verificar_posicao_z(atacante:CharacterBody2D, vitima:CharacterBody2D):
 	if atacante.pos_base.y > vitima.pos_base.y - 40 and atacante.pos_base.y < vitima.pos_base.y + 40:
 		return true
 
-func on_ataque_fraco_area_entered(area:Area2D) -> void:	
+func on_ataque_fraco_area_entered(area:Area2D) -> void:
 	if area.name == "area_corpo":
 		var inimigo:CharacterBody2D = area.get_parent()
 		if verificar_posicao_z( self , inimigo):
 			var posicao: Vector2 = $ataque_fraco/shape.global_position
 			efeito_hit2(posicao)
 			tocar_som("golpe_fraco")
-#			tremer_tela(20)
+			tremer_tela(20)
 			inimigo.emit_signal("acertar", 1, 30)
 			PlayerData.score += 10
 			inimigo_atingido = true
@@ -737,7 +747,7 @@ func on_ataque_medio_area_entered(area:Area2D) -> void:
 			efeito_hit2(posicao)
 			tocar_som("golpe_medio")
 			PlayerData.score += 20
-#			tremer_tela(25)
+			tremer_tela(25)
 			inimigo.emit_signal("acertar", 2, 60)
 			inimigo_atingido = true
 			
@@ -754,7 +764,7 @@ func on_ataque_forte_area_entered(area:Area2D) -> void:
 			efeito_hit2(posicao)
 			tocar_som("golpe_forte")
 			PlayerData.score += 30
-#			tremer_tela(30)
+			tremer_tela(30)
 			inimigo.emit_signal("acertar", 3, 800)
 			inimigo_atingido = true
 			combo = 0
@@ -771,7 +781,7 @@ func _on_voadora2_area_entered(area:Area2D) -> void:
 			var posicao:Vector2 = $voadora2/shape.global_position
 			efeito_hit2(posicao)
 			tocar_som("golpe_forte")
-#			tremer_tela(40)
+			tremer_tela(40)
 			PlayerData.score += 35
 			inimigo.emit_signal("acertar", 3, 800)
 			inimigo_atingido = true
@@ -779,7 +789,7 @@ func _on_voadora2_area_entered(area:Area2D) -> void:
 
 
 
-func on_area_agarrar_area_entered(area:Area2D) -> void:	
+func on_area_agarrar_area_entered(area:Area2D) -> void:
 	if area.name == "area_agarrao_inimigo":
 		var inimigo:CharacterBody2D = area.get_parent()
 		if abs(velocidade) && status == "normal":
@@ -815,13 +825,14 @@ func on_area_agarrar_area_entered(area:Area2D) -> void:
 
 
 func on_joelhada_area_entered(area:Area2D) -> void:
-	if area.name == "area_corpo": 				
+	if area.name == "area_corpo":
 		var posicao:Vector2 = $joelhada/shape.global_position
 		efeito_hit2(posicao)
 		tocar_som("golpe_fraco")
 		inimigo_acao.acertou(4, 120)
+		tremer_tela(30)
 		inimigo_acao.status = "apanhando"
-		combo_joelhada +=1		
+		combo_joelhada +=1
 		
 #	if area.name == "area_corpo": 
 #		var inimigo:CharacterBody2D = area.get_parent()
@@ -836,16 +847,16 @@ func on_joelhada_area_entered(area:Area2D) -> void:
 #				combo_joelhada += 1
 
 
-func _on_arremesso_area_entered(area:Area2D) -> void:	
-	if area.name == "area_agarrao_inimigo":		
-		var inimigo:CharacterBody2D = area.get_parent()	
+func _on_arremesso_area_entered(area:Area2D) -> void:
+	if area.name == "area_agarrao_inimigo":
+		var inimigo:CharacterBody2D = area.get_parent()
 		if inimigo.status == "agarrado":
 			PlayerData.score += 40
 			if tipo_arremesso == 1:
 				if transform.x.x > 0:
 					posicao = position.x + 100
 				else :
-					posicao = position.x - 100						
+					posicao = position.x - 100
 				inimigo.global_position.y = global_position.y
 				inimigo.position.x = posicao
 			
@@ -856,7 +867,7 @@ func _on_arremesso_area_entered(area:Area2D) -> void:
 					inimigo.transform.x.x = -0.5
 				else :
 					posicao = position.x - 100
-					inimigo.transform.x.x = 0.5						
+					inimigo.transform.x.x = 0.5
 				inimigo.global_position.y = global_position.y
 				inimigo.position.x = posicao
 				inimigo.emit_signal("acertar", 5, 900)
@@ -873,8 +884,8 @@ func _on_ataque_especial_area_entered(area:Area2D) -> void:
 			var posicao:Vector2 = inimigo.get_node("corpo/cabeca").global_position
 			tocar_som("golpe_especial")
 			efeito_hit3(posicao)
-#			tremer_tela(50)
-			PlayerData.score += 35		
+			tremer_tela(50)
+			PlayerData.score += 35
 			inimigo.emit_signal("acertar", 3, 800)
 			#inimigo_atingido = true
 
@@ -885,7 +896,7 @@ func _on_ataque_especial2_area_entered(area:Area2D) -> void:
 		if verificar_posicao_z( self , inimigo):
 #			var posicao = $ataque_especial/shape.global_position
 			var posicao:Vector2 = inimigo.get_node("corpo/cabeca").global_position
-#			tremer_tela(50)
+			tremer_tela(50)
 			efeito_hit3(posicao)
 			PlayerData.score += 35
 			inimigo.emit_signal("acertar", 3, 800)
@@ -901,7 +912,7 @@ func _on_ataque_especial_area_area_entered(area:Area2D) -> void:
 			posicao = inimigo.get_node("corpo/cabeca").global_position
 			tocar_som("golpe_especial")
 			efeito_hit5(posicao)
-#			tremer_tela(50)
+			tremer_tela(50)
 			PlayerData.score += 60
 			inimigo.emit_signal("acertar", 3, 500)
 			#inimigo_atingido = true
@@ -928,7 +939,7 @@ func on_timer_imortal_timeout():
 
 func on_timer_combo_timeout():
 	
-	combo = 0	
+	combo = 0
 
 
 func on_timer_combo_joelhada_timeout():

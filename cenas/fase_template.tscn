@@ -17,7 +17,6 @@ background_mode = 3
 
 [node name="FaseTemplate" type="Node2D"]
 script = ExtResource("1_mc8n2")
-metadata/_edit_horizontal_guides_ = [649.0, -140.0]
 metadata/_edit_vertical_guides_ = [2660.0]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
@@ -56,7 +55,7 @@ position = Vector2(-40, 312.5)
 shape = SubResource("RectangleShape2D_q1hj7")
 
 [node name="lateral_direita" type="CollisionShape2D" parent="Cenario/limite_lateral"]
-position = Vector2(2697, 387.75)
+position = Vector2(1980, 393)
 shape = SubResource("RectangleShape2D_q1hj7")
 
 [node name="Hud" parent="." instance=ExtResource("2_j5wwn")]
@@ -74,4 +73,3 @@ position = Vector2(384, 470)
 [node name="inimigo_2" parent="Inimigos" instance=ExtResource("5_c4sd8")]
 position = Vector2(1082, 498)
 nome = "José"
-hp = 150
