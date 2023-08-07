@@ -1,9 +1,12 @@
 extends Node2D
 class_name FaseTemplate
 
+var PAUSE: PackedScene =  preload ("res://inteface/pause.tscn")
+
 var pontuacao:int = 0
 @export var nome_fase:String = "fase_1"
 @export var fases_desbloqueadas: Array = ["fase_2"]
+
 
 
 	

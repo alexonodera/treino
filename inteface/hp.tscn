@@ -6,13 +6,15 @@
 script = ExtResource("1_0ecrg")
 
 [node name="hp_borda" type="ColorRect" parent="."]
-offset_right = 245.0
-offset_bottom = 40.0
+offset_left = -117.0
+offset_top = -19.0
+offset_right = 128.0
+offset_bottom = 21.0
 color = Color(0.454902, 0.478431, 0.556863, 1)
 
 [node name="hp_interno" type="ColorRect" parent="."]
-offset_left = 4.0
-offset_top = 8.0
-offset_right = 239.0
-offset_bottom = 29.0
+offset_left = -113.0
+offset_top = -11.0
+offset_right = 122.0
+offset_bottom = 10.0
 color = Color(0.933333, 0.890196, 0.439216, 1)

@@ -10,6 +10,7 @@ var vidas: = 2 : set = set_vidas
 var position:Vector2 = Vector2.ZERO
 var pos_base:Vector2 = Vector2.ZERO
 var status:String = ""
+var player: CharacterBody2D = null 
 
 
 

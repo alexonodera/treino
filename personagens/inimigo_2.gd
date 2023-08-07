@@ -1,14 +1,17 @@
 extends CharacterBody2D
 
-var EFEITO: PackedScene = preload("res://Effects/hit.tscn")
-var EFEITO2: PackedScene = preload("res://Effects/hit2.tscn")
+var EFEITO: PackedScene = preload("res://Effects/hit3.tscn")
+var EFEITO2: PackedScene = preload("res://Effects/hit3.tscn")
 
 @export var nome:String = ""
 @export var max_velocidade:int = 250
 @export var gravidade:int = 2000
 @export var tempo_agarrado:int = 2
+@export var forca:int = 2
+@export var boss: bool = false
 
 @onready var timer_comportamento: Timer = get_node("TimerComportamento")
+@onready var barra_hp: Node2D = get_node("hp")
 @onready var anin: AnimationPlayer = $AnimationPlayer
 @onready var cena:Node2D = $"../../"
 @onready var area_agarrao_inimigo:Area2D = get_node("area_agarrao_inimigo") 
@@ -50,10 +53,13 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if hp <= 0 and status != "caindo":
+	if hp <= 0 and status != "caindo" and status != "morto":
 		status = "morrendo"
 
-		
+	if transform.x.x > 0:
+		barra_hp.scale = Vector2(1,1)
+	else:
+		barra_hp.scale = Vector2(-1,1)
 	z_index = position.y	
 		
 
@@ -101,28 +107,7 @@ func _physics_process(delta: float) -> void:
 			await anin.animation_finished			
 			parado()	
 			status = "normal"	
-		
-		
-#		$dano_arremesso/shape.disabled = true
-#		$area_ataque/shape.disabled = true
-#
-#		if anin.current_animation == "queda_chao":
-#			$area_corpo/shape.disabled = true		
-#			await anin.animation_finished	
-#			parado()		
-#		else:
-#			$area_corpo/shape.disabled = false
-#		if apanhando_agarrado:
-#			status = "agarrado"
-#			play("hit4")
-#			await anin.animation_finished	
-#			parado()	
-#		else:
-#			await anin.animation_finished	
-#			parado()	
-#			status = "normal"	
-		
-
+	
 	
 	elif status == "batendo":
 		$dano_arremesso/shape.disabled = true
@@ -141,7 +126,7 @@ func _physics_process(delta: float) -> void:
 		
 		verificar_queda()
 		
-	elif status == "agarrado":
+	elif status == "agarrado" and PlayerData.player.status == "agarrar":
 	
 		$area_agarrao_inimigo/shape.disabled = true
 		$area_ataque/shape.disabled = true
@@ -177,17 +162,28 @@ func _physics_process(delta: float) -> void:
 		if anin.current_animation == "queda3" or anin.current_animation == "queda_chao":
 			play("queda_chao")
 			await anin.animation_finished	
+	
 		else:
-			play("hit3_e")	
-			
+			play("hit3_e")
+			await anin.animation_finished
+			status = "morto"
 		
-		await anin.animation_finished
-		PlayerData.score += 1
-		queue_free()
+	elif status == "morto":	
+		play("morte")		
+		await anin.animation_finished		
+
+		
+	
+
 
 	
 	# if status == "normal":
 	# 	pos_base = position
+
+	
+
+
+	
 
 func cair(forca:int):
 	velocidade.y = -800
@@ -224,6 +220,7 @@ func verificar_queda():
 		remove_collision_exception_with(cena.get_node("Cenario/limite"))
 		caido = true
 		apanhando_agarrado = false
+		PlayerData.player.tremer_tela(80)
 		status = "apanhando"	
 		
 		efeito_queda()	
@@ -235,7 +232,8 @@ func verificar_queda():
 		
 			play("queda_chao")
 			await anin.animation_finished
-			queue_free()
+			status = "morto"
+			
 		else:
 			play("queda_chao")
 			
@@ -247,7 +245,7 @@ func verificar_queda():
 func efeito_hit(tipo:int):
 	
 	var efeito: Efeito = EFEITO2.instantiate()
-	efeito.scale = Vector2(10,10)
+	efeito.scale = Vector2(5,5)
 	add_child(efeito)
 	if tipo == 1:
 		var posicao:Vector2 =  $corpo/cabeca.global_position
@@ -260,7 +258,7 @@ func efeito_hit(tipo:int):
 		
 func efeito_queda():
 	var efeito: Efeito = EFEITO.instantiate()
-	efeito.scale = Vector2(10,10)
+	efeito.scale = Vector2(5,5)
 	add_child(efeito)	
 	efeito.global_position = $limite.global_position
 #	player.apply_noise_shake()
@@ -444,7 +442,7 @@ func _on_ataque_medio_area_entered(area: Area2D) -> void:
 			else:
 				player_area.virar(1)
 			tocar_som("ataque1")
-			player_area.emit_signal("acertar",2,100)
+			player_area.emit_signal("acertar",2,20*forca)
 
 
 func on_dano_arremesso_area_entered(area: Area2D) -> void:
@@ -478,7 +476,7 @@ func _on_ataque_forte_area_entered(area: Area2D) -> void:
 			else:
 				player_area.virar(1)
 			tocar_som("ataque1")
-			player_area.emit_signal("acertar",3,80)
+			player_area.emit_signal("acertar",3,40*forca)
 
 
 func _on_ataque_fraco_area_entered(area: Area2D) -> void:
@@ -490,7 +488,7 @@ func _on_ataque_fraco_area_entered(area: Area2D) -> void:
 			else:
 				player_area.virar(1)
 			tocar_som("ataque_fraco")
-			player_area.emit_signal("acertar",2,20)
+			player_area.emit_signal("acertar",2,10*forca)
 
 
 
@@ -507,6 +505,14 @@ func on_animation_player_animation_finished(anim_name):
 		pass			
 #		status = "levantando"
 #		agarrado = false
+	if anim_name == "morte":
+		if boss:
+			
+			queue_free()
+			cena.concluir_fase()
+		else:
+			queue_free()
+	
 		
 	
 

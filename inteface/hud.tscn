@@ -1,3 +1,7 @@
-[gd_scene format=3 uid="uid://pwfv74ih422u"]
+[gd_scene load_steps=2 format=3 uid="uid://pwfv74ih422u"]
+
+[ext_resource type="PackedScene" uid="uid://me6j86gxf833" path="res://inteface/barra_energia.tscn" id="1_of5um"]
 
 [node name="Hud" type="CanvasLayer"]
+
+[node name="Barra_energia" parent="." instance=ExtResource("1_of5um")]

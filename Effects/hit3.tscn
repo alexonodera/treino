@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://yarp2hybek20"]
+[gd_scene load_steps=7 format=3 uid="uid://yarp2hybek20"]
 
 [ext_resource type="Texture2D" uid="uid://bnwoctt5kpmco" path="res://assets/particulas/particula2.png" id="2"]
 [ext_resource type="Script" path="res://Effects/hit2.gd" id="2_as5lf"]
@@ -13,30 +13,32 @@ _data = [Vector2(0, 360), 0.0, 0.0, 0, 0, Vector2(1, -360), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="2"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.990521, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="3"]
-offsets = PackedFloat32Array(0.00980392, 1)
-colors = PackedColorArray(0.948303, 1, 0.0546875, 1, 1, 1, 1, 1)
-
-[sub_resource type="Gradient" id="4"]
-colors = PackedColorArray(1, 0.922852, 0, 1, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
 
 [node name="CPUParticles2D" type="CPUParticles2D"]
 z_index = 100
 material = SubResource("5")
 scale = Vector2(1.5, 1.5)
-amount = 25
-lifetime = 0.1
+amount = 6
+speed_scale = 3.0
 explosiveness = 1.0
+randomness = 1.0
 texture = ExtResource("2")
-spread = 180.0
+emission_shape = 1
+emission_sphere_radius = 0.01
+spread = 44.6
 gravity = Vector2(0, 0)
+initial_velocity_max = 637.16
 angle_curve = SubResource("1")
+scale_amount_max = 5.0
 scale_amount_curve = SubResource("2")
+color = Color(0, 1, 1, 1)
 color_ramp = SubResource("3")
-color_initial_ramp = SubResource("4")
 script = ExtResource("2_as5lf")
 
 [node name="Timer" type="Timer" parent="."]
