@@ -68,7 +68,9 @@ func novo_item() -> void:
 		core.cadastrar(item_n)
 		core.gravar_dados()
 		core.save_selecionado = item_n
-		get_tree().change_scene_to_file("res://cenas/fase_template.tscn")	
+		TransicaoTela.cena = "res://cenas/fase_template.tscn"
+		TransicaoTela.aparecer()	
+#		get_tree().change_scene_to_file("res://cenas/fase_template.tscn")	
 		
 
 func carregar_itens()-> void:
@@ -131,11 +133,15 @@ func selecionar_save(item:Dictionary, item_tmp: Control) ->void:
 	
 
 func voltar_titulo() -> void:
-	get_tree().change_scene_to_file("res://cenas/titulo.tscn")
+	TransicaoTela.cena = "res://cenas/titulo.tscn"
+	TransicaoTela.aparecer()	
+#	get_tree().change_scene_to_file("res://cenas/titulo.tscn")
 	
 func carregar_jogo() -> void:
 	core.save_selecionado  = iten_selecionado
-	get_tree().change_scene_to_file("res://cenas/mapa.tscn")
+	TransicaoTela.cena = "res://cenas/mapa.tscn"
+	TransicaoTela.aparecer()	
+#	get_tree().change_scene_to_file("res://cenas/mapa.tscn")
 	
 func apagar_jogo() ->void:
 	for i in get_tree().get_nodes_in_group("janela"):

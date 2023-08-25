@@ -96,6 +96,7 @@ func _ready() -> void:
 	PlayerData.player = self
 	noise.seed = randi()
 	noise.frequency = 2.0
+	
 
 
 
@@ -260,7 +261,7 @@ func _physics_process(delta:float) -> void:
 				inimigo_acao.position.y = position.y
 				inimigo_acao.position.x = posicao
 
-				inimigo_acao.transform.x.x = -transform.x.x
+#				inimigo_acao.transform.x.x = -transform.x.x
 				var direcao = Input.get_action_strength("direita") - Input.get_action_strength("esquerda")
 
 				
@@ -379,7 +380,9 @@ func _physics_process(delta:float) -> void:
 	elif status == "morto":
 		PlayerData.emit_signal("died")
 
-
+	elif status == "fim_estagio":
+		parar()
+		anin.play("comemorar")
 
 
 	if status != "voo":
@@ -450,6 +453,8 @@ func combo_joelhada_mais():
 func voo(forca_voo:float):
 
 	add_collision_exception_with(cena.get_node("Cenario/limite"))
+#	for objeto in get_tree().get_nodes_in_group("cenario"):
+#		add_collision_exception_with(objeto)
 	if tipo_voo == 1:
 		if abs(velocidade.x) > 0:
 			velocidade.y = altura_pulo
@@ -496,6 +501,8 @@ func verificar_voo():
 	#if position.y > pos_base.y:
 		$sombra_sprite.visible = true
 		remove_collision_exception_with(cena.get_node("Cenario/limite"))
+#		for objeto in get_tree().get_nodes_in_group("cenario"):
+#			remove_collision_exception_with(objeto)
 
 		if tipo_voo == 2:
 			

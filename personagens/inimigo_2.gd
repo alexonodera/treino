@@ -47,19 +47,22 @@ var velocidade:Vector2 = Vector2.ZERO
 func _ready() -> void:
 	connect("acertar",Callable(self,"acertou"))
 #	connect("agarrar",Callable(self,"f_agarrou"))
-	hp_inicial = hp
+	
+	hp_inicial = hp	
+	barra_hp.nome.text = nome
 	
 
 
 func _physics_process(delta: float) -> void:
-	
+#	if transform.x.x > 0:
+#		barra_hp.scale = Vector2(1,1)
+#	else:
+#		barra_hp.scale = Vector2(-1,1)
+		
 	if hp <= 0 and status != "caindo" and status != "morto":
 		status = "morrendo"
 
-	if transform.x.x > 0:
-		barra_hp.scale = Vector2(1,1)
-	else:
-		barra_hp.scale = Vector2(-1,1)
+
 	z_index = position.y	
 		
 

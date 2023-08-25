@@ -21,9 +21,11 @@ item="*res://scripts/core/item.gd"
 rel="*res://scripts/core/rel.gd"
 core="*res://scripts/core/core.gd"
 PlayerData="*res://Autoload/PlayerData.tscn"
+TransicaoTela="*res://cenas/transicao_tela.tscn"
 
 [display]
 
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [input]

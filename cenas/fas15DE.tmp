@@ -1,0 +1,106 @@
+[gd_scene load_steps=10 format=3 uid="uid://btjo22io6bqp1"]
+
+[ext_resource type="Texture2D" uid="uid://drb1dc1bcvgo0" path="res://assets/fundo_2.png" id="1_c41vt"]
+[ext_resource type="Script" path="res://cenas/fase_template.gd" id="1_mc8n2"]
+[ext_resource type="PackedScene" uid="uid://pwfv74ih422u" path="res://inteface/hud.tscn" id="2_j5wwn"]
+[ext_resource type="PackedScene" uid="uid://bpdpuvhw11xxs" path="res://personagens/Player_template.tscn" id="4_jpxmi"]
+[ext_resource type="PackedScene" uid="uid://dfknj0o4e20p7" path="res://personagens/inimigo_template.tscn" id="5_c4sd8"]
+[ext_resource type="PackedScene" uid="uid://dteihlyorwian" path="res://inteface/pause.tscn" id="6_5d8xh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgv67"]
+size = Vector2(2749.25, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q1hj7"]
+size = Vector2(95, 987.5)
+
+[sub_resource type="Environment" id="Environment_isqec"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 0.02
+
+[node name="FaseTemplate" type="Node2D"]
+process_mode = 1
+script = ExtResource("1_mc8n2")
+metadata/_edit_vertical_guides_ = [2660.0]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+z_index = -6
+color = Color(0.713726, 0.913725, 1, 1)
+
+[node name="Hud" parent="CanvasModulate" instance=ExtResource("2_j5wwn")]
+
+[node name="Control" parent="CanvasModulate/Hud" instance=ExtResource("6_5d8xh")]
+
+[node name="Cenario" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="Cenario"]
+position = Vector2(1326, 255)
+scale = Vector2(1.09865, 0.770508)
+texture = ExtResource("1_c41vt")
+
+[node name="limite" type="StaticBody2D" parent="Cenario"]
+z_index = -3
+z_as_relative = false
+collision_layer = 4
+collision_mask = 0
+
+[node name="limite_inferior" type="CollisionShape2D" parent="Cenario/limite"]
+position = Vector2(1333.38, 321)
+scale = Vector2(1.06119, 0.739639)
+shape = SubResource("RectangleShape2D_qgv67")
+
+[node name="limite_inferior2" type="CollisionShape2D" parent="Cenario/limite"]
+position = Vector2(1331, 708)
+shape = SubResource("RectangleShape2D_qgv67")
+
+[node name="limite_lateral" type="StaticBody2D" parent="Cenario"]
+z_index = -3
+z_as_relative = false
+collision_layer = 128
+
+[node name="lateral_esqueda" type="CollisionShape2D" parent="Cenario/limite_lateral"]
+position = Vector2(-40, 312.5)
+shape = SubResource("RectangleShape2D_q1hj7")
+
+[node name="lateral_direita" type="CollisionShape2D" parent="Cenario/limite_lateral"]
+position = Vector2(2691, 322)
+shape = SubResource("RectangleShape2D_q1hj7")
+
+[node name="Env" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_isqec")
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource("4_jpxmi")]
+position = Vector2(384, 470)
+hp = 500
+
+[node name="Inimigos" type="Node2D" parent="."]
+
+[node name="inimigo_2" parent="Inimigos" instance=ExtResource("5_c4sd8")]
+position = Vector2(1538, 481)
+nome = "José"
+hp = 1000
+
+[node name="inimigo_8" parent="Inimigos" instance=ExtResource("5_c4sd8")]
+position = Vector2(1676, 482)
+scale = Vector2(0.332784, 0.332784)
+nome = "José"
+max_velocidade = 400
+forca = 1
+
+[node name="inimigo_5" parent="Inimigos" instance=ExtResource("5_c4sd8")]
+position = Vector2(1797, 484)
+nome = "José"
+hp = 1000
+
+[node name="inimigo_7" parent="Inimigos" instance=ExtResource("5_c4sd8")]
+position = Vector2(2183, 497)
+scale = Vector2(0.518795, 0.5166)
+nome = "Boss"
+max_velocidade = 100
+gravidade = 4000
+tempo_agarrado = 3
+forca = 7
+boss = true
+hp = 4000

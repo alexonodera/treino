@@ -15,15 +15,21 @@ func _ready():
 func botao_pressionado(botao:String) -> void:
 	match botao:
 		"Fase":
-			get_tree().change_scene_to_file("res://cenas/teste.tscn")	
+			TransicaoTela.cena = "res://cenas/fase_template.tscn"
+			TransicaoTela.aparecer()	
+#			get_tree().change_scene_to_file("res://cenas/teste.tscn")	
 		"Fase2":
-			get_tree().change_scene_to_file("res://cenas/fase_template.tscn")	
+			TransicaoTela.cena = "res://cenas/fase_template.tscn"
+			TransicaoTela.aparecer()	
+#			get_tree().change_scene_to_file("res://cenas/fase_template.tscn")	
 		"Fase3":
 			pass
 
 
 func voltar_load() -> void:
-	get_tree().change_scene_to_file("res://inteface/control.tscn")
+	TransicaoTela.cena = "res://inteface/control.tscn"
+	TransicaoTela.aparecer()
+#	get_tree().change_scene_to_file("res://inteface/control.tscn")
 	
 func verificar_fases_desbloqueadas() -> void:
 	var fases_concluidas: Array = core.procurar_sub_itens(core.save_selecionado.id,"fase_concluida")

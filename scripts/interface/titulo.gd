@@ -12,8 +12,9 @@ func iniciar_jogo() -> void:
 	if core.carregar_dados():
 		var dados = core.procurar_itens("save")
 		if dados.size() > 0:			
-		
-			get_tree().change_scene_to_file("res://inteface/control.tscn")
+			TransicaoTela.cena = "res://inteface/control.tscn"
+			TransicaoTela.aparecer()	
+#			get_tree().change_scene_to_file("res://inteface/control.tscn")
 		else:
 			core.novo_item() 
 #			get_tree().change_scene_to_file("res://cenas/teste.tscn")		

@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://btttwinlsxbkx"]
+
+[ext_resource type="Texture2D" uid="uid://bddeyxh24ym7m" path="res://assets/personagens/modelo_personagem/sombra.png" id="1_6jqmy"]
+[ext_resource type="Script" path="res://cenas/decoracao/caixa_template.gd" id="1_vjbbp"]
+[ext_resource type="Texture2D" uid="uid://memxdu4j75ky" path="res://assets/decoracao/London-Telephone-Booth-PNG-Image-HD.png" id="2_4fd4s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwj8y"]
+size = Vector2(143, 53.2801)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5qius"]
+size = Vector2(162, 279)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hhljq"]
+size = Vector2(147, 290)
+
+[node name="caixa_template" type="CharacterBody2D" groups=["cenario"]]
+collision_layer = 5
+script = ExtResource("1_vjbbp")
+
+[node name="corpo" type="Sprite2D" parent="."]
+position = Vector2(52, -165)
+scale = Vector2(0.437575, 0.437575)
+texture = ExtResource("2_4fd4s")
+
+[node name="limite3" type="CollisionShape2D" parent="."]
+position = Vector2(5.00003, -24.2499)
+rotation = -3.14159
+scale = Vector2(1, 1.00413)
+shape = SubResource("RectangleShape2D_xwj8y")
+
+[node name="sombra_sprite" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.705882)
+z_index = -10
+position = Vector2(0, -2)
+scale = Vector2(0.807691, 0.206897)
+texture = ExtResource("1_6jqmy")
+
+[node name="area_dano" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="area_dano"]
+position = Vector2(-2, -140.5)
+shape = SubResource("RectangleShape2D_5qius")
+
+[node name="colisao_z" type="Area2D" parent="."]
+visible = false
+
+[node name="shape" type="CollisionShape2D" parent="colisao_z"]
+position = Vector2(2.5, -184)
+shape = SubResource("RectangleShape2D_hhljq")
+
+[connection signal="area_entered" from="colisao_z" to="." method="_on_colisao_z_area_entered"]

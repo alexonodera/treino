@@ -107,6 +107,7 @@ _data = {
 }
 
 [node name="Confirmacao" type="Control" groups=["janela"]]
+process_mode = 3
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
