@@ -21,6 +21,9 @@ var MAGIA: PackedScene =  preload ("res://Effects/magia.tscn")
 @onready var area_hit: Area2D = get_node("area_corpo_player")
 #@onready var barra_hp = cena.get_node("InterfaceLayer/UserInterface/hp")
 @onready var camera: Camera2D = get_node("Camera2D")
+@onready var colisao_z: CollisionShape2D = get_node("area_pulo/shape")
+@onready var limite: CollisionShape2D = get_node("limite")
+
 
 
 @export var max_velocidade: int = 200
@@ -37,7 +40,7 @@ var MAGIA: PackedScene =  preload ("res://Effects/magia.tscn")
 
 signal acertar(tipo:int, forca:int)
 
-
+var sobre_objeto:bool = false
 var tipo_voo: int = 0
 var ataque_voando:bool = false
 var ataque_agarrado:bool = false
@@ -45,6 +48,8 @@ var ataque_correndo:bool = false
 var inimigo_atingido:bool = false
 var joelhada_atingida:bool = false
 var pos_base:Vector2 = Vector2.ZERO
+var pos_base_ant: Vector2= Vector2.ZERO
+var zindex_ant: int = 0
 var status:String = "normal"
 var posicao: int = 0
 var tipo_especial: int = 0
@@ -96,11 +101,13 @@ func _ready() -> void:
 	PlayerData.player = self
 	noise.seed = randi()
 	noise.frequency = 2.0
+
 	
 
 
 
 func _physics_process(delta:float) -> void:
+
 	
 	PlayerData.position = global_position
 	PlayerData.status = status
@@ -186,6 +193,7 @@ func _physics_process(delta:float) -> void:
 
 
 	elif status == "voo":
+		colisao_z.disabled = false
 		$sombra_sprite.visible = false
 		$area_corpo_player/shape.disabled = true
 		if anin.current_animation != "pos_queda":
@@ -385,9 +393,15 @@ func _physics_process(delta:float) -> void:
 		anin.play("comemorar")
 
 
+
 	if status != "voo":
-		z_index = position.y
-		pos_base = position
+		if sobre_objeto:
+			pos_base = pos_base_ant
+			z_index = zindex_ant
+		else:
+			z_index = position.y
+			pos_base = position
+
 
 func combo_contador()->void:
 	parar()
@@ -453,8 +467,11 @@ func combo_joelhada_mais():
 func voo(forca_voo:float):
 
 	add_collision_exception_with(cena.get_node("Cenario/limite"))
-#	for objeto in get_tree().get_nodes_in_group("cenario"):
-#		add_collision_exception_with(objeto)
+	for objeto in get_tree().get_nodes_in_group("cenario"):
+		var base = objeto.get_node("colisao_base")
+		add_collision_exception_with(base)
+#		remove_collision_exception_with(base)
+
 	if tipo_voo == 1:
 		if abs(velocidade.x) > 0:
 			velocidade.y = altura_pulo
@@ -501,8 +518,10 @@ func verificar_voo():
 	#if position.y > pos_base.y:
 		$sombra_sprite.visible = true
 		remove_collision_exception_with(cena.get_node("Cenario/limite"))
-#		for objeto in get_tree().get_nodes_in_group("cenario"):
-#			remove_collision_exception_with(objeto)
+		for objeto in get_tree().get_nodes_in_group("cenario"):
+			var base = objeto.get_node("colisao_base")
+#			add_collision_exception_with(base)
+			remove_collision_exception_with(base)
 
 		if tipo_voo == 2:
 			
@@ -606,6 +625,7 @@ func desabilitar_ataques():
 
 func habilitar_areas():
 	area_hit.set_deferred("monitoring", true)
+	colisao_z.disabled = true
 	$sombra_sprite.visible = true
 	$corpo/sombra.visible = true
 	$area_agarrar/shape.disabled = false
@@ -941,3 +961,56 @@ func on_timer_agarrar_timeout():
 
 
 
+
+
+func on_area_pulo_area_entered(area):
+	if area.name == "colisao_z":
+		var corpo:CharacterBody2D = area.get_parent()	
+		if corpo.pos_base.y >pos_base.y - 40 and corpo.pos_base.y < pos_base.y + 20:
+			velocidade.x = velocidade.x * -1
+			tocar_som("golpe_fraco")
+			tremer_tela(30)
+
+
+
+
+
+
+func on_area_sobre_area_entered(area):
+	if area.name == "area_superior" and sobre_objeto == false:	
+	
+		var corpo:CharacterBody2D = area.get_parent()
+		if corpo.pos_base.y > pos_base.y - 20 and corpo.pos_base.y < pos_base.y + 20:			
+#			parar()
+			sobre_objeto = true
+			pos_base_ant = pos_base
+			zindex_ant = corpo.z_index +1
+			var nova_pos = corpo.get_node("area_superior/shape").global_position
+			pos_base = nova_pos
+		
+		
+
+
+func on_area_sobre_area_exited(area):
+	if area.name == "area_superior" and sobre_objeto == true:
+		
+		var corpo:CharacterBody2D = area.get_parent()
+
+		if corpo.pos_base.y > pos_base_ant.y - 20 and corpo.pos_base.y < pos_base_ant.y +20 and area.name =="area_superior":
+				
+			if velocidade.y >0 and status != "voo":
+				pos_base_ant.y += 30
+				pos_base = pos_base_ant
+				for objeto in get_tree().get_nodes_in_group("cenario"):
+					var base = objeto.get_node("colisao_base")
+					add_collision_exception_with(base)
+#				limite.disabled = true
+			elif velocidade.y < 0 and status != "voo":
+				pos_base_ant.y -= 30
+				pos_base = pos_base_ant
+				z_index = zindex_ant -10
+			
+			
+			status = "voo"
+			sobre_objeto = false
+#			position.y += 100

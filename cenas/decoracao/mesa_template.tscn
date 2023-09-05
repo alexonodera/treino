@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl2e06dmo50tl"]
+
+[ext_resource type="PackedScene" uid="uid://d1vlv3daaxp4p" path="res://cenas/decoracao/cadeira_template.tscn" id="1_8wdsr"]
+[ext_resource type="Texture2D" uid="uid://che38yogupovn" path="res://assets/decoracao/mesa.png" id="2_k2yfp"]
+
+[sub_resource type="GDScript" id="GDScript_1h3kj"]
+script/source = "extends Caixa_template
+
+
+
+#func on_colisao_z_area_entered(area):
+#	print(\"teste\")
+#	print(area.name)
+#	if area.name == \"area_corpo_player\":	
+#		print(\"aqui\")
+#		var corpo:CharacterBody2D = area.get_parent()	
+#		if corpo.position.y > position.y - 20 and corpo.position.y < position.y + 20:
+#			print(corpo.velocidade)
+#			corpo.velocidade.x = 0
+#
+			
+
+
+func _on_colisao_z_area_entered(area):
+	
+	if area.name == \"area_corpo_player\":	
+
+		var corpo:CharacterBody2D = area.get_parent()	
+
+		if corpo.pos_base.y > position.y - 20 and corpo.pos_base.y < position.y + 20:
+			pass
+#			print(corpo.velocidade)
+#			corpo.velocidade.x = 0
+
+
+"
+
+[node name="mesa_template" instance=ExtResource("1_8wdsr")]
+script = SubResource("GDScript_1h3kj")
+
+[node name="corpo" parent="." index="0"]
+position = Vector2(1, -69)
+scale = Vector2(0.18175, 0.18175)
+texture = ExtResource("2_k2yfp")
+
+[node name="sombra_sprite" parent="." index="2"]
+position = Vector2(-0.999996, -5)
+scale = Vector2(0.982906, 0.384058)
+
+[node name="shape" parent="area_dano" index="0"]
+position = Vector2(1.70262, -70.5)
+
+[node name="shape" parent="colisao_z" index="0"]
+position = Vector2(3.25, -69.1875)
+
+[node name="shape" parent="colisao_base" index="0"]
+position = Vector2(-5.4384e-06, -10.6085)
+
+[node name="shape" parent="area_superior" index="0"]
+position = Vector2(-1, -126)

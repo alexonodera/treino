@@ -1,0 +1,111 @@
+[gd_scene load_steps=9 format=3 uid="uid://d1vlv3daaxp4p"]
+
+[ext_resource type="Texture2D" uid="uid://r0bhoyj8orgv" path="res://assets/decoracao/cadeira.png" id="1_mpy87"]
+[ext_resource type="Texture2D" uid="uid://bddeyxh24ym7m" path="res://assets/personagens/modelo_personagem/sombra.png" id="3_x1msl"]
+
+[sub_resource type="GDScript" id="GDScript_xhq7h"]
+script/source = "extends Caixa_template
+
+
+
+#func on_colisao_z_area_entered(area):
+#	print(\"teste\")
+#	print(area.name)
+#	if area.name == \"area_corpo_player\":	
+#		print(\"aqui\")
+#		var corpo:CharacterBody2D = area.get_parent()	
+#		if corpo.position.y > position.y - 20 and corpo.position.y < position.y + 20:
+#			print(corpo.velocidade)
+#			corpo.velocidade.x = 0
+#
+			
+
+
+func _on_colisao_z_area_entered(area):
+	
+	if area.name == \"area_corpo_player\":	
+
+		var corpo:CharacterBody2D = area.get_parent()	
+
+		if corpo.pos_base.y > position.y - 20 and corpo.pos_base.y < position.y + 20:
+			pass
+#			print(corpo.velocidade)
+#			corpo.velocidade.x = 0
+
+
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwj8y"]
+size = Vector2(65, 28.8807)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5qius"]
+size = Vector2(65.8139, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hhljq"]
+size = Vector2(64, 39.1406)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cpvkv"]
+size = Vector2(46.9549, 5.61001)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kh761"]
+size = Vector2(74, 17)
+
+[node name="caixa_template" type="CharacterBody2D" groups=["cenario"]]
+collision_layer = 4
+collision_mask = 0
+script = SubResource("GDScript_xhq7h")
+
+[node name="corpo" type="Sprite2D" parent="."]
+position = Vector2(1, -57)
+scale = Vector2(0.437575, 0.437575)
+texture = ExtResource("1_mpy87")
+
+[node name="limite3" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, -13)
+rotation = -3.14159
+scale = Vector2(1, 1.00413)
+shape = SubResource("RectangleShape2D_xwj8y")
+disabled = true
+
+[node name="sombra_sprite" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.705882)
+z_index = -10
+position = Vector2(1, -5)
+scale = Vector2(0.461538, 0.384058)
+texture = ExtResource("3_x1msl")
+
+[node name="area_dano" type="Area2D" parent="."]
+
+[node name="shape" type="CollisionShape2D" parent="area_dano"]
+position = Vector2(2, -28)
+scale = Vector2(1.00283, 1)
+shape = SubResource("RectangleShape2D_5qius")
+
+[node name="colisao_z" type="Area2D" parent="."]
+
+[node name="shape" type="CollisionShape2D" parent="colisao_z"]
+position = Vector2(3, -27.4297)
+shape = SubResource("RectangleShape2D_hhljq")
+
+[node name="colisao_base" type="StaticBody2D" parent="."]
+light_mask = 0
+visibility_layer = 5
+scale = Vector2(1.67233, 1.62605)
+collision_layer = 128
+collision_mask = 128
+
+[node name="shape" type="CollisionShape2D" parent="colisao_base"]
+position = Vector2(0.896947, -6.45737)
+rotation = -3.14159
+scale = Vector2(0.853242, 2.08284)
+shape = SubResource("RectangleShape2D_cpvkv")
+
+[node name="area_superior" type="Area2D" parent="."]
+collision_layer = 4096
+collision_mask = 4096
+
+[node name="shape" type="CollisionShape2D" parent="area_superior"]
+position = Vector2(4, -62)
+shape = SubResource("RectangleShape2D_kh761")
+
+[connection signal="area_entered" from="colisao_z" to="." method="_on_colisao_z_area_entered"]

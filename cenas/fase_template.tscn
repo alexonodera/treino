@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://btjo22io6bqp1"]
+[gd_scene load_steps=15 format=3 uid="uid://btjo22io6bqp1"]
 
 [ext_resource type="Texture2D" uid="uid://drb1dc1bcvgo0" path="res://assets/fundo_2.png" id="1_c41vt"]
 [ext_resource type="Script" path="res://cenas/fase_template.gd" id="1_mc8n2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bpdpuvhw11xxs" path="res://personagens/Player_template.tscn" id="4_jpxmi"]
 [ext_resource type="PackedScene" uid="uid://btttwinlsxbkx" path="res://cenas/decoracao/caixa_template.tscn" id="5_jmqx4"]
 [ext_resource type="PackedScene" uid="uid://dteihlyorwian" path="res://inteface/pause.tscn" id="6_5d8xh"]
+[ext_resource type="PackedScene" uid="uid://d1vlv3daaxp4p" path="res://cenas/decoracao/cadeira_template.tscn" id="6_f3nw7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qgv67"]
 size = Vector2(2749.25, 128)
@@ -166,8 +167,10 @@ collision_mask = 0
 
 [node name="limite_inferior" type="CollisionShape2D" parent="Cenario/limite"]
 position = Vector2(1333.38, 321)
+rotation = 3.14159
 scale = Vector2(1.06119, 0.739639)
 shape = SubResource("RectangleShape2D_qgv67")
+one_way_collision = true
 
 [node name="limite_inferior2" type="CollisionShape2D" parent="Cenario/limite"]
 position = Vector2(1331, 708)
@@ -191,9 +194,13 @@ environment = SubResource("Environment_isqec")
 
 [node name="Decoracao" type="Node2D" parent="."]
 
-[node name="caixa_template" parent="Decoracao" instance=ExtResource("5_jmqx4")]
-position = Vector2(887, 513)
+[node name="caixa_template2" parent="Decoracao" instance=ExtResource("5_jmqx4")]
+position = Vector2(1514, 513)
 scale = Vector2(1.2, 1.2)
+
+[node name="caixa_template3" parent="Decoracao" instance=ExtResource("6_f3nw7")]
+position = Vector2(546, 514)
+scale = Vector2(1.5, 1.5)
 
 [node name="Players" type="Node2D" parent="."]
 
