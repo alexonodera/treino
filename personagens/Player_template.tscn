@@ -10369,7 +10369,7 @@ _data = {
 size = Vector2(152.5, 36.75)
 
 [sub_resource type="RectangleShape2D" id="46"]
-size = Vector2(218.08, 37.7375)
+size = Vector2(218.08, 65.6508)
 
 [sub_resource type="RectangleShape2D" id="47"]
 size = Vector2(26.4628, 8.4875)
@@ -10399,10 +10399,10 @@ size = Vector2(140, 284.5)
 size = Vector2(260, 70)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bvgxi"]
-size = Vector2(157.5, 58.75)
+size = Vector2(65, 58.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p41jk"]
-size = Vector2(146.25, 16.25)
+size = Vector2(46.2501, 35)
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(2, -2)
@@ -10455,7 +10455,7 @@ offset = Vector2(7, 83)
 
 [node name="Node2D" type="Node2D" parent="corpo/cintura/perna_esqueda/canela"]
 y_sort_enabled = true
-position = Vector2(-3.42203, 82.6219)
+position = Vector2(-3.42201, 82.622)
 
 [node name="Line2D" type="Line2D" parent="corpo/cintura/perna_esqueda/canela/Node2D"]
 modulate = Color(0.790684, 0.786151, 0.0312122, 1)
@@ -10542,6 +10542,7 @@ texture = ExtResource("3")
 offset = Vector2(5.50562, 81.1656)
 
 [node name="Node2D" type="Node2D" parent="corpo/braco_esquedo/pulso"]
+z_as_relative = false
 position = Vector2(-11.4487, 86.5038)
 
 [node name="Line2D" type="Line2D" parent="corpo/braco_esquedo/pulso/Node2D"]
@@ -10559,20 +10560,6 @@ show_behind_parent = true
 position = Vector2(1, 387)
 occluder = SubResource("126")
 
-[node name="Node2D" type="Node2D" parent="corpo"]
-z_index = 100
-z_as_relative = false
-position = Vector2(-3.42203, 82.6219)
-
-[node name="Line2D" type="Line2D" parent="corpo/Node2D"]
-modulate = Color(0.790684, 0.786151, 0.0312122, 1)
-material = SubResource("CanvasItemMaterial_17thi")
-points = PackedVector2Array(-1505.1, 516.414, -869.517, 392.828, -489.931, 251.586, -380.416, 199.762, 4.41379, 17.6552)
-width = 50.0
-width_curve = SubResource("Curve_kkldj")
-gradient = SubResource("Gradient_c08sl")
-script = ExtResource("5_xru01")
-
 [node name="sombra_sprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.705882)
 position = Vector2(0, -2)
@@ -10586,15 +10573,15 @@ libraries = {
 }
 
 [node name="limite" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-5, -27.5)
 shape = SubResource("44")
 
 [node name="ataque_fraco" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, 2.5)
 
 [node name="shape" type="CollisionShape2D" parent="ataque_fraco"]
-position = Vector2(230, -495)
+position = Vector2(230, -472.625)
 scale = Vector2(1.32584, -1.60318)
 shape = SubResource("46")
 disabled = true
@@ -10649,6 +10636,7 @@ shape = SubResource("116")
 disabled = true
 
 [node name="ataque_especial" type="Area2D" parent="."]
+visible = false
 
 [node name="shape" type="CollisionShape2D" parent="ataque_especial"]
 visible = false
@@ -10680,19 +10668,20 @@ position = Vector2(925, -290)
 shape = SubResource("111")
 
 [node name="area_pulo" type="Area2D" parent="."]
+visible = false
 
 [node name="shape" type="CollisionShape2D" parent="area_pulo"]
-position = Vector2(-1.24999, -25)
-scale = Vector2(1, 1)
+position = Vector2(0, -25)
 shape = SubResource("RectangleShape2D_bvgxi")
 
 [node name="area_sobre" type="Area2D" parent="."]
+visible = false
 collision_layer = 4096
 collision_mask = 4096
 
 [node name="shape" type="CollisionShape2D" parent="area_sobre"]
-position = Vector2(-3.12499, -12.5)
-scale = Vector2(1, 1)
+position = Vector2(-5, -25)
+scale = Vector2(0.999999, 0.999999)
 shape = SubResource("RectangleShape2D_p41jk")
 
 [node name="sons" type="Node2D" parent="."]

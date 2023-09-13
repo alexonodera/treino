@@ -12,8 +12,7 @@ func _physics_process(delta):
 func on_area_entered(area):
 
 	if area.name == "area_corpo":
-		var inimigo:CharacterBody2D = area.get_parent()		
-			
+		var inimigo:CharacterBody2D = area.get_parent()				
 		var posicao:Vector2 = inimigo.get_node("corpo/cabeca").global_position
 		PlayerData.player.tremer_tela(50)
 		var tamanho:Vector2 =  Vector2(16,16)
@@ -25,6 +24,17 @@ func on_area_entered(area):
 		
 		inimigo.emit_signal("acertar", comportamento, 100)
 		anin.play("acertou")
+	if area.name == "area_acerto":
+		var objeto: PhysicsBody2D = area.get_parent()		
+		var posicao: Vector2 = objeto.global_position
+		var tamanho:Vector2 =  Vector2(16,16)
+		PlayerData.player.efeito_especial(posicao, EFEITO3, tamanho)
+		PlayerData.score += 35
+		PlayerData.player.tocar_som("golpe_especial")
+		
+		objeto.emit_signal("acertar", transform.x, 220)
+		PlayerData.score += 20
+
 		
 
 

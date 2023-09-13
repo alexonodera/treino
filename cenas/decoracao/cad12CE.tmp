@@ -37,11 +37,7 @@ func _physics_process(_delta):
 func acertou(tipo:Vector2, forca:int):	
 	hp_f(abs(forca))
 #	print(tipo.x)
-#	transform.x.x = tipo.x
-	if tipo.x >0:
-		transform.x = Vector2(scale.x, 0)
-	else:
-		transform.x = Vector2(-scale.x, 0)
+	transform.x = tipo
 	if hp<= 0:
 		status = \"destruir\"
 		anin.play(\"destroi\")

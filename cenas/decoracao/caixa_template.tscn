@@ -59,5 +59,3 @@ collision_mask = 0
 [node name="shape" type="CollisionShape2D" parent="colisao_base"]
 position = Vector2(4, -20)
 shape = SubResource("RectangleShape2D_qakxh")
-
-[connection signal="area_entered" from="colisao_z" to="." method="_on_colisao_z_area_entered"]
