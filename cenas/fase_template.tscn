@@ -1,12 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://btjo22io6bqp1"]
+[gd_scene load_steps=17 format=3 uid="uid://btjo22io6bqp1"]
 
 [ext_resource type="Texture2D" uid="uid://drb1dc1bcvgo0" path="res://assets/fundo_2.png" id="1_c41vt"]
 [ext_resource type="Script" path="res://cenas/fase_template.gd" id="1_mc8n2"]
 [ext_resource type="PackedScene" uid="uid://pwfv74ih422u" path="res://inteface/hud.tscn" id="2_j5wwn"]
-[ext_resource type="PackedScene" uid="uid://bpdpuvhw11xxs" path="res://personagens/Player_template.tscn" id="4_jpxmi"]
 [ext_resource type="PackedScene" uid="uid://btttwinlsxbkx" path="res://cenas/decoracao/caixa_template.tscn" id="5_jmqx4"]
 [ext_resource type="PackedScene" uid="uid://dteihlyorwian" path="res://inteface/pause.tscn" id="6_5d8xh"]
 [ext_resource type="PackedScene" uid="uid://d1vlv3daaxp4p" path="res://cenas/decoracao/cadeira_template.tscn" id="6_f3nw7"]
+[ext_resource type="PackedScene" uid="uid://kldoiq4t7ana" path="res://cenas/decoracao/comida.tscn" id="7_d8441"]
+[ext_resource type="PackedScene" uid="uid://dfknj0o4e20p7" path="res://personagens/inimigo_template.tscn" id="9_ojjtm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ranl7"]
 size = Vector2(2715.93, 38.3118)
@@ -132,9 +133,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -491.0
-offset_top = -51.0
-offset_bottom = 51.0
+offset_left = 661.0
+offset_top = 273.0
+offset_right = 1152.0
+offset_bottom = 375.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -149,16 +151,6 @@ text = "Stage 1 Start"
 
 [node name="Background" type="Sprite2D" parent="Cenario"]
 position = Vector2(1326, 255)
-scale = Vector2(1.09865, 0.770508)
-texture = ExtResource("1_c41vt")
-
-[node name="Background2" type="Sprite2D" parent="Cenario"]
-position = Vector2(1326, 255)
-scale = Vector2(1.09865, 0.770508)
-texture = ExtResource("1_c41vt")
-
-[node name="Background3" type="Sprite2D" parent="Cenario"]
-position = Vector2(1328, 255)
 scale = Vector2(1.09865, 0.770508)
 texture = ExtResource("1_c41vt")
 
@@ -205,6 +197,7 @@ scale = Vector2(1.2, 1.2)
 [node name="caixa_template3" parent="Decoracao" instance=ExtResource("6_f3nw7")]
 position = Vector2(756, 538)
 scale = Vector2(1.2, 1.2)
+hp = 500
 
 [node name="caixa_template4" parent="Decoracao" instance=ExtResource("6_f3nw7")]
 position = Vector2(1143, 427)
@@ -214,13 +207,35 @@ scale = Vector2(1.2, 1.2)
 position = Vector2(984, 547)
 scale = Vector2(1.2, 1.2)
 
+[node name="comida" parent="Decoracao" instance=ExtResource("7_d8441")]
+position = Vector2(567, 500)
+scale = Vector2(0.7, 0.7)
+vitalidade = 10
+
+[node name="comida2" parent="Decoracao" instance=ExtResource("7_d8441")]
+position = Vector2(644, 425)
+scale = Vector2(0.7, 0.7)
+vitalidade = 20
+
+[node name="comida3" parent="Decoracao" instance=ExtResource("7_d8441")]
+position = Vector2(366, 553)
+scale = Vector2(0.7, 0.7)
+vitalidade = 20
+
+[node name="comida4" parent="Decoracao" instance=ExtResource("7_d8441")]
+position = Vector2(249, 428)
+scale = Vector2(0.7, 0.7)
+vitalidade = 20
+
 [node name="Players" type="Node2D" parent="."]
 
-[node name="Player" parent="Players" instance=ExtResource("4_jpxmi")]
-position = Vector2(384, 470)
-hp = 500
-
 [node name="Inimigos" type="Node2D" parent="."]
+
+[node name="inimigo_2" parent="Inimigos" instance=ExtResource("9_ojjtm")]
+position = Vector2(1913, 478)
+
+[node name="inimigo_3" parent="Inimigos" instance=ExtResource("9_ojjtm")]
+position = Vector2(869, 467)
 
 [node name="Texto_fase" type="Node2D" parent="."]
 

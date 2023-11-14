@@ -45,6 +45,7 @@ func reiniciar_jogo():
 func recarregar_fase():
 	pausado = false
 	get_tree().paused = false	
+	
 	TransicaoTela.aparecer()
 
 	

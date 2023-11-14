@@ -68,7 +68,8 @@ func novo_item() -> void:
 		core.cadastrar(item_n)
 		core.gravar_dados()
 		core.save_selecionado = item_n
-		TransicaoTela.cena = "res://cenas/fase_template.tscn"
+		PlayerData.novo_jogo = true
+		TransicaoTela.cena = "res://cenas/player_select.tscn"
 		TransicaoTela.aparecer()	
 #		get_tree().change_scene_to_file("res://cenas/fase_template.tscn")	
 		
@@ -103,7 +104,7 @@ func carregar_itens()-> void:
 			var botao_1: Button = iten_tmp.get_node("Clique")
 			var clicar_item = Callable(self, "selecionar_save")
 #			botao_1.connect("button_down",clicar_item.bind(x))
-			
+		
 			lista_itens.add_child(iten_tmp)
 			
 			botao_1.connect("button_down",clicar_item.bind(x,iten_tmp))
@@ -139,7 +140,8 @@ func voltar_titulo() -> void:
 	
 func carregar_jogo() -> void:
 	core.save_selecionado  = iten_selecionado
-	TransicaoTela.cena = "res://cenas/mapa.tscn"
+	PlayerData.novo_jogo = false
+	TransicaoTela.cena = "res://cenas/player_select.tscn"
 	TransicaoTela.aparecer()	
 #	get_tree().change_scene_to_file("res://cenas/mapa.tscn")
 	

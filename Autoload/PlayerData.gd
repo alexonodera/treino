@@ -10,18 +10,36 @@ var vidas: = 2 : set = set_vidas
 var position:Vector2 = Vector2.ZERO
 var pos_base:Vector2 = Vector2.ZERO
 var status:String = ""
-var player: CharacterBody2D = null 
+var player_1: CharacterBody2D = null 
+var player_2: CharacterBody2D = null 
+var char_p1: int = 0
+var char_p2: int = 0
+var novo_jogo: bool = false
+@onready var char_1: PackedScene =  preload("res://personagens/char_1.tscn")
+@onready var char_2: PackedScene =  preload("res://personagens/char_2.tscn")
+var personagens: Array = []
 
 
 
+func _ready():
+	personagens.push_back(char_1)
+	personagens.push_back(char_2)
 
 
 func reset():
 	self.score = 0
 	self.deaths = 0
+	
+	
 
 
-
+func select_player(char_sel:int, player:int) -> void:
+	if player == 1:
+		player_1 =  personagens[char_sel].instantiate()
+	else:
+		player_2 = personagens[char_sel].instantiate()
+	
+	
 
 func set_score(new_score: int) -> void:
 	score = new_score

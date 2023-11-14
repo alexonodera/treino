@@ -14,6 +14,7 @@ signal acertar(tipo:int, forca:int)
 @onready var colisao_z: CollisionShape2D = get_node(\"colisao_z/shape\")
 @onready var area_superior: CollisionShape2D = get_node(\"area_superior/shape\")
 @onready var shape_colisao_base: CollisionShape2D = get_node(\"colisao_base/shape\")
+@export var comida: PackedScene =  preload (\"res://cenas/decoracao/comida.tscn\")
 
 @onready var status = \"normal\"
 
@@ -44,6 +45,12 @@ func acertou(tipo:Vector2, forca:int):
 		transform.x = Vector2(-scale.x, 0)
 	if hp<= 0:
 		status = \"destruir\"
+		var comida_n = comida.instantiate()
+		comida_n.scale = Vector2(0.8,0.8)
+#		get_node(\"/root/Decoracao\").addChild(comida_n)
+		get_parent().call_deferred(\"add_child\", comida_n)
+#		add_child(comida_n)
+		comida_n.global_position = global_position
 		anin.play(\"destroi\")
 	else:
 		status = \"normal\"
@@ -63,6 +70,7 @@ func hp_f(valor:int):
 
 func _on_anin_animation_finished(anim_name):
 	if anim_name == \"destroi\":
+		
 		queue_free()
 
 
@@ -78,7 +86,7 @@ size = Vector2(96.7263, 142)
 size = Vector2(94.25, 113)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cpvkv"]
-size = Vector2(70.4323, 5.61001)
+size = Vector2(62.3729, 5.0933)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kh761"]
 size = Vector2(91, 16)
@@ -335,19 +343,19 @@ shape = SubResource("RectangleShape2D_hhljq")
 [node name="colisao_base" type="StaticBody2D" parent="."]
 light_mask = 0
 visibility_layer = 5
+position = Vector2(2, -8)
 scale = Vector2(1.67233, 1.62605)
 collision_layer = 128
 collision_mask = 128
 
 [node name="shape" type="CollisionShape2D" parent="colisao_base"]
-position = Vector2(1.64442, -6.76485)
+position = Vector2(-9.53674e-07, 0)
 rotation = -3.14159
 scale = Vector2(0.853242, 2.08284)
 shape = SubResource("RectangleShape2D_cpvkv")
 
 [node name="area_superior" type="Area2D" parent="."]
 collision_layer = 4096
-collision_mask = 4096
 
 [node name="shape" type="CollisionShape2D" parent="area_superior"]
 position = Vector2(1.5, -157)

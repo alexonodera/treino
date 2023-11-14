@@ -33,10 +33,22 @@ script = ExtResource("1_2kcwb")
 
 [node name="Energia" type="ProgressBar" parent="."]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 11.0
-offset_right = 511.0
-offset_bottom = 38.0
+offset_left = 34.0
+offset_top = 75.0
+offset_right = 384.0
+offset_bottom = 105.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_styles/background = SubResource("StyleBoxFlat_hw0i8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wp77c")
+value = 50.0
+rounded = true
+
+[node name="Energia2" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 670.0
+offset_top = 75.0
+offset_right = 1020.0
+offset_bottom = 105.0
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_styles/background = SubResource("StyleBoxFlat_hw0i8")
 theme_override_styles/fill = SubResource("StyleBoxFlat_wp77c")
@@ -45,13 +57,48 @@ rounded = true
 
 [node name="ContadorVidas" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 524.0
-offset_top = 13.0
-offset_right = 564.0
-offset_bottom = 53.0
+offset_left = 388.0
+offset_top = 55.0
+offset_right = 454.0
+offset_bottom = 125.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.313726)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
 theme_override_constants/shadow_outline_size = 3
-theme_override_font_sizes/bold_font_size = 3
+theme_override_font_sizes/normal_font_size = 42
+theme_override_font_sizes/bold_font_size = 8
 text = "x2"
+
+[node name="ContadorVidas2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1026.0
+offset_top = 55.0
+offset_right = 1092.0
+offset_bottom = 125.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.313726)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/normal_font_size = 42
+theme_override_font_sizes/bold_font_size = 8
+text = "x2"
+
+[node name="nome_char" type="Label" parent="."]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 42.0
+offset_right = 150.0
+offset_bottom = 75.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.498039)
+theme_override_font_sizes/font_size = 21
+text = "Player 1"
+
+[node name="nome_char2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 675.0
+offset_top = 42.0
+offset_right = 787.0
+offset_bottom = 75.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.498039)
+theme_override_font_sizes/font_size = 21
+text = "Player 2"

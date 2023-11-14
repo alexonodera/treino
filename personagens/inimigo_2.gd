@@ -3,6 +3,10 @@ extends CharacterBody2D
 var EFEITO: PackedScene = preload("res://Effects/hit3.tscn")
 var EFEITO2: PackedScene = preload("res://Effects/hit3.tscn")
 
+
+
+
+
 @export var nome:String = ""
 @export var max_velocidade:int = 250
 @export var gravidade:int = 2000
@@ -10,11 +14,13 @@ var EFEITO2: PackedScene = preload("res://Effects/hit3.tscn")
 @export var forca:int = 2
 @export var boss: bool = false
 
+@onready var cabeca: Sprite2D = get_node("corpo/cabeca")
 @onready var timer_comportamento: Timer = get_node("TimerComportamento")
 @onready var barra_hp: Node2D = get_node("hp")
 @onready var anin: AnimationPlayer = $AnimationPlayer
 @onready var cena:Node2D = $"../../"
 @onready var area_agarrao_inimigo:Area2D = get_node("area_agarrao_inimigo") 
+@onready var limite = get_node("limite")
 var pos_base:Vector2 = Vector2.ZERO
 signal acertar(tipo:int, forca:int)
 signal agarrar(tipo:int)
@@ -39,6 +45,8 @@ var comportamento_movimento:int = 5
 @export var hp:int = 1500
 var hp_inicial:int = hp
 
+var text_cabeca: CompressedTexture2D = null
+
 
 var velocidade:Vector2 = Vector2.ZERO
 
@@ -46,8 +54,10 @@ var velocidade:Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	connect("acertar",Callable(self,"acertou"))
-#	connect("agarrar",Callable(self,"f_agarrou"))
+
 	
+	var textura:Texture2D = load("res://assets/decoracao/tv.png")
+	cabeca.texture = textura
 	hp_inicial = hp	
 	barra_hp.nome.text = nome
 	
@@ -63,7 +73,7 @@ func _physics_process(delta: float) -> void:
 		status = "morrendo"
 
 
-	z_index = position.y	
+	z_index = int(position.y)	
 		
 
 	set_velocity(velocidade)
@@ -71,10 +81,11 @@ func _physics_process(delta: float) -> void:
 
 	if  status != "caindo":
 		pos_base = position
+		
 	
 	
 	if status == "normal":	
-	
+		limite.disabled = false
 		agarrado = false
 		apanhando_agarrado = false
 		arremessado =false
@@ -122,15 +133,17 @@ func _physics_process(delta: float) -> void:
 			status = "normal"
 			
 	elif status == "caindo":
+		z_index = int(pos_base.y)
 		$sombra_sprite.visible = false		
 		$area_corpo/shape.disabled = true
 		$area_ataque/shape.disabled = true
 		$area_agarrao_inimigo/shape.disabled = true
+		limite.disabled = true
 		
 		verificar_queda()
 		
-	elif status == "agarrado" and PlayerData.player.status == "agarrar":
-	
+#	elif status == "agarrado" and PlayerData.player.status == "agarrar":
+	elif status == "agarrado":
 		$area_agarrao_inimigo/shape.disabled = true
 		$area_ataque/shape.disabled = true
 		$area_corpo/shape.disabled = false
@@ -188,9 +201,9 @@ func _physics_process(delta: float) -> void:
 
 	
 
-func cair(forca:int):
+func cair(forca_z:int):
 	velocidade.y = -800
-	velocidade.x = forca
+	velocidade.x = forca_z
 	
 	
 func verificar_queda():
@@ -290,10 +303,10 @@ func play(animation: String) -> void:
 
 	
 
-func acertou(tipo:int, forca:int):	
+func acertou(tipo:int, forca_h:int):	
 	
 	parado()
-	hp_f(abs(forca))
+	hp_f(abs(forca_h))
 	
 	if tipo == 5:
 		#efeito_hit()
@@ -301,16 +314,16 @@ func acertou(tipo:int, forca:int):
 		arremessado = true
 		status ="caindo"
 		if transform.x.x >0:
-			cair(forca)
+			cair(forca_h)
 		else:
-			cair(-forca)
+			cair(-forca_h)
 	elif tipo == 3:
 		efeito_hit(1)		
 		status ="caindo"
 		if transform.x.x >0:
-			cair(-forca)
+			cair(-forca_h)
 		else:
-			cair(forca)
+			cair(forca_h)
 	elif tipo ==4:
 		status= "agarrado"
 		efeito_hit(2)		
@@ -462,7 +475,8 @@ func tocar_som(som:String):
 
 func on_area_corpo_area_entered(area: Area2D) -> void:
 	if area.name == "area_corpo":
-		var inimigo_proximo:CharacterBody2D = area.get_parent()
+		pass
+#		var inimigo_proximo:CharacterBody2D = area.get_parent()
 #		status = "afastar"
 	
 	

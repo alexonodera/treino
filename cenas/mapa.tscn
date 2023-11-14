@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://51ggvmmvw6rh"]
+[gd_scene load_steps=4 format=3 uid="uid://51ggvmmvw6rh"]
 
 [ext_resource type="Texture2D" uid="uid://sw3g4ewvbybq" path="res://assets/imagem_fundo.png" id="1_iwu8i"]
 [ext_resource type="Script" path="res://scripts/interface/mapa.gd" id="1_lx3wh"]
+[ext_resource type="Script" path="res://cenas/btn_fase.gd" id="3_snakk"]
 
 [node name="Mapa" type="Control"]
 layout_mode = 3
@@ -71,6 +72,7 @@ theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 30
 text = "Stage 01"
 flat = true
+script = ExtResource("3_snakk")
 metadata/id_fase = "fase_1"
 
 [node name="Fase2" type="Button" parent="Control/GridContainer" groups=["botao", "fase"]]

@@ -1,0 +1,185 @@
+[gd_scene load_steps=5 format=3 uid="uid://sjsgoorbqbw4"]
+
+[ext_resource type="Texture2D" uid="uid://cj00lupr7j8sg" path="res://assets/fundo_4.png" id="1_r5roq"]
+[ext_resource type="Texture2D" uid="uid://drirw0a0yv7uu" path="res://assets/interface/char_select_1.png" id="2_e38q5"]
+[ext_resource type="Texture2D" uid="uid://bob44v704gv03" path="res://assets/interface/cursor_p1.png" id="4_nuhsn"]
+
+[sub_resource type="GDScript" id="GDScript_7orn7"]
+script/source = "extends Control
+
+
+@onready var cursor_p1:TextureRect = get_node(\"cursor_p1\")
+@onready var cursor_p2:Node2D = get_node(\"cursor_p2\")
+
+var chars = []
+
+func _ready():
+
+	for char in get_tree().get_nodes_in_group(\"char_sel\"):
+		chars.push_back(char)
+		
+
+
+	print(chars[0].global_position)	
+	print(chars[0].position)		
+	print(chars[0].name)
+	print(cursor_p1.global_position)
+	
+func _physics_process(delta):	
+	cursor_p2.position = chars[0].position
+	
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_7orn7")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -188.0
+offset_bottom = 188.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_r5roq")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.470588, 0.470588, 0.313726)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = -161.0
+offset_right = 3.0
+offset_bottom = 139.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -118.0
+offset_right = -1.0
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.827451, 0.796078, 0, 0.337255)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="char2" type="Button" parent="Control/HBoxContainer" groups=["char_sel"]]
+custom_minimum_size = Vector2(223, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer/char2"]
+layout_mode = 0
+offset_right = 223.0
+offset_bottom = 300.0
+texture = ExtResource("2_e38q5")
+expand_mode = 3
+
+[node name="fundo" type="ColorRect" parent="Control/HBoxContainer/char2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.807843, 0, 0.439216, 0.372549)
+
+[node name="char4" type="Button" parent="Control/HBoxContainer" groups=["char_sel"]]
+custom_minimum_size = Vector2(223, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer/char4"]
+layout_mode = 0
+offset_right = 223.0
+offset_bottom = 300.0
+texture = ExtResource("2_e38q5")
+expand_mode = 3
+
+[node name="fundo" type="ColorRect" parent="Control/HBoxContainer/char4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12549, 0.403922, 0.92549, 0.372549)
+
+[node name="char3" type="Button" parent="Control/HBoxContainer" groups=["char_sel"]]
+custom_minimum_size = Vector2(223, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer/char3"]
+layout_mode = 0
+offset_right = 223.0
+offset_bottom = 300.0
+texture = ExtResource("2_e38q5")
+expand_mode = 3
+
+[node name="fundo" type="ColorRect" parent="Control/HBoxContainer/char3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.501961, 0.454902, 0.168627, 0.372549)
+
+[node name="cursor_p2" type="Node2D" parent="."]
+
+[node name="sprite" type="Sprite2D" parent="cursor_p2"]
+position = Vector2(3, 163)
+texture = ExtResource("4_nuhsn")
+
+[node name="cursor_p1" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -148.5
+offset_right = 97.0
+offset_bottom = 148.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_nuhsn")

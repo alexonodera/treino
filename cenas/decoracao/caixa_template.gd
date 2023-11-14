@@ -6,7 +6,7 @@ class_name Caixa_template
 var pos_base: Vector2 = Vector2.ZERO
 
 func _process(_delta):
-	z_index = position.y
+	z_index = abs(position.y)
 	pos_base = colisao_base.global_position
 
 

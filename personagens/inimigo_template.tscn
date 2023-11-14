@@ -12991,15 +12991,17 @@ size = Vector2(202.5, 411.406)
 size = Vector2(147.956, 38.2475)
 
 [sub_resource type="RectangleShape2D" id="110"]
-size = Vector2(141.25, 52.5)
+size = Vector2(133.125, 52.5)
 
 [sub_resource type="RectangleShape2D" id="116"]
 size = Vector2(99.6082, 128.75)
 
 [node name="inimigo_2" type="CharacterBody2D"]
 scale = Vector2(0.4, 0.4)
-collision_mask = 260
+collision_layer = 2
+collision_mask = 4484
 script = ExtResource("1_u5d8c")
+hp = 250
 metadata/_edit_vertical_guides_ = [-535.0]
 
 [node name="corpo" type="Sprite2D" parent="."]
@@ -13155,6 +13157,7 @@ rotation = 0.54036
 shape = SubResource("50")
 
 [node name="area_corpo" type="Area2D" parent="."]
+visible = false
 collision_layer = 257
 collision_mask = 257
 
@@ -13171,10 +13174,9 @@ scale = Vector2(1.23162, 2.37778)
 shape = SubResource("106")
 
 [node name="area_agarrao_inimigo" type="Area2D" parent="."]
-visible = false
 
 [node name="shape" type="CollisionShape2D" parent="area_agarrao_inimigo"]
-position = Vector2(-8.125, -426.25)
+position = Vector2(-14.0625, -397.5)
 shape = SubResource("110")
 
 [node name="dano_arremesso" type="Area2D" parent="."]

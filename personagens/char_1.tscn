@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmqfeeixtnsv"]
+
+[ext_resource type="PackedScene" uid="uid://bpdpuvhw11xxs" path="res://personagens/Player_template.tscn" id="1_8aajd"]
+
+[node name="Char_1" node_paths=PackedStringArray("anin") instance=ExtResource("1_8aajd")]
+anin = NodePath("AnimationPlayer")
