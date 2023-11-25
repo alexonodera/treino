@@ -14,11 +14,11 @@ func on_area_entered(area):
 	if area.name == "area_corpo":
 		var inimigo:CharacterBody2D = area.get_parent()				
 		var posicao:Vector2 = inimigo.get_node("corpo/cabeca").global_position
-		PlayerData.player.tremer_tela(50)
+		PlayerData.player_1.tremer_tela(50)
 		var tamanho:Vector2 =  Vector2(16,16)
-		PlayerData.player.efeito_especial(posicao, EFEITO3, tamanho)
+		PlayerData.player_1.efeito_especial(posicao, EFEITO3, tamanho)
 		PlayerData.score += 35
-		PlayerData.player.tocar_som("golpe_especial")
+		PlayerData.player_1.tocar_som("golpe_especial")
 		
 		var comportamento:int = int(randf_range(1,3))
 		
@@ -28,9 +28,9 @@ func on_area_entered(area):
 		var objeto: PhysicsBody2D = area.get_parent()		
 		var posicao: Vector2 = objeto.global_position
 		var tamanho:Vector2 =  Vector2(16,16)
-		PlayerData.player.efeito_especial(posicao, EFEITO3, tamanho)
+		PlayerData.player_1.efeito_especial(posicao, EFEITO3, tamanho)
 		PlayerData.score += 35
-		PlayerData.player.tocar_som("golpe_especial")
+		PlayerData.player_1.tocar_som("golpe_especial")
 		
 		objeto.emit_signal("acertar", transform.x, 220)
 		PlayerData.score += 20

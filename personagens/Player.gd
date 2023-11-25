@@ -20,7 +20,7 @@ var MAGIA: PackedScene =  preload ("res://Effects/magia.tscn")
 
 @onready var area_hit: Area2D = get_node("area_corpo_player")
 #@onready var barra_hp = cena.get_node("InterfaceLayer/UserInterface/hp")
-@onready var camera: Camera2D = get_node("Camera2D")
+@onready var camera: Camera2D = PlayerData.camera
 @onready var colisao_z: CollisionShape2D = get_node("area_pulo/shape")
 @onready var limite: CollisionShape2D = get_node("limite")
 
@@ -56,6 +56,7 @@ var tipo_especial: int = 0
 var tipo_arremesso: int = 0
 var imortal:bool = false
 var tempo_agarrado: float = 0
+var jogador:String = ""
 
 
 var hp_inicial: int = 0
@@ -151,21 +152,21 @@ func _physics_process(delta:float) -> void:
 		virar(velocidade.x)
 		calcular_velocidade()
 		animacao()
-		if Input.is_action_just_pressed("ataque") and status == "normal":
+		if Input.is_action_just_pressed("ataque"+jogador) and status == "normal":
 			tocar_som("golpe_vazio")
 			if combo == max_combo:
 				combo = 0
 			combo_contador()
 			status = "batendo"
 		
-		if Input.is_action_just_pressed("pulo") and status == "normal":
+		if Input.is_action_just_pressed("pulo"+jogador) and status == "normal":
 			play("pre_pulo")
 			tocar_som("pulo")
 			status = "voo"
 			tipo_voo = 1
 			voo(0)
 
-		if Input.is_action_just_pressed("especial") and status == "normal":
+		if Input.is_action_just_pressed("especial"+jogador) and status == "normal":
 			status = "especial"
 
 			if abs(velocidade.x) > 0:
@@ -203,14 +204,14 @@ func _physics_process(delta:float) -> void:
 		verificar_voo()
 
 		if velocidade.x != 0 and (tipo_voo == 1 or tipo_voo == 3):
-			if (Input.is_action_just_pressed("ataque") and status == "voo" and anin.current_animation != "pos_queda"):
+			if (Input.is_action_just_pressed("ataque"+jogador) and status == "voo" and anin.current_animation != "pos_queda"):
 				ataque_voando = true
 
 				play("voadora2")
 				await anin.animation_finished
 				ataque_voando = false
 		elif velocidade.x == 0 and tipo_voo == 1:
-			if (Input.is_action_just_pressed("ataque") and status == "voo" and anin.current_animation != "pos_queda"):
+			if (Input.is_action_just_pressed("ataque"+jogador) and status == "voo" and anin.current_animation != "pos_queda"):
 				ataque_voando = true
 
 				play("voadora")
@@ -219,10 +220,10 @@ func _physics_process(delta:float) -> void:
 
 	elif status == "correndo":
 		$area_agarrar/shape.disabled = true
-		if (Input.is_action_just_pressed("direita") or Input.is_action_just_pressed("esquerda")) and  ! ataque_correndo:
+		if (Input.is_action_just_pressed("direita"+jogador) or Input.is_action_just_pressed("esquerda"+jogador)) and  ! ataque_correndo:
 			status = "normal"
 		#await get_tree().create_timer(.2).timeout
-		if Input.is_action_just_pressed("ataque"):
+		if Input.is_action_just_pressed("ataque"+jogador):
 			ataque_correndo = true
 			#tocar_som("golpe_vazio")
 			play("ataque_correndo")
@@ -231,7 +232,7 @@ func _physics_process(delta:float) -> void:
 			ataque_correndo = false
 			status = "normal"
 
-		if Input.is_action_just_pressed("pulo") and  ! ataque_correndo:
+		if Input.is_action_just_pressed("pulo"+jogador) and  ! ataque_correndo:
 			play("pre_pulo")
 			tocar_som("pulo")
 			status = "voo"
@@ -274,11 +275,11 @@ func _physics_process(delta:float) -> void:
 				inimigo_acao.position.x = posicao
 
 #				inimigo_acao.transform.x.x = -transform.x.x
-				var direcao = Input.get_action_strength("direita") - Input.get_action_strength("esquerda")
+				var direcao = Input.get_action_strength("direita"+jogador) - Input.get_action_strength("esquerda"+jogador)
 
 				
 				
-				if Input.is_action_just_pressed("ataque"):
+				if Input.is_action_just_pressed("ataque"+jogador):
 					if direcao == 0:
 		
 						ataque_agarrado = true
@@ -673,10 +674,10 @@ func animacao():
 func calcular_velocidade():
 
 	if  ! ataque_correndo:
-		velocidade.x = Input.get_action_strength("direita") - Input.get_action_strength("esquerda")
-		velocidade.y = Input.get_action_strength("baixo") - Input.get_action_strength("cima")
+		velocidade.x = Input.get_action_strength("direita"+jogador) - Input.get_action_strength("esquerda"+jogador)
+		velocidade.y = Input.get_action_strength("baixo"+jogador) - Input.get_action_strength("cima"+jogador)
 
-	if Input.is_action_just_pressed("correr") and status == "normal" and abs(velocidade.x) > 0 and abs(velocidade.y) == 0:
+	if Input.is_action_just_pressed("correr"+jogador) and status == "normal" and abs(velocidade.x) > 0 and abs(velocidade.y) == 0:
 		status = "correndo"
 
 		#correção para movimentação na diagonal

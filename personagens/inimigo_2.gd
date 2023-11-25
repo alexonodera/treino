@@ -236,7 +236,7 @@ func verificar_queda():
 		remove_collision_exception_with(cena.get_node("Cenario/limite"))
 		caido = true
 		apanhando_agarrado = false
-		PlayerData.player.tremer_tela(80)
+		PlayerData.player_1.tremer_tela(80)
 		status = "apanhando"	
 		
 		efeito_queda()	

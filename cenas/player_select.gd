@@ -9,7 +9,7 @@ var pos_cursor_p1: int = 0
 var pos_cursor_p2: int = 0
 var p1_pronto: bool = false
 var p2_pronto: bool = false
-var multijogador: bool = false
+
 var itens =[]
 
 
@@ -26,8 +26,9 @@ func _ready():
 	
 func _process(_delta):
 	if !p2_pronto:
-		if Input.is_action_just_pressed("start_p2"):			
-			multijogador = true			
+		if Input.is_action_just_pressed("start_p2"):
+				
+			PlayerData.multijogador = true			
 		
 		if Input.is_action_just_pressed("direita_p2"):
 			if pos_cursor_p2 < itens.size()-1:
@@ -43,7 +44,7 @@ func _process(_delta):
 			p2_pronto = true
 			iniciar_jogo()
 			
-		if multijogador:
+		if PlayerData.multijogador:
 			cursor_p2.global_position = itens[pos_cursor_p2].global_position
 	if !p1_pronto:
 		cursor_p1.global_position = itens[pos_cursor_p1].global_position
@@ -58,7 +59,7 @@ func _process(_delta):
 			
 		if Input.is_action_just_pressed("ataque"):	
 			PlayerData.char_p1 = pos_cursor_p1
-			print("ataque_p1")
+		
 			p1_pronto = true
 			iniciar_jogo()
 	
@@ -67,24 +68,25 @@ func _process(_delta):
 
 
 func iniciar_jogo():
-	if multijogador:
+	if PlayerData.multijogador:
 		if p1_pronto and p2_pronto:		
 			if PlayerData.novo_jogo:
-				print("teste0")
+			
 				TransicaoTela.cena = "res://cenas/fase_template.tscn"
 			else:
-				print("teste1")
+		
 				TransicaoTela.cena = "res://cenas/mapa.tscn"
 				TransicaoTela.aparecer()
 		else:
 			print("tem que esperar")
 	else:
-		if p1_pronto and !multijogador:
+		if p1_pronto and !PlayerData.multijogador:
 			if PlayerData.novo_jogo:
-				print("teste2")
+			
 				TransicaoTela.cena = "res://cenas/fase_template.tscn"
 			else:
-				print("teste3")
+		
+				PlayerData.multijogador = false
 				TransicaoTela.cena = "res://cenas/mapa.tscn"
 				
 				TransicaoTela.aparecer()

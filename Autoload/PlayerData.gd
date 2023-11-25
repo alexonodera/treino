@@ -18,6 +18,8 @@ var novo_jogo: bool = false
 @onready var char_1: PackedScene =  preload("res://personagens/char_1.tscn")
 @onready var char_2: PackedScene =  preload("res://personagens/char_2.tscn")
 var personagens: Array = []
+var multijogador: bool = false
+var camera:  Camera2D = null
 
 
 
@@ -38,6 +40,7 @@ func select_player(char_sel:int, player:int) -> void:
 		player_1 =  personagens[char_sel].instantiate()
 	else:
 		player_2 = personagens[char_sel].instantiate()
+		player_2.jogador = "_p2"
 	
 	
 

@@ -5,6 +5,7 @@ class_name FaseTemplate
 @onready var anin: AnimationPlayer = get_node("AnimationPlayer")
 @onready var label_fase: Label = get_node("CanvasModulate/Hud/texto_fase")
 @onready var Players:Node2D = get_node("Players")
+@onready var camera: Camera2D = get_node("camera")
 
 
 var pontuacao:int = 0
@@ -13,11 +14,13 @@ var pontuacao:int = 0
 var fase_ativa:bool = true
 
 func _ready():
+	PlayerData.camera = camera
 	Engine.max_fps = 60
 	iniciar_fase()
 
 func iniciar_fase():
-	if PlayerData.multiplayer:		
+	if PlayerData.multijogador:
+				
 		PlayerData.select_player(PlayerData.char_p1, 1)
 		PlayerData.select_player(PlayerData.char_p2, 2)
 		Players.add_child(PlayerData.player_1)
@@ -26,11 +29,15 @@ func iniciar_fase():
 		PlayerData.player_1.hp_2(150)
 		PlayerData.player_2.global_position=Vector2(80.0,550.0)
 		PlayerData.player_2.hp_2(150)
+		camera.add_target(PlayerData.player_1)
+		camera.add_target(PlayerData.player_2)
 	else:
+	
 		PlayerData.select_player(PlayerData.char_p1, 1)
 		Players.add_child(PlayerData.player_1)
 		PlayerData.player_1.global_position=Vector2(80.0,495.0)
 		PlayerData.player_1.hp_2(150)
+		camera.add_target(PlayerData.player_1)
 
 	label_fase.text = nome_fase+" Start"
 	anin.play("inicio_fase")

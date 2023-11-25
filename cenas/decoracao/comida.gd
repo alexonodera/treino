@@ -15,9 +15,21 @@ class_name Comida
 func _process(_delta):
 	z_index = abs(position.y)
 	if player_ref != null and Input.is_action_just_pressed("ataque"):
-		if PlayerData.player.pos_base.y > position.y - 20 and PlayerData.player.pos_base.y < position.y + 20:
-			PlayerData.player.status = "pegar_item"
-			PlayerData.player.hp_2(-vitalidade)
+		if PlayerData.player_1.pos_base.y > position.y - 20 and PlayerData.player_1.pos_base.y < position.y + 20:
+			PlayerData.player_1.status = "pegar_item"
+			PlayerData.player_1.hp_2(-vitalidade)
+			var posicao_e: Vector2 = area.get_node("shape").global_position
+			area.get_node("shape").disabled = true
+			var tamanho:Vector2 =  Vector2(1,1)
+			efeito_especial(posicao_e, EFEITO7, tamanho)
+			anin.play("sumir")
+			await anin.animation_finished
+
+			queue_free()
+	elif player_ref != null and Input.is_action_just_pressed("ataque_p2"):
+		if PlayerData.player_2.pos_base.y > position.y - 20 and PlayerData.player_2.pos_base.y < position.y + 20:
+			PlayerData.player_2.status = "pegar_item"
+			PlayerData.player_2.hp_2(-vitalidade)
 			var posicao_e: Vector2 = area.get_node("shape").global_position
 			area.get_node("shape").disabled = true
 			var tamanho:Vector2 =  Vector2(1,1)

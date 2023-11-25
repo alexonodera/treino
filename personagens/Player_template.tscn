@@ -10742,7 +10742,7 @@ size = Vector2(65, 58.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p41jk"]
 size = Vector2(45, 60.0001)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(2, -2)
 scale = Vector2(0.4, 0.4)
 collision_mask = 164
@@ -11035,13 +11035,6 @@ one_shot = true
 [node name="TimerComboJoelhada" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
-
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(40, -90)
-limit_left = 0
-limit_top = 0
-limit_bottom = 0
-limit_smoothed = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="on_animation_player_animation_finished"]
 [connection signal="area_entered" from="ataque_fraco" to="." method="on_ataque_fraco_area_entered"]

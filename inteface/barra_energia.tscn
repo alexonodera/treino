@@ -31,7 +31,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2kcwb")
 
-[node name="Energia" type="ProgressBar" parent="."]
+[node name="hud_p1" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Energia" type="ProgressBar" parent="hud_p1"]
 layout_mode = 0
 offset_left = 34.0
 offset_top = 75.0
@@ -43,19 +48,17 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_wp77c")
 value = 50.0
 rounded = true
 
-[node name="Energia2" type="ProgressBar" parent="."]
+[node name="nome_char" type="Label" parent="hud_p1"]
 layout_mode = 0
-offset_left = 670.0
-offset_top = 75.0
-offset_right = 1020.0
-offset_bottom = 105.0
-theme_override_colors/font_color = Color(0, 0, 0, 0)
-theme_override_styles/background = SubResource("StyleBoxFlat_hw0i8")
-theme_override_styles/fill = SubResource("StyleBoxFlat_wp77c")
-value = 50.0
-rounded = true
+offset_left = 38.0
+offset_top = 42.0
+offset_right = 150.0
+offset_bottom = 75.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.498039)
+theme_override_font_sizes/font_size = 21
+text = "Player 1"
 
-[node name="ContadorVidas" type="RichTextLabel" parent="."]
+[node name="ContadorVidas" type="RichTextLabel" parent="hud_p1"]
 layout_mode = 0
 offset_left = 388.0
 offset_top = 55.0
@@ -69,7 +72,34 @@ theme_override_font_sizes/normal_font_size = 42
 theme_override_font_sizes/bold_font_size = 8
 text = "x2"
 
-[node name="ContadorVidas2" type="RichTextLabel" parent="."]
+[node name="hud_p2" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="nome_char2" type="Label" parent="hud_p2"]
+layout_mode = 0
+offset_left = 675.0
+offset_top = 42.0
+offset_right = 787.0
+offset_bottom = 75.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.498039)
+theme_override_font_sizes/font_size = 21
+text = "Player 2"
+
+[node name="Energia2" type="ProgressBar" parent="hud_p2"]
+layout_mode = 0
+offset_left = 670.0
+offset_top = 75.0
+offset_right = 1020.0
+offset_bottom = 105.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_styles/background = SubResource("StyleBoxFlat_hw0i8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wp77c")
+value = 50.0
+rounded = true
+
+[node name="ContadorVidas2" type="RichTextLabel" parent="hud_p2"]
 layout_mode = 0
 offset_left = 1026.0
 offset_top = 55.0
@@ -82,23 +112,3 @@ theme_override_constants/shadow_outline_size = 3
 theme_override_font_sizes/normal_font_size = 42
 theme_override_font_sizes/bold_font_size = 8
 text = "x2"
-
-[node name="nome_char" type="Label" parent="."]
-layout_mode = 0
-offset_left = 38.0
-offset_top = 42.0
-offset_right = 150.0
-offset_bottom = 75.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.498039)
-theme_override_font_sizes/font_size = 21
-text = "Player 1"
-
-[node name="nome_char2" type="Label" parent="."]
-layout_mode = 0
-offset_left = 675.0
-offset_top = 42.0
-offset_right = 787.0
-offset_bottom = 75.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.498039)
-theme_override_font_sizes/font_size = 21
-text = "Player 2"

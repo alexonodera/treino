@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://btjo22io6bqp1"]
+[gd_scene load_steps=18 format=3 uid="uid://btjo22io6bqp1"]
 
 [ext_resource type="Texture2D" uid="uid://drb1dc1bcvgo0" path="res://assets/fundo_2.png" id="1_c41vt"]
 [ext_resource type="Script" path="res://cenas/fase_template.gd" id="1_mc8n2"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d1vlv3daaxp4p" path="res://cenas/decoracao/cadeira_template.tscn" id="6_f3nw7"]
 [ext_resource type="PackedScene" uid="uid://kldoiq4t7ana" path="res://cenas/decoracao/comida.tscn" id="7_d8441"]
 [ext_resource type="PackedScene" uid="uid://dfknj0o4e20p7" path="res://personagens/inimigo_template.tscn" id="9_ojjtm"]
+[ext_resource type="Script" path="res://cenas/Camera2D.gd" id="9_qyqkm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ranl7"]
 size = Vector2(2715.93, 38.3118)
@@ -119,7 +120,8 @@ _data = {
 process_mode = 1
 script = ExtResource("1_mc8n2")
 nome_fase = "Stage 1"
-metadata/_edit_vertical_guides_ = [2660.0]
+metadata/_edit_vertical_guides_ = [2660.0, -224.0, 2663.0]
+metadata/_edit_horizontal_guides_ = [649.0, -9.0]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 z_index = -6
@@ -133,10 +135,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 661.0
-offset_top = 273.0
-offset_right = 1152.0
-offset_bottom = 375.0
+offset_left = -491.0
+offset_top = -51.0
+offset_bottom = 51.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -243,5 +244,14 @@ position = Vector2(869, 467)
 libraries = {
 "": SubResource("AnimationLibrary_fawes")
 }
+
+[node name="camera" type="Camera2D" parent="."]
+scale = Vector2(1.02972, 1.27203)
+limit_left = 0
+limit_top = 0
+limit_right = 2663
+limit_bottom = 649
+limit_smoothed = true
+script = ExtResource("9_qyqkm")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
