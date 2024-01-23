@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cglafmhmhw6yo"]
+
+[ext_resource type="PackedScene" uid="uid://dfknj0o4e20p7" path="res://personagens/inimigo_template.tscn" id="1_oklj8"]
+
+[node name="boss1" instance=ExtResource("1_oklj8")]
+nome = "Boss brabo"
+max_velocidade = 80
+forca = 16
+boss = true
+hp = 2500

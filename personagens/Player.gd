@@ -410,6 +410,7 @@ func _physics_process(delta:float) -> void:
 			pos_base = position
 
 func pegar_item()->void:
+	parar()
 	anin.play("pegar_item")
 	await anin.animation_finished
 	status= "normal"

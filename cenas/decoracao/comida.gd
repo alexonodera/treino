@@ -14,7 +14,7 @@ class_name Comida
 
 func _process(_delta):
 	z_index = abs(position.y)
-	if player_ref != null and Input.is_action_just_pressed("ataque"):
+	if player_ref != null and Input.is_action_just_pressed("ataque") and player_ref.status != "agarrar":
 		if PlayerData.player_1.pos_base.y > position.y - 20 and PlayerData.player_1.pos_base.y < position.y + 20:
 			PlayerData.player_1.status = "pegar_item"
 			PlayerData.player_1.hp_2(-vitalidade)
@@ -26,7 +26,7 @@ func _process(_delta):
 			await anin.animation_finished
 
 			queue_free()
-	elif player_ref != null and Input.is_action_just_pressed("ataque_p2"):
+	elif player_ref != null and Input.is_action_just_pressed("ataque_p2")  and player_ref.status != "agarrar":
 		if PlayerData.player_2.pos_base.y > position.y - 20 and PlayerData.player_2.pos_base.y < position.y + 20:
 			PlayerData.player_2.status = "pegar_item"
 			PlayerData.player_2.hp_2(-vitalidade)

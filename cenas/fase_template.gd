@@ -5,17 +5,22 @@ class_name FaseTemplate
 @onready var anin: AnimationPlayer = get_node("AnimationPlayer")
 @onready var label_fase: Label = get_node("CanvasModulate/Hud/texto_fase")
 @onready var Players:Node2D = get_node("Players")
+@onready var Inimigos:Node2D = get_node("Inimigos")
 @onready var camera: Camera2D = get_node("camera")
+var BOSS: PackedScene =  preload ("res://personagens/boss1.tscn")
+@onready var gatilho_boss: Area2D = get_node("Boss/gatilho_boss")
+
 
 
 var pontuacao:int = 0
 @export var nome_fase:String = "fase_1"
 @export var fases_desbloqueadas: Array = ["fase_2"]
 var fase_ativa:bool = true
+var boss_ativo:bool = false
 
 func _ready():
 	PlayerData.camera = camera
-	Engine.max_fps = 60
+	Engine.max_fps = 120
 	iniciar_fase()
 
 func iniciar_fase():
@@ -62,6 +67,7 @@ func concluir_fase() -> void:
 		criar_nova_fase_concluida(nome_fase)
 	label_fase.text = "Stage Clear"
 	fase_ativa = false
+#Adicionar validação para finalizar a fase no novo modo com multiplayer
 	PlayerData.player.status = "fim_estagio"
 
 	anin.play("fim_fase")
@@ -82,11 +88,22 @@ func criar_nova_fase_concluida(nome:String) -> void:
 	core.gravar_dados()
 
 
-	
-	
-
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "fim_fase":
 		TransicaoTela.cena = "res://cenas/mapa.tscn"
 		TransicaoTela.aparecer()	
+
+
+func on_gatilho_boss_area_entered(area):
+	if area.name == "area_corpo_player":
+		if !boss_ativo:
+			var boss: CharacterBody2D = BOSS.instantiate()
+			Inimigos.add_child(boss)
+			boss.global_position = Vector2(2455,474)
+			boss_ativo = true
+			gatilho_boss.queue_free()
+
+		
+		
+		

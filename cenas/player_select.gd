@@ -63,18 +63,12 @@ func _process(_delta):
 			p1_pronto = true
 			iniciar_jogo()
 	
-
-
-
-
 func iniciar_jogo():
 	if PlayerData.multijogador:
 		if p1_pronto and p2_pronto:		
-			if PlayerData.novo_jogo:
-			
+			if PlayerData.novo_jogo:			
 				TransicaoTela.cena = "res://cenas/fase_template.tscn"
-			else:
-		
+			else:		
 				TransicaoTela.cena = "res://cenas/mapa.tscn"
 				TransicaoTela.aparecer()
 		else:
@@ -82,8 +76,8 @@ func iniciar_jogo():
 	else:
 		if p1_pronto and !PlayerData.multijogador:
 			if PlayerData.novo_jogo:
-			
 				TransicaoTela.cena = "res://cenas/fase_template.tscn"
+				TransicaoTela.aparecer()
 			else:
 		
 				PlayerData.multijogador = false

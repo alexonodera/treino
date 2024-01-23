@@ -98,7 +98,7 @@ func _physics_process(delta: float) -> void:
 		$ataque_medio/shape.disabled = true
 		$ataque_fraco/shape.disabled = true
 		$ataque_forte/shape.disabled = true
-		$dano_arremesso/shape.disabled = true
+	
 		
 		movimento()
 		virar_para_player()
@@ -106,7 +106,7 @@ func _physics_process(delta: float) -> void:
 		animacao() 		
 		
 	elif status == "apanhando":	
-		$dano_arremesso/shape.disabled = true
+	
 		$area_ataque/shape.disabled = true
 
 		if apanhando_agarrado:
@@ -124,7 +124,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 	elif status == "batendo":
-		$dano_arremesso/shape.disabled = true
+	
 		$area_corpo/shape.disabled = false
 		await anin.animation_finished
 		if apanhando_agarrado:

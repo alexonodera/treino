@@ -70,9 +70,9 @@ color = Color(0, 0, 0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 process_mode = 3
-autoplay = "aparecer"
 libraries = {
 "": SubResource("AnimationLibrary_q42pb")
 }
+autoplay = "aparecer"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="on_animation_player_animation_finished"]

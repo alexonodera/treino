@@ -51,6 +51,6 @@ func _physics_process(_delta):
 			vidas.text = "x"+ str(PlayerData.player_1.vidas)
 		
 	
-func atualizar_dados_player(player:CharacterBody2D, tipo:int):
+func atualizar_dados_player(_player:CharacterBody2D, _tipo:int):
 	pass
 	

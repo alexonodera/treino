@@ -10849,10 +10849,10 @@ scale = Vector2(1.42094, 1)
 texture = ExtResource("6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "parado"
 libraries = {
 "": SubResource("AnimationLibrary_juv76")
 }
+autoplay = "parado"
 
 [node name="limite" type="CollisionShape2D" parent="."]
 visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://btjo22io6bqp1"]
+[gd_scene load_steps=19 format=3 uid="uid://btjo22io6bqp1"]
 
 [ext_resource type="Texture2D" uid="uid://drb1dc1bcvgo0" path="res://assets/fundo_2.png" id="1_c41vt"]
 [ext_resource type="Script" path="res://cenas/fase_template.gd" id="1_mc8n2"]
@@ -25,6 +25,9 @@ background_energy_multiplier = 4.53
 glow_enabled = true
 glow_intensity = 1.68
 glow_bloom = 0.07
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyvht"]
+size = Vector2(94, 284.5)
 
 [sub_resource type="Animation" id="Animation_kb81m"]
 length = 0.001
@@ -233,10 +236,18 @@ vitalidade = 20
 [node name="Inimigos" type="Node2D" parent="."]
 
 [node name="inimigo_2" parent="Inimigos" instance=ExtResource("9_ojjtm")]
-position = Vector2(1913, 478)
+position = Vector2(2455, 474)
 
 [node name="inimigo_3" parent="Inimigos" instance=ExtResource("9_ojjtm")]
 position = Vector2(869, 467)
+
+[node name="Boss" type="Node2D" parent="."]
+
+[node name="gatilho_boss" type="Area2D" parent="Boss"]
+
+[node name="shape" type="CollisionShape2D" parent="Boss/gatilho_boss"]
+position = Vector2(1343, 518)
+shape = SubResource("RectangleShape2D_oyvht")
 
 [node name="Texto_fase" type="Node2D" parent="."]
 
@@ -254,4 +265,5 @@ limit_bottom = 649
 limit_smoothed = true
 script = ExtResource("9_qyqkm")
 
+[connection signal="area_entered" from="Boss/gatilho_boss" to="." method="on_gatilho_boss_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
