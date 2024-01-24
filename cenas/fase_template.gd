@@ -6,6 +6,7 @@ class_name FaseTemplate
 @onready var label_fase: Label = get_node("CanvasModulate/Hud/texto_fase")
 @onready var Players:Node2D = get_node("Players")
 @onready var Inimigos:Node2D = get_node("Inimigos")
+@onready var Grupo_boss:Node2D = get_node("Boss")
 @onready var camera: Camera2D = get_node("camera")
 var BOSS: PackedScene =  preload ("res://personagens/boss1.tscn")
 @onready var gatilho_boss: Area2D = get_node("Boss/gatilho_boss")
@@ -20,7 +21,7 @@ var boss_ativo:bool = false
 
 func _ready():
 	PlayerData.camera = camera
-	Engine.max_fps = 120
+	Engine.max_fps = 60
 	iniciar_fase()
 
 func iniciar_fase():
@@ -68,7 +69,9 @@ func concluir_fase() -> void:
 	label_fase.text = "Stage Clear"
 	fase_ativa = false
 #Adicionar validação para finalizar a fase no novo modo com multiplayer
-	PlayerData.player.status = "fim_estagio"
+	#PlayerData.player.status = "fim_estagio"
+	for p in get_tree().get_nodes_in_group("player"):
+		p.status = "fim_estagio"
 
 	anin.play("fim_fase")
 	
@@ -97,13 +100,16 @@ func _on_animation_player_animation_finished(anim_name):
 
 func on_gatilho_boss_area_entered(area):
 	if area.name == "area_corpo_player":
-		if !boss_ativo:
-			var boss: CharacterBody2D = BOSS.instantiate()
-			Inimigos.add_child(boss)
-			boss.global_position = Vector2(2455,474)
+		if !boss_ativo:		
 			boss_ativo = true
-			gatilho_boss.queue_free()
+			call_deferred("_chamar_boss")
+
+			
 
 		
-		
+func _chamar_boss():
+	var boss: CharacterBody2D = BOSS.instantiate()
+	Grupo_boss.add_child(boss)
+	boss.global_position = Vector2(2455,474)	
+	gatilho_boss.queue_free()	
 		
