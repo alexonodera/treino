@@ -1,11 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://btjo22io6bqp1"]
+[gd_scene load_steps=22 format=3 uid="uid://btjo22io6bqp1"]
 
 [ext_resource type="Texture2D" uid="uid://drb1dc1bcvgo0" path="res://assets/fundo_2.png" id="1_c41vt"]
 [ext_resource type="Script" path="res://cenas/fase_template.gd" id="1_mc8n2"]
 [ext_resource type="PackedScene" uid="uid://pwfv74ih422u" path="res://inteface/hud.tscn" id="2_j5wwn"]
+[ext_resource type="AudioStream" uid="uid://cxsivr07tugk6" path="res://assets/sons_jogo_ok/musica_jogo.mp3" id="5_5q02p"]
 [ext_resource type="PackedScene" uid="uid://btttwinlsxbkx" path="res://cenas/decoracao/caixa_template.tscn" id="5_jmqx4"]
 [ext_resource type="PackedScene" uid="uid://dteihlyorwian" path="res://inteface/pause.tscn" id="6_5d8xh"]
 [ext_resource type="PackedScene" uid="uid://d1vlv3daaxp4p" path="res://cenas/decoracao/cadeira_template.tscn" id="6_f3nw7"]
+[ext_resource type="AudioStream" uid="uid://bsl535wvclm4m" path="res://assets/musicas/fase_teste/fase_boss.mp3" id="6_gljnq"]
+[ext_resource type="AudioStream" uid="uid://tfne71cdvsd2" path="res://assets/musicas/fase_teste/fase_concluida.mp3" id="7_223av"]
 [ext_resource type="PackedScene" uid="uid://kldoiq4t7ana" path="res://cenas/decoracao/comida.tscn" id="7_d8441"]
 [ext_resource type="PackedScene" uid="uid://dfknj0o4e20p7" path="res://personagens/inimigo_template.tscn" id="9_ojjtm"]
 [ext_resource type="Script" path="res://cenas/Camera2D.gd" id="9_qyqkm"]
@@ -192,6 +195,19 @@ shape = SubResource("RectangleShape2D_q1hj7")
 [node name="Env" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_isqec")
 
+[node name="sons" type="Node2D" parent="."]
+position = Vector2(1143, 427)
+scale = Vector2(1.2, 1.2)
+
+[node name="musica_fase" type="AudioStreamPlayer2D" parent="sons"]
+stream = ExtResource("5_5q02p")
+
+[node name="musica_boss" type="AudioStreamPlayer2D" parent="sons"]
+stream = ExtResource("6_gljnq")
+
+[node name="fase_concluida" type="AudioStreamPlayer2D" parent="sons"]
+stream = ExtResource("7_223av")
+
 [node name="Decoracao" type="Node2D" parent="."]
 
 [node name="caixa_template2" parent="Decoracao" instance=ExtResource("5_jmqx4")]
@@ -237,9 +253,19 @@ vitalidade = 20
 
 [node name="inimigo_2" parent="Inimigos" instance=ExtResource("9_ojjtm")]
 position = Vector2(2455, 474)
+hp = 2500
 
 [node name="inimigo_3" parent="Inimigos" instance=ExtResource("9_ojjtm")]
 position = Vector2(869, 467)
+hp = 2500
+
+[node name="inimigo_4" parent="Inimigos" instance=ExtResource("9_ojjtm")]
+position = Vector2(1848, 489)
+hp = 2000
+
+[node name="inimigo_5" parent="Inimigos" instance=ExtResource("9_ojjtm")]
+position = Vector2(2054, 528)
+hp = 1000
 
 [node name="Boss" type="Node2D" parent="."]
 

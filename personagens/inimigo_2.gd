@@ -317,6 +317,13 @@ func acertou(tipo:int, forca_h:int):
 			cair(forca_h)
 		else:
 			cair(-forca_h)
+	elif tipo == 6:
+		efeito_hit(1)		
+		status ="caindo"
+		if transform.x.x >0:
+			cair(10)
+		else:
+			cair(10)
 	elif tipo == 3:
 		efeito_hit(1)		
 		status ="caindo"

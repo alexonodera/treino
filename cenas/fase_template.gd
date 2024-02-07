@@ -25,6 +25,7 @@ func _ready():
 	iniciar_fase()
 
 func iniciar_fase():
+	tocar_som("musica_fase")
 	if PlayerData.multijogador:
 				
 		PlayerData.select_player(PlayerData.char_p1, 1)
@@ -50,7 +51,8 @@ func iniciar_fase():
 
 	
 func concluir_fase() -> void:
-	
+	parar_som("musica_boss")
+	tocar_som("fase_concluida")
 	var fases_concluidas = core.procurar_sub_itens(core.save_selecionado.id, "fase_concluida")
 	
 	if fases_concluidas:				
@@ -72,7 +74,9 @@ func concluir_fase() -> void:
 	#PlayerData.player.status = "fim_estagio"
 	for p in get_tree().get_nodes_in_group("player"):
 		p.status = "fim_estagio"
-
+ 
+	for i in get_tree().get_nodes_in_group("inimigo"):
+		i.acertou(6, 9999)
 	anin.play("fim_fase")
 	
 #	get_tree().change_scene_to_file("res://cenas/mapa.tscn")
@@ -108,8 +112,15 @@ func on_gatilho_boss_area_entered(area):
 
 		
 func _chamar_boss():
+	parar_som("musica_fase")
+	tocar_som("musica_boss")
 	var boss: CharacterBody2D = BOSS.instantiate()
 	Grupo_boss.add_child(boss)
 	boss.global_position = Vector2(2455,474)	
 	gatilho_boss.queue_free()	
 		
+func parar_som(som:String):
+	$"sons".get_node(som).stop()
+
+func tocar_som(som:String):
+	$"sons".get_node(som).play()

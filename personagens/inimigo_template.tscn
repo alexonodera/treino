@@ -11906,7 +11906,7 @@ size = Vector2(133.125, 52.5)
 [sub_resource type="RectangleShape2D" id="116"]
 size = Vector2(99.6082, 128.75)
 
-[node name="inimigo_2" type="CharacterBody2D"]
+[node name="inimigo_2" type="CharacterBody2D" groups=["inimigo"]]
 scale = Vector2(0.4, 0.4)
 collision_layer = 2
 collision_mask = 4484
