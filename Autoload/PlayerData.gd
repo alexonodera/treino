@@ -1,12 +1,12 @@
 extends Node
 
 
-signal updated
-signal died
+#signal updated
+#signal died
 
-var score: = 0 : set = set_score
-var deaths: = 0 : set = set_deaths
-var vidas: = 2 : set = set_vidas
+
+#var deaths: int = 0 : set = set_deaths
+#var vidas: int = 2 : set = set_vidas
 var position:Vector2 = Vector2.ZERO
 var pos_base:Vector2 = Vector2.ZERO
 var status:String = ""
@@ -28,9 +28,9 @@ func _ready():
 	personagens.push_back(char_2)
 
 
-func reset():
-	self.score = 0
-	self.deaths = 0
+#func reset():
+	#self.score = 0
+	#self.deaths = 0
 	
 	
 
@@ -44,18 +44,18 @@ func select_player(char_sel:int, player:int) -> void:
 	
 	
 
-func set_score(new_score: int) -> void:
-	score = new_score
-	emit_signal("updated")
-
-
-func set_deaths(new_value: int) -> void:
-	deaths = new_value
-	emit_signal("died")
+#func set_score(new_score: int) -> void:
+	#score = new_score
+	#emit_signal("updated")
+#
+#
+#func set_deaths(new_value: int) -> void:
+	#deaths = new_value
+	#emit_signal("died")
 	
-func set_vidas(vidas_restantes: int) -> void:
-	vidas = vidas_restantes
-	emit_signal("updated")
-	if vidas < 0:
+#func set_vidas(vidas_restantes: int) -> void:
+	#vidas = vidas_restantes
+	#emit_signal("updated")
+	#if vidas < 0:
 #		vidas = 0
-		emit_signal("died")
+		#emit_signal("died")

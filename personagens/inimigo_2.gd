@@ -3,16 +3,13 @@ extends CharacterBody2D
 var EFEITO: PackedScene = preload("res://Effects/hit3.tscn")
 var EFEITO2: PackedScene = preload("res://Effects/hit3.tscn")
 
-
-
-
-
 @export var nome:String = ""
 @export var max_velocidade:int = 250
 @export var gravidade:int = 2000
 @export var tempo_agarrado:int = 2
 @export var forca:int = 2
 @export var boss: bool = false
+@export var distancia_minima: float = 300.00
 
 @onready var cabeca: Sprite2D = get_node("corpo/cabeca")
 @onready var timer_comportamento: Timer = get_node("TimerComportamento")
@@ -21,6 +18,7 @@ var EFEITO2: PackedScene = preload("res://Effects/hit3.tscn")
 @onready var cena:Node2D = $"../../"
 @onready var area_agarrao_inimigo:Area2D = get_node("area_agarrao_inimigo") 
 @onready var limite = get_node("limite")
+
 var pos_base:Vector2 = Vector2.ZERO
 signal acertar(tipo:int, forca:int)
 signal agarrar(tipo:int)
@@ -50,6 +48,8 @@ var text_cabeca: CompressedTexture2D = null
 
 var velocidade:Vector2 = Vector2.ZERO
 
+var player_alvo: CharacterBody2D = null
+
 
 
 func _ready() -> void:
@@ -64,10 +64,15 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-#	if transform.x.x > 0:
-#		barra_hp.scale = Vector2(1,1)
-#	else:
-#		barra_hp.scale = Vector2(-1,1)
+	
+	if !player_alvo:
+		for p in get_tree().get_nodes_in_group("player"):			
+			var distancia:float = p.position.distance_to(position)					
+			if  distancia  < distancia_minima:				
+				player_alvo = p
+				distancia_minima = distancia
+		
+		
 		
 	if hp <= 0 and status != "caindo" and status != "morto":
 		status = "morrendo"
@@ -142,7 +147,7 @@ func _physics_process(delta: float) -> void:
 		
 		verificar_queda()
 		
-#	elif status == "agarrado" and PlayerData.player.status == "agarrar":
+#	elif status == "agarrado" and player_alvo.player.status == "agarrar":
 	elif status == "agarrado":
 		$area_agarrao_inimigo/shape.disabled = true
 		$area_ataque/shape.disabled = true
@@ -355,8 +360,8 @@ func f_agarrado():
 	
 
 func virar_para_player():
-	if status == "normal":
-		if position.x > PlayerData.position.x:
+	if status == "normal" and player_alvo:
+		if position.x > player_alvo.position.x:
 			transform.x = Vector2(-scale.x, 0)
 		else:
 			transform.x = Vector2(scale.x, 0)
@@ -385,54 +390,55 @@ func verificar_posicao_z(atacante:CharacterBody2D, vitima:CharacterBody2D):
 
 	
 func movimento():
-	if PlayerData.status == "voo":
-		pass
-		#velocidade = Vector2(-100,0)
-	else:
-		if position.x + 70 > PlayerData.position.x  and position.x - 70 < PlayerData.position.x:
-			recuar = true
-			tempo_recuar = 0
-			#parado()
+	if player_alvo:
+		if player_alvo.status == "voo":
+			pass
+			#velocidade = Vector2(-100,0)
 		else:
-			velocidade = position.direction_to(PlayerData.pos_base)* max_velocidade	
-#			match comportamento_movimento:
-#				1:
-#
-#					velocidade = Vector2(100,0)
-#					timer_comportamento.start(-1)
-#
-#
-#				2: 
-#
-#					velocidade = Vector2(-100,0)
-#					timer_comportamento.start(-1)
-#
-#				3:
-#
-#					velocidade = Vector2(0,-100)
-#					timer_comportamento.start(-1)
-#
-#				4:
-#
-#					velocidade = Vector2(0,100)
-#					timer_comportamento.start(-1)
-#
-#				5:
-#
-#					velocidade = Vector2(0,100)
-#					velocidade = position.direction_to(PlayerData.pos_base)* max_velocidade	
-#					timer_comportamento.start(-1)
-#			velocidade = Vector2(0,100)
-			
-#
-#
+			if position.x + 70 > player_alvo.position.x  and position.x - 70 < player_alvo.position.x:
+				recuar = true
+				tempo_recuar = 0
+				#parado()
+			else:
+				velocidade = position.direction_to(player_alvo.pos_base)* max_velocidade	
+	#			match comportamento_movimento:
+	#				1:
+	#
+	#					velocidade = Vector2(100,0)
+	#					timer_comportamento.start(-1)
+	#
+	#
+	#				2: 
+	#
+	#					velocidade = Vector2(-100,0)
+	#					timer_comportamento.start(-1)
+	#
+	#				3:
+	#
+	#					velocidade = Vector2(0,-100)
+	#					timer_comportamento.start(-1)
+	#
+	#				4:
+	#
+	#					velocidade = Vector2(0,100)
+	#					timer_comportamento.start(-1)
+	#
+	#				5:
+	#
+	#					velocidade = Vector2(0,100)
+	#					velocidade = position.direction_to(player_alvo.pos_base)* max_velocidade	
+	#					timer_comportamento.start(-1)
+	#			velocidade = Vector2(0,100)
+				
+	#
+	#
 			
 			
 
 
 func on_area_ataque_area_entered(area: Area2D) -> void:
 	if area.name == "area_corpo_player":		
-		if PlayerData.position.y > position.y - 20 and PlayerData.position.y < position.y + 20:
+		if player_alvo and player_alvo.position.y > position.y - 20 and player_alvo.position.y < position.y + 20:
 			parado()
 			status = "batendo"
 			var comportamento:int = int(randf_range(0,2))

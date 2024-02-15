@@ -9,6 +9,8 @@ class_name BarraEnergia
 @onready var vidas2: RichTextLabel = get_node("hud_p2/ContadorVidas2")
 @onready var nome_char2:Label = get_node("hud_p2/nome_char2")
 @onready var hud_p2:Control = get_node("hud_p2")
+@onready var pontuacao: Label = get_node("hud_p1/pontuacao")
+@onready var pontuacao2: Label = get_node("hud_p2/pontuacao")
 
 var vida_atual:int = 0;
 var vida_atualizada:int = 0;
@@ -25,7 +27,7 @@ func _physics_process(_delta):
 		nome_char.text = PlayerData.player_1.nome
 		var hp_atual: int = round(float(PlayerData.player_1.hp)/float(PlayerData.player_1.hp_inicial)*100.0)
 		hp.value = hp_atual
-		
+		pontuacao.text = str(PlayerData.player_1.pontuacao)
 		if PlayerData.player_1.vidas < 0:
 			vidas.text = "x 0"
 		else:		
@@ -34,7 +36,7 @@ func _physics_process(_delta):
 		nome_char2.text = PlayerData.player_2.nome
 		var hp_atual_2: int = round(float(PlayerData.player_2.hp)/float(PlayerData.player_2.hp_inicial)*100.0)
 		hp2.value = hp_atual_2
-		
+		pontuacao2.text = str(PlayerData.player_2.pontuacao)
 		if PlayerData.player_2.vidas < 0:
 			vidas2.text = "x 0"
 		else:		
@@ -44,7 +46,7 @@ func _physics_process(_delta):
 		nome_char.text = PlayerData.player_1.nome
 		var hp_atual: int = round(float(PlayerData.player_1.hp)/float(PlayerData.player_1.hp_inicial)*100.0)
 		hp.value = hp_atual
-		
+		pontuacao.text = str(PlayerData.player_1.pontuacao)
 		if PlayerData.player_1.vidas < 0:
 			vidas.text = "x 0"
 		else:		

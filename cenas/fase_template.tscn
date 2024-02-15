@@ -30,7 +30,7 @@ glow_intensity = 1.68
 glow_bloom = 0.07
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyvht"]
-size = Vector2(94, 284.5)
+size = Vector2(155, 808.25)
 
 [sub_resource type="Animation" id="Animation_kb81m"]
 length = 0.001
@@ -272,7 +272,7 @@ hp = 1000
 [node name="gatilho_boss" type="Area2D" parent="Boss"]
 
 [node name="shape" type="CollisionShape2D" parent="Boss/gatilho_boss"]
-position = Vector2(1343, 518)
+position = Vector2(1373.5, 256.125)
 shape = SubResource("RectangleShape2D_oyvht")
 
 [node name="Texto_fase" type="Node2D" parent="."]

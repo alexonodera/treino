@@ -72,6 +72,14 @@ theme_override_font_sizes/normal_font_size = 42
 theme_override_font_sizes/bold_font_size = 8
 text = "x2"
 
+[node name="pontuacao" type="Label" parent="hud_p1"]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 47.0
+offset_right = 378.0
+offset_bottom = 70.0
+text = "00000000"
+
 [node name="hud_p2" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
@@ -112,3 +120,11 @@ theme_override_constants/shadow_outline_size = 3
 theme_override_font_sizes/normal_font_size = 42
 theme_override_font_sizes/bold_font_size = 8
 text = "x2"
+
+[node name="pontuacao2" type="Label" parent="hud_p2"]
+layout_mode = 0
+offset_left = 944.0
+offset_top = 47.0
+offset_right = 1018.0
+offset_bottom = 70.0
+text = "00000000"
