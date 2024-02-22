@@ -28,7 +28,7 @@ var MAGIA: PackedScene =  preload ("res://Effects/magia.tscn")
 @export var nome: String = "mr_bacon"
 @export var max_velocidade: int = 200
 @export var velocidade_ataque: int = 1
-@export var forca: int = 10
+@export var forca: int = 1000
 @export var defesa: int = 10
 @export var massa: int= 2000
 @export var hp: int = 1500
@@ -58,6 +58,7 @@ var tipo_arremesso: int = 0
 var imortal:bool = false
 var tempo_agarrado: float = 0
 var jogador:String = ""
+var tag_virar:bool = true
 
 
 var hp_inicial: int = 0
@@ -110,7 +111,7 @@ func _ready() -> void:
 
 func _physics_process(delta:float) -> void:
 	
-	print(pontuacao)
+	#print(pontuacao)
 	#PlayerData.position = global_position
 	#PlayerData.status = status
 	#PlayerData.pos_base = pos_base
@@ -142,6 +143,7 @@ func _physics_process(delta:float) -> void:
 
 
 	if status == "normal":
+		
 		habilitar_areas()
 		inimigo_acao = null
 		tempo_correndo = 0
@@ -392,8 +394,9 @@ func _physics_process(delta:float) -> void:
 		status = "normal"
 
 	elif status == "morto":
-		play("morto")
-		await anin.animation_finished
+		#play("morto")
+		#await anin.animation_finished
+		game_over()
 		#queue_free()
 		#PlayerData.emit_signal("died")
 		
@@ -423,7 +426,8 @@ func pegar_item()->void:
 
 
 	
-	
+func game_over():
+	PlayerData.fase.game_over()
 	
 
 func combo_contador()->void:
@@ -668,9 +672,19 @@ func play(animation:String) -> void:
 
 func animacao():
 
+	if velocidade.x == 0:
+		tag_virar = true
 	if status == "normal" and velocidade != Vector2.ZERO:
-#		anin.playback_speed = 1
-		anin.play("caminhar")
+		if tag_virar:
+			
+			anin.play("virar")
+			await anin.animation_finished	
+			tag_virar = false		
+		else:
+			anin.play("caminhar")
+			
+
+		
 	elif status == "correndo" and velocidade != Vector2.ZERO:
 #		anin.playback_speed = 1.45
 		anin.play("correr")
@@ -746,11 +760,13 @@ func cair(forca_c:int):
 	velocidade.y = -800
 	velocidade.x = forca_c
 
-func virar(lado:float):
+func virar(lado:float):	
 	if lado > 0:
+
 		transform.x = Vector2(scale.x, 0)
 
 	elif lado < 0:
+	
 		transform.x = Vector2(-scale.x, 0)
 
 
@@ -896,7 +912,7 @@ func on_joelhada_area_entered(area:Area2D) -> void:
 		var tamanho:Vector2 =  Vector2(6,6)
 		efeito_especial(posicao_p, EFEITO3, tamanho)
 		tocar_som("golpe_fraco")
-		inimigo_acao.acertou(4, 120)
+		inimigo_acao.acertou(4, 120* forca)
 		tremer_tela(30)
 		inimigo_acao.status = "apanhando"
 		combo_joelhada +=1
@@ -1012,8 +1028,12 @@ func tocar_som(som:String):
 
 
 func on_animation_player_animation_finished(anim_name:String):
+	
+	#if anim_name == "virar":
+		#print("aqui virar 2")
+		#tag_virar =false
 	if anim_name == "ataque4":
-		play("agarrar")
+		anin.play("agarrar")
 	if  anim_name == "especial1" || anim_name == "pos_queda" || anim_name == "arremesso" || anim_name == "ataque_correndo":
 		status = "normal"
 
@@ -1097,5 +1117,3 @@ func on_area_sobre_area_exited(area):
 			status = "voo"
 			sobre_objeto = false
 #			position.y += 100
-
-

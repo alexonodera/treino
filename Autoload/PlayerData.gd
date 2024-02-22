@@ -20,6 +20,8 @@ var novo_jogo: bool = false
 var personagens: Array = []
 var multijogador: bool = false
 var camera:  Camera2D = null
+var fase:Node2D = null
+var path_fase_atual: String = ""
 
 
 

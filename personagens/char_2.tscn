@@ -10687,9 +10687,12 @@ _data = {
 [node name="char_2" node_paths=PackedStringArray("anin") instance=ExtResource("1_6dscm")]
 anin = NodePath("Anin2")
 nome = "mr_batata"
-max_velocidade = 400
-velocidade_ataque = 8
-forca = 5
+
+[node name="corpo" parent="." index="0"]
+position = Vector2(-5, -430)
+
+[node name="cabeca" parent="corpo" index="0"]
+position = Vector2(21, -143.5)
 
 [node name="novo_sprite" type="Sprite2D" parent="corpo/cabeca" index="0"]
 position = Vector2(-68.1451, -95.293)
@@ -10699,10 +10702,10 @@ flip_h = true
 [node name="shape" parent="ataque_especial_area" index="0"]
 disabled = false
 
-[node name="Anin2" type="AnimationPlayer" parent="." index="21"]
-autoplay = "parado"
+[node name="Anin2" type="AnimationPlayer" parent="." index="20"]
 libraries = {
 "": SubResource("AnimationLibrary_juv76")
 }
+autoplay = "parado"
 
-[connection signal="animation_finished" from="Anin2" to="." method="on_animation_player_animation_finished" flags=18]
+[connection signal="animation_finished" from="Anin2" to="." method="on_animation_player_animation_finished"]

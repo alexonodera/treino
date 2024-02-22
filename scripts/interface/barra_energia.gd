@@ -10,7 +10,9 @@ class_name BarraEnergia
 @onready var nome_char2:Label = get_node("hud_p2/nome_char2")
 @onready var hud_p2:Control = get_node("hud_p2")
 @onready var pontuacao: Label = get_node("hud_p1/pontuacao")
-@onready var pontuacao2: Label = get_node("hud_p2/pontuacao")
+
+	
+@onready var pontuacao2: Label = null
 
 var vida_atual:int = 0;
 var vida_atualizada:int = 0;
@@ -18,7 +20,8 @@ var vida_atualizada:int = 0;
 
 
 func _ready():
-	
+	if PlayerData.multijogador:
+		pontuacao2 = get_node("hud_p2/pontuacao")
 	pass
 	
 func _physics_process(_delta):

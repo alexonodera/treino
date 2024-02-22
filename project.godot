@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="treino"
-run/main_scene="res://cenas/titulo.tscn"
+run/main_scene="res://inteface/intro.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 

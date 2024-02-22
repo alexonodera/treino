@@ -1,0 +1,95 @@
+[gd_scene load_steps=7 format=3 uid="uid://u7l3gaceki5p"]
+
+[ext_resource type="PackedScene" uid="uid://c8bwxyocivh7q" path="res://inteface/intro.tscn" id="1_0rghh"]
+[ext_resource type="Texture2D" uid="uid://cj00lupr7j8sg" path="res://assets/fundo_4.png" id="2_jf3bg"]
+
+[sub_resource type="GDScript" id="GDScript_puimo"]
+script/source = "extends RichTextLabel
+
+func _ready():
+	var tween = create_tween()
+	tween.tween_property(self,\"visible_ratio\",1.0, 10 )
+
+"
+
+[sub_resource type="Animation" id="Animation_sq83h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-606, -30)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_oyukf"]
+resource_name = "fundo"
+length = 15.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-606, -30), Vector2(-589, -644)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m1dup"]
+_data = {
+"RESET": SubResource("Animation_sq83h"),
+"fundo": SubResource("Animation_oyukf")
+}
+
+[node name="Intro2" node_paths=PackedStringArray("anin") instance=ExtResource("1_0rghh")]
+cena = "res://cenas/titulo.tscn"
+anin = NodePath("Anin_local")
+
+[node name="TextureRect" parent="." index="0"]
+offset_left = -606.0
+offset_top = -30.0
+offset_right = 1826.0
+offset_bottom = 1297.0
+texture = ExtResource("2_jf3bg")
+
+[node name="texto" parent="MarginContainer/Panel" index="0"]
+text = "Alongside newfound allies, he battles challenges, hones his magical abilities, and forms deep bonds. As they face the ultimate showdown, their courage and unity become pivotal in shaping the fate of a realm where darkness and hope vie for supremacy."
+script = SubResource("GDScript_puimo")
+
+[node name="Anin_local" type="AnimationPlayer" parent="." index="4"]
+libraries = {
+"": SubResource("AnimationLibrary_m1dup")
+}
+autoplay = "fundo"

@@ -30,7 +30,7 @@ glow_intensity = 1.68
 glow_bloom = 0.07
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyvht"]
-size = Vector2(155, 808.25)
+size = Vector2(1350, 808.25)
 
 [sub_resource type="Animation" id="Animation_kb81m"]
 length = 0.001
@@ -61,7 +61,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_sh6jj"]
 resource_name = "fim_fase"
-length = 5.00001
+length = 10.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -141,9 +141,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -491.0
-offset_top = -51.0
-offset_bottom = 51.0
+offset_left = 661.0
+offset_top = 273.0
+offset_right = 1152.0
+offset_bottom = 375.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -272,7 +273,7 @@ hp = 1000
 [node name="gatilho_boss" type="Area2D" parent="Boss"]
 
 [node name="shape" type="CollisionShape2D" parent="Boss/gatilho_boss"]
-position = Vector2(1373.5, 256.125)
+position = Vector2(1971, 256.125)
 shape = SubResource("RectangleShape2D_oyvht")
 
 [node name="Texto_fase" type="Node2D" parent="."]

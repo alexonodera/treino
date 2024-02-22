@@ -55,7 +55,6 @@ var player_alvo: CharacterBody2D = null
 func _ready() -> void:
 	connect("acertar",Callable(self,"acertou"))
 
-	
 	var textura:Texture2D = load("res://assets/decoracao/tv.png")
 	cabeca.texture = textura
 	hp_inicial = hp	

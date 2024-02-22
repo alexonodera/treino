@@ -6,7 +6,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
+	get_tree().paused = false
 	var clicar_item = Callable(self, "iniciar_jogo")
 	botao_start.connect("button_down",clicar_item.bind())
 	
@@ -39,9 +39,10 @@ func sair_jogo() ->void:
 	botao_ok.connect("button_down",clicar_item.bind(janela_confirmacao))
 	
 	
-func _confirmar_sair(janela_confirmacao):
-	janela_confirmacao.get_node("Anin").play("desaparecer")
-	await janela_confirmacao.get_node("Anin").animation_finished
+func _confirmar_sair(_janela_confirmacao):
+	#var anin_janela =get_node("Anin")
+	#janela_confirmacao.get_node("Anin").play("desaparecer")
+	#await janela_confirmacao.get_node("Anin").animation_finished
 	get_tree().quit()
 
 	

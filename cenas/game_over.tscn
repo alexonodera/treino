@@ -1,0 +1,118 @@
+[gd_scene load_steps=3 format=3 uid="uid://baodivxb86pyd"]
+
+[ext_resource type="Script" path="res://cenas/game_over.gd" id="1_gvx2e"]
+[ext_resource type="Texture2D" uid="uid://sw3g4ewvbybq" path="res://assets/imagem_fundo.png" id="2_wsnnt"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gvx2e")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.356863, 0.356863, 0.356863, 0.580392)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -348.0
+offset_right = -1.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_wsnnt")
+
+[node name="titulo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -520.5
+offset_top = -493.0
+offset_right = 520.5
+offset_bottom = 493.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NomeJogo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -267.0
+offset_top = -59.0
+offset_right = 267.0
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_font_sizes/font_size = 110
+text = "GAME OVER"
+
+[node name="Restart" type="Button" parent="." groups=["botoes"]]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -223.0
+offset_right = 100.0
+offset_bottom = -163.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Try again"
+
+[node name="Mapa" type="Button" parent="." groups=["botoes"]]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -151.0
+offset_right = 100.0
+offset_bottom = -91.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Stage Select"
+
+[node name="Menu" type="Button" parent="." groups=["botoes"]]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -82.0
+offset_right = 100.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Main Menu"

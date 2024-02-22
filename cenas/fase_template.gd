@@ -11,6 +11,7 @@ class_name FaseTemplate
 var BOSS: PackedScene =  preload ("res://personagens/boss1.tscn")
 @onready var gatilho_boss: Area2D = get_node("Boss/gatilho_boss")
 @export var nome_fase:String = "fase_1"
+@export var ultima_fase:bool = false
 @export var fases_desbloqueadas: Array = ["fase_2"]
 var fase_ativa:bool = true
 var boss_ativo:bool = false
@@ -21,6 +22,11 @@ func _ready():
 	iniciar_fase()
 
 func iniciar_fase():
+	PlayerData.fase = self
+	PlayerData.path_fase_atual = get_tree().current_scene.scene_file_path
+	
+	
+
 	tocar_som("musica_fase")
 	if PlayerData.multijogador:
 				
@@ -110,7 +116,23 @@ func on_gatilho_boss_area_entered(area):
 			call_deferred("_chamar_boss")
 
 			
-
+func game_over():
+	var flag_game_over: bool = true
+	for p in get_tree().get_nodes_in_group("player"):
+		if !PlayerData.multijogador and p.status == "morto":
+			flag_game_over = true
+		elif PlayerData.multijogador and p.status != "morto":
+			flag_game_over = false
+			break
+			
+			
+		
+			
+	if flag_game_over:	
+		#get_tree().paused = true
+		TransicaoTela.cena = "res://cenas/game_over.tscn"
+		TransicaoTela.aparecer()	
+		
 		
 func _chamar_boss():
 	parar_som("musica_fase")
