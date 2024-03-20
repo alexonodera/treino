@@ -74,10 +74,14 @@ func _on_anin_animation_finished(anim_name):
 		queue_free()
 
 
+
+
+func on_area_acerto_area_entered(area):
+	pass # Replace with function body.
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xwj8y"]
-size = Vector2(102, 28.8807)
+size = Vector2(43.7595, 17.9255)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5qius"]
 size = Vector2(96.7263, 142)
@@ -85,11 +89,11 @@ size = Vector2(96.7263, 142)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hhljq"]
 size = Vector2(94.25, 113)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cpvkv"]
-size = Vector2(62.3729, 5.0933)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sc17m"]
+size = Vector2(12.9684, 23.5435)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kh761"]
-size = Vector2(91, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvli2"]
+size = Vector2(12.8242, 22.1126)
 
 [sub_resource type="Animation" id="Animation_qkpnj"]
 length = 0.001
@@ -314,9 +318,8 @@ texture = ExtResource("1_b8m8v")
 
 [node name="limite3" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(1.99999, -13)
-rotation = -3.14159
-scale = Vector2(1, 1.00413)
+position = Vector2(4, -18)
+scale = Vector2(1.91958, -1.00412)
 shape = SubResource("RectangleShape2D_xwj8y")
 disabled = true
 
@@ -330,15 +333,18 @@ texture = ExtResource("3_x1msl")
 [node name="area_acerto" type="Area2D" parent="."]
 
 [node name="shape" type="CollisionShape2D" parent="area_acerto"]
-position = Vector2(1.5, -95)
+position = Vector2(2, -84)
 scale = Vector2(1.00283, 1)
 shape = SubResource("RectangleShape2D_5qius")
 
 [node name="colisao_z" type="Area2D" parent="."]
+visible = false
 
 [node name="shape" type="CollisionShape2D" parent="colisao_z"]
-position = Vector2(2.125, -80.5)
+visible = false
+position = Vector2(5, -79)
 shape = SubResource("RectangleShape2D_hhljq")
+disabled = true
 
 [node name="colisao_base" type="StaticBody2D" parent="."]
 light_mask = 0
@@ -349,21 +355,25 @@ collision_layer = 128
 collision_mask = 128
 
 [node name="shape" type="CollisionShape2D" parent="colisao_base"]
-position = Vector2(-9.53674e-07, 0)
-rotation = -3.14159
+position = Vector2(0, -5.53489)
+rotation = -1.55848
 scale = Vector2(0.853242, 2.08284)
-shape = SubResource("RectangleShape2D_cpvkv")
+shape = SubResource("RectangleShape2D_sc17m")
+disabled = true
 
 [node name="area_superior" type="Area2D" parent="."]
 collision_layer = 4096
 
 [node name="shape" type="CollisionShape2D" parent="area_superior"]
-position = Vector2(1.5, -157)
-shape = SubResource("RectangleShape2D_kh761")
+position = Vector2(1, -156)
+rotation = 1.58283
+scale = Vector2(1.05791, 3.61704)
+shape = SubResource("RectangleShape2D_uvli2")
 
 [node name="anin" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_8lbrf")
 }
 
+[connection signal="area_entered" from="area_acerto" to="." method="on_area_acerto_area_entered"]
 [connection signal="animation_finished" from="anin" to="." method="_on_anin_animation_finished"]

@@ -14,7 +14,7 @@ size = Vector2(162, 279)
 size = Vector2(147, 290)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qakxh"]
-size = Vector2(137, 44)
+size = Vector2(114, 33)
 
 [node name="caixa_template" type="CharacterBody2D" groups=["cenario"]]
 collision_layer = 4
@@ -27,10 +27,12 @@ scale = Vector2(0.437575, 0.437575)
 texture = ExtResource("2_4fd4s")
 
 [node name="limite3" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(5.00001, -14.7499)
 rotation = -3.14159
 scale = Vector2(1, 1.00413)
 shape = SubResource("RectangleShape2D_xwj8y")
+disabled = true
 
 [node name="sombra_sprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.705882)
@@ -46,15 +48,18 @@ position = Vector2(-2, -140.5)
 shape = SubResource("RectangleShape2D_5qius")
 
 [node name="colisao_z" type="Area2D" parent="."]
+visible = false
 
 [node name="shape" type="CollisionShape2D" parent="colisao_z"]
+visible = false
 position = Vector2(2.5, -184)
 shape = SubResource("RectangleShape2D_hhljq")
+disabled = true
 
 [node name="colisao_base" type="StaticBody2D" parent="."]
 collision_layer = 4
 collision_mask = 0
 
 [node name="shape" type="CollisionShape2D" parent="colisao_base"]
-position = Vector2(4, -20)
+position = Vector2(4, -29.5)
 shape = SubResource("RectangleShape2D_qakxh")

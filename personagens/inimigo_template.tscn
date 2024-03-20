@@ -1883,7 +1883,7 @@ tracks/24/path = NodePath("dano_arremesso/shape:disabled")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.7, 1),
+"times": PackedFloat32Array(0, 0.3, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, true]
@@ -11904,7 +11904,7 @@ size = Vector2(147.956, 38.2475)
 size = Vector2(133.125, 52.5)
 
 [sub_resource type="RectangleShape2D" id="116"]
-size = Vector2(99.6082, 128.75)
+size = Vector2(242.5, 219.375)
 
 [node name="inimigo_2" type="CharacterBody2D" groups=["inimigo"]]
 scale = Vector2(0.4, 0.4)
@@ -12092,10 +12092,9 @@ position = Vector2(-14.0625, -397.5)
 shape = SubResource("110")
 
 [node name="dano_arremesso" type="Area2D" parent="."]
-visible = false
 
 [node name="shape" type="CollisionShape2D" parent="dano_arremesso"]
-position = Vector2(9.9612, -410)
+position = Vector2(-8.75001, -455.312)
 shape = SubResource("116")
 disabled = true
 

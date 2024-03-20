@@ -52,6 +52,7 @@ var player_alvo: CharacterBody2D = null
 
 
 
+
 func _ready() -> void:
 	connect("acertar",Callable(self,"acertou"))
 
@@ -88,7 +89,8 @@ func _physics_process(delta: float) -> void:
 		
 	
 	
-	if status == "normal":	
+	if status == "normal":
+		
 		limite.disabled = false
 		agarrado = false
 		apanhando_agarrado = false
@@ -103,7 +105,7 @@ func _physics_process(delta: float) -> void:
 		$ataque_fraco/shape.disabled = true
 		$ataque_forte/shape.disabled = true
 	
-		
+		evitar_colisoes_proximas()	
 		movimento()
 		virar_para_player()
 		recuando()
@@ -305,7 +307,35 @@ func play(animation: String) -> void:
 #
 		
 
-	
+func evitar_colisoes_proximas():
+	# Defina o grupo dos objetos que você deseja verificar
+	var grupo_alvo = "inimigo"
+
+	# Obtenha todos os objetos no mesmo grupo
+	var objetos_no_grupo = get_tree().get_nodes_in_group(grupo_alvo)
+
+	# Defina a distância mínima para evitar colisões
+	#var distancia_minima_n = 50
+
+	# Iterar sobre todos os objetos no grupo
+	for objeto in objetos_no_grupo:
+		# Certifique-se de não verificar o próprio objeto
+		if objeto != self:
+			# Obtenha a distância entre os dois objetos
+			var distancia = self.global_position.distance_to(objeto.global_position)
+
+			# Se a distância for menor que a distância mínima, mova-se para longe
+			if distancia < distancia_minima:
+				# Calcular a direção para se mover (afastar-se do objeto)
+				var direcao = (self.global_position - objeto.global_position).normalized()
+
+				# Defina a nova posição com base na direção e na distância mínima
+				var nova_posicao = self.global_position + direcao * distancia_minima
+
+				# Defina a nova posição para evitar colisões
+				set_velocity((nova_posicao - global_position).normalized() * max_velocidade)
+				move_and_slide()
+			
 
 func acertou(tipo:int, forca_h:int):	
 	
@@ -399,6 +429,18 @@ func movimento():
 				tempo_recuar = 0
 				#parado()
 			else:
+				
+				#var collisions = collision_shape2d.get_overlapping_bodies()
+#
+		## Se houver colisões, move o inimigo para uma posição diferente
+				#for collision in collisions:
+					#if collision != self:
+						## Calcula a direção entre os inimigos
+						#var direction = (self.position - collision.position).normalized()
+#
+						## Move os inimigos para longe um do outro
+						#self.position += direction * 10
+						#collision.position -= direction * 10
 				velocidade = position.direction_to(player_alvo.pos_base)* max_velocidade	
 	#			match comportamento_movimento:
 	#				1:
@@ -475,10 +517,9 @@ func _on_ataque_medio_area_entered(area: Area2D) -> void:
 
 func on_dano_arremesso_area_entered(area: Area2D) -> void:
 	if area.name == "area_corpo":
-		pass
-#		var inimigo = area.get_parent()
-#		tocar_som("ataque1")
-#		inimigo.emit_signal("acertar",3,400)
+		var inimigo = area.get_parent()
+		tocar_som("ataque1")
+		inimigo.emit_signal("acertar",3,400)
 
 
 func tocar_som(som:String):

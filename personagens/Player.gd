@@ -23,6 +23,7 @@ var MAGIA: PackedScene =  preload ("res://Effects/magia.tscn")
 @onready var camera: Camera2D = PlayerData.camera
 @onready var colisao_z: CollisionShape2D = get_node("area_pulo/shape")
 @onready var limite: CollisionShape2D = get_node("limite")
+@onready var area_sobre: CollisionShape2D = get_node("area_sobre/shape")
 
 
 @export var nome: String = "mr_bacon"
@@ -111,10 +112,6 @@ func _ready() -> void:
 
 func _physics_process(delta:float) -> void:
 	
-	#print(pontuacao)
-	#PlayerData.position = global_position
-	#PlayerData.status = status
-	#PlayerData.pos_base = pos_base
 	#Código para a tela tremer quando houver um impacto
 	shake_strength = lerp(shake_strength,0.0, SHAKE_DECAY_RATE * delta)
 #	
@@ -145,12 +142,6 @@ func _physics_process(delta:float) -> void:
 	if status == "normal":
 		
 		habilitar_areas()
-		inimigo_acao = null
-		tempo_correndo = 0
-		tempo_agarrado = 0
-		combo_joelhada = 0
-		ataque_agarrado = false
-		ataque_correndo = false
 		desabilitar_ataques()
 		virar(velocidade.x)
 		calcular_velocidade()
@@ -209,14 +200,12 @@ func _physics_process(delta:float) -> void:
 		if velocidade.x != 0 and (tipo_voo == 1 or tipo_voo == 3):
 			if (Input.is_action_just_pressed("ataque"+jogador) and status == "voo" and anin.current_animation != "pos_queda"):
 				ataque_voando = true
-
 				play("voadora2")
 				await anin.animation_finished
 				ataque_voando = false
 		elif velocidade.x == 0 and tipo_voo == 1:
 			if (Input.is_action_just_pressed("ataque"+jogador) and status == "voo" and anin.current_animation != "pos_queda"):
 				ataque_voando = true
-
 				play("voadora")
 				await anin.animation_finished
 				ataque_voando = false
@@ -496,6 +485,9 @@ func combo_joelhada_mais():
 func voo(forca_voo:float):
 
 	add_collision_exception_with(cena.get_node("Cenario/limite"))
+	
+	for objeto in get_tree().get_nodes_in_group("cenario"):		
+		add_collision_exception_with(objeto.get_node("colisao_base"))
 #	for objeto in get_tree().get_nodes_in_group("cenario"):		
 #			add_collision_exception_with(objeto.get_node("limite3"))
 #			remove_collision_exception_with(objeto.get_node("colisao_base"))
@@ -517,14 +509,21 @@ func voo(forca_voo:float):
 
 
 func verificar_voo():
-	for objeto in get_tree().get_nodes_in_group("cenario"):		
-		add_collision_exception_with(objeto.get_node("colisao_base"))
+	#for objeto in get_tree().get_nodes_in_group("cenario"):		
+		#add_collision_exception_with(objeto.get_node("colisao_base"))
+
 	if tipo_voo == 1 or tipo_voo == 3:
 		if velocidade.y < 0 and  ! ataque_voando:
 			play("pulo")
+			colisao_z.disabled= true
+			area_sobre.disabled= true
 
 		if velocidade.y > 0 and  ! ataque_voando:
 			play("queda")
+			for objeto in get_tree().get_nodes_in_group("cenario"):		
+				add_collision_exception_with(objeto.get_node("colisao_base"))
+			colisao_z.disabled= false
+			area_sobre.disabled= false
 	elif tipo_voo == 2:
 		if velocidade.y < 0:
 			play("pulo")
@@ -552,6 +551,7 @@ func verificar_voo():
 		for objeto in get_tree().get_nodes_in_group("cenario"):		
 #			add_collision_exception_with(objeto.get_node("limite3"))
 			remove_collision_exception_with(objeto.get_node("colisao_base"))
+	
 
 		if tipo_voo == 2:
 			
@@ -654,6 +654,12 @@ func desabilitar_ataques():
 	$arremesso/shape.disabled = true
 
 func habilitar_areas():
+	inimigo_acao = null
+	tempo_correndo = 0
+	tempo_agarrado = 0
+	combo_joelhada = 0
+	ataque_agarrado = false
+	ataque_correndo = false
 	area_hit.set_deferred("monitoring", true)
 	colisao_z.disabled = true
 	$sombra_sprite.visible = true
@@ -672,7 +678,7 @@ func play(animation:String) -> void:
 
 func animacao():
 
-	if velocidade.x == 0:
+	if velocidade.x == 0 and velocidade.y == 0:
 		tag_virar = true
 	if status == "normal" and velocidade != Vector2.ZERO:
 		if tag_virar:
@@ -740,7 +746,7 @@ func acertou(tipo:int, forca_n:int):
 		else :
 			if "hit" + str(tipo) == anin.current_animation:
 				anin.stop(true)
-			play("hit" + str(tipo))
+			anin.play("hit" + str(tipo))
 
 func hp_2(valor):
 	if valor < 0:
@@ -778,11 +784,16 @@ func verificar_posicao_z(atacante:CharacterBody2D, vitima):
 
 func on_ataque_fraco_area_entered(area:Area2D) -> void:
 	if area.name == "area_corpo":
+		#anin.stop()	
+		#await get_tree().create_timer(0.3)
+		#anin.play()
+
 		var inimigo:CharacterBody2D = area.get_parent()
 		if verificar_posicao_z( self , inimigo):
 			var posicao_p: Vector2 = $ataque_fraco/shape.global_position
 			var tamanho:Vector2 =  Vector2(2,2)
-			efeito_especial(posicao_p, EFEITO3, tamanho)
+			efeito_especial(posicao_p, EFEITO3, tamanho)	
+			
 			tocar_som("golpe_fraco")
 			tremer_tela(20)
 			pontuacao += 30
